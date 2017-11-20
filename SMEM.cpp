@@ -453,6 +453,11 @@ void SMEM::InitialSMem(void)
 try {
     pthread_mutex_lock(&mutexSmem);
 
+    lane_adj_run_state.
+
+
+
+
     bCommEnableSwitch = false;
     ui5F18EffectTime = 0;
     iSmem92TC_ChangePlanOneTime5F18_PlanID = 255; //default

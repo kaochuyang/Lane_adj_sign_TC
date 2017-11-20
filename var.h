@@ -226,7 +226,10 @@ void SendRequestToKeypad(void);                                                 
     BYTE brightness;
 
 };
-
+       typedef struct junbo_packet
+    {
+      BYTE  packet[8];
+    };
 
 
 typedef struct BCD{
@@ -237,7 +240,12 @@ typedef union BCDSW{
         BCD bcdHiLo;
         BYTE bcdCode;
 }BCDSW;
-
+    typedef  struct s_junbo_lane_adj
+    {
+        BYTE ID;
+        unsigned char command;
+        unsigned char parameter[2];
+    };
 //-----------------------------------------------
 typedef struct MESSAGEOK {
         int protocol;                                                           //�ϥΪ��q�T��w����,�аѦ�var.h�w�q�i�઺��w

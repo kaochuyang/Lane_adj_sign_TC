@@ -64,6 +64,21 @@ public:
     };
     junbo_to_light record_light[9],record_state[3][4],record_timeout[9],record_brightness[9];
 
+    typedef struct junbo_lane_adj_memory_object
+    {
+        s_junbo_lane_adj
+
+         defaul_textID[8],
+         _default_light_timeout[8],
+         brightness[8];
+    };
+    s_junbo_lane_adj
+    light_state[8],
+    lane_adj_run_state[8],
+    module_state[8];
+
+
+
 
  protocol_9F_m_curve protocol_9F_object;
     junli_vd junli_object;
