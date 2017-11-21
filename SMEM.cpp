@@ -453,7 +453,7 @@ void SMEM::InitialSMem(void)
 try {
     pthread_mutex_lock(&mutexSmem);
 
-    lane_adj_run_state.
+
 
 
 

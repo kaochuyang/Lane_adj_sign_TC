@@ -44,7 +44,22 @@ public:
 
     void query_module_state();
     void report_module_state();
+    void link_ID_check();
 
+
+
+    typedef struct module_state_struct
+    {
+        BYTE bit_block_ID:4;
+        BYTE bit_0:1;
+        BYTE bit_1:1;
+        BYTE bit_2:1;
+        BYTE bit_3:1;
+    };
+
+
+    bool initial_module_state(module_state_struct *object);
+    module_state_struct module_state_object;
 
 protected:
 private:
@@ -61,7 +76,7 @@ private:
     right,
     straight_left,
     straight_right,
-    query_textID,
+    query_state,
     light_timeout,
     module_query[4],
     brightness;

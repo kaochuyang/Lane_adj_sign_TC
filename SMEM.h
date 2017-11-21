@@ -72,12 +72,15 @@ public:
          _default_light_timeout[8],
          brightness[8];
     };
+
+
+
     s_junbo_lane_adj
     light_state[8],
-    lane_adj_run_state[8],
+
     module_state[8];
 
-
+   int lane_adj_run_state[9];
 
 
  protocol_9F_m_curve protocol_9F_object;

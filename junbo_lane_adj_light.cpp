@@ -47,8 +47,8 @@ void junbo_lane_adj_light::initial_junbo_control(char *output_tty_name)
 //////////////////////////////////////
     brightness.command=0xc5;
 ////////////////////////////////////
-    query_textID.command=0xc6;
-    query_textID.parameter[0]=0x0;
+    query_state.command=0xc6;
+    query_state.parameter[0]=0x0;
 
 
 
@@ -148,6 +148,8 @@ void junbo_lane_adj_light::junbo_light_send_reference_select(BYTE ID,s_junbo_lan
     try
     {
         Action.ID=ID;
+
+        if(smem.lane_adj_run_state[ID]==1)
         junbo_light_send(junbo_Packeted(Action));
 
     }
@@ -188,8 +190,8 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
         if(messageIn.cksStatus==true)
         {
 
-            /*
-                        if((junbo_receive_packet[3]==0xb1)
+
+                       /* if((junbo_receive_packet[3]==0xb1)
                                 ||(junbo_receive_packet[3]==0xb0)
                                 ||(junbo_receive_packet[3]==0xb3))
                         {
@@ -222,8 +224,12 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
                             smem.record_state[ID][module_state_object.bit_block_ID].parameter=junbo_receive_packet[4];
                         }
 
-            */
+                        else*/ if(junbo_receive_packet[4]==0xb6)
+                        {
 
+                            ID=junbo_receive_packet[3];
+                            smem.lane_adj_run_state[ID]=1;
+                        }
 
 
 
@@ -266,6 +272,10 @@ void junbo_lane_adj_light::link_ID_check()
 {
     try
     {
+     memset(smem.lane_adj_run_state,-1,sizeof(smem.lane_adj_run_state));
+
+     for(int ID=1;ID<9;ID++)junbo_light_send_reference_select(ID,query_state);
+
 
     }catch(...){}
 }
@@ -287,7 +297,7 @@ void junbo_lane_adj_light::brightness_control(int bright_parameter)
     try
     {
 
-     brightness.parameter[0]=control_parameter;
+     brightness.parameter[0]=bright_parameter;
      for(int i=0;i<8;i++)
      junbo_light_send_reference_select(i,brightness);
 
@@ -298,10 +308,54 @@ void junbo_lane_adj_light::module_query()
 {
     try
     {
+         initial_module_state(&module_state_object);
+        unsigned char ucSendTMP[6];
+        for(int ID=1; ID<3; ID++)
+        {
 
 
+            for(int query_block=0; query_block<4; query_block++)
+
+            {
+            /*     initial_module_state(&module_state_object);
+                smem.record_state[ID][query_block].ID=0;
+                smem.record_state[ID][query_block].command=0;
+                smem.record_state[ID][query_block].parameter=0;
+                ucSendTMP[0] = 0xAA;//head
+                ucSendTMP[1] =smem.GetSequence();
+                ucSendTMP[2] = ID;
+                ucSendTMP[3] = query[query_block].command;
+                ucSendTMP[4] = query[query_block].parameter;
+                ucSendTMP[5] = 0x0;//cks
+                for (int a=0; a<5; a++)
+                    ucSendTMP[5]^=ucSendTMP[a];
+                printf("\nquery light ID=%d\n",ID);
+                junbo_cms_send(ucSendTMP);
+
+
+
+           */
+
+
+            }
 
 
     }
     catch(...){}
+}
+bool junbo_lane_adj_light::initial_module_state(module_state_struct *object)
+{
+    try
+    {
+        object->bit_block_ID=0;
+        object->bit_0=0;
+        object->bit_1=0;
+        object->bit_2=0;
+        object->bit_3=0;
+        return true;
+    }
+    catch(...)
+    {
+
+    }
 }
