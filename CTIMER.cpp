@@ -474,9 +474,9 @@ void intervalTimer::TimersSetting(void)
         _it10.it_interval.tv_nsec = 0;                                  // 1/10 sec
         if ( timer_settime( _t10, 0, & _it10, NULL ) ) exit( 1 );
 
-        _itTrafficeLight.it_value.tv_sec = 0;
-        _itTrafficeLight.it_value.tv_nsec = 200000000;  //0.2 sec
-        _itTrafficeLight.it_interval.tv_sec = 2;
+        _itTrafficeLight.it_value.tv_sec = 10;
+        _itTrafficeLight.it_value.tv_nsec = 0;  //0.2 sec
+        _itTrafficeLight.it_interval.tv_sec = 86400;
         _itTrafficeLight.it_interval.tv_nsec = 0;
         if ( timer_settime( _tTrafficeLight, 0, & _itTrafficeLight, NULL ) ) exit( 1 );
 
@@ -681,88 +681,6 @@ void * intervalTimer::PTime(void *arg)
 
                     break;
                 case( 11 ):
-//Remove  _intervalTimer.vCheckAndReSendSS_S0_Status();
-                    smem.vCheckConnectStatus();
-
-                    //OT20110526
-                    iMinCycleTime = 600;
-
-                    ucTmp = smem.vGetHWCycleCodeFor_0F14_0FC4();
-                    switch (ucTmp)
-                    {
-                    case(0):  //means stop
-                        iTmp = 600;
-                        break;
-                    case(1):
-                        iTmp = 1;
-                        break;
-                    case(2):
-                        iTmp = 2;
-                        break;
-                    case(3):
-                        iTmp = 5;
-                        break;
-                    case(4):
-                        iTmp = 60;
-                        break;
-                    case(5):
-                        iTmp = 300;
-                        break;
-                    }
-                    if(iTmp > 0 && iTmp < iMinCycleTime)
-                    {
-                        iMinCycleTime = iTmp;
-                    }
-
-                    iTmp = smem.vGetINTData(TC92SignalLightStatus_5F0F_IntervalTime);
-                    if(iTmp == 0xFF)    //stop send
-                    {
-                        iTmp = 600;
-                    }
-                    if(iTmp > 0 && iTmp < iMinCycleTime)
-                    {
-                        iMinCycleTime = iTmp;
-                    }
-
-                    iTmp = smem.vGetINTData(TC92SignalStepStatus_5F03_IntervalTime);
-                    if(iTmp == 0xFF)    //stop send
-                    {
-                        iTmp = 600;
-                    }
-                    if(iTmp > 0 && iTmp < iMinCycleTime)
-                    {
-                        iMinCycleTime = iTmp;
-                    }
-                    iMinCycleTime += 2;  //set delay time.
-
-                    tmpTime = smem.vGetLastGetProtocolTime();
-                    if(currentTime >= tmpTime && (currentTime - tmpTime) <= iMinCycleTime)
-                    {
-                        smem.vSaveCenterConnectStatus(true);
-                    }
-                    else
-                    {
-                        smem.vSaveCenterConnectStatus(false);
-                    }
-
-                    //OT20110825
-                    tmpTime = smem.vGetLastTrafficeLightTime();
-//                                  printf("currentTime - tmpTime:%d\n", currentTime - tmpTime);
-                    if(tmpTime >= currentTime)    //log time > system time
-                    {
-                        smem.vSetTrafficLightBoardConnectStatus(true);
-                    }
-                    else
-                    {
-                        if( (currentTime - tmpTime) <= 60)
-                        {
-                            smem.vSetTrafficLightBoardConnectStatus(true);
-                        }
-                        else
-                        {
-                            smem.vSetTrafficLightBoardConnectStatus(false);
-                        }
-                    }
 
 
                     break;
@@ -782,11 +700,6 @@ void * intervalTimer::PTime(void *arg)
 
 
                 case( 15 ):  //0F04, HwStatus AutoReport
-                    uc0F04[2] = smem.vGetHardwareStatus(3);
-                    uc0F04[3] = smem.vGetHardwareStatus(4);
-                    _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
-                    _MSG.InnerOrOutWard = cOutWard;
-                    writeJob.WritePhysicalOut(_MSG.packet, _MSG.packetLength, DEVICECENTER92);
 
                     break;
 
@@ -796,18 +709,7 @@ void * intervalTimer::PTime(void *arg)
                     break;
 
                 case( 101 ):
-                    _intervalTimer.vDBLockRequest(iDBLockCount);                        //default not start
-                    iDBLockCount++;
-                    if(iDBLockCount >= 6)                        //TimeOut
-                    {
-                        iDBLockCount = 0;
-                        screenOnline.RequestTimeOut();
-                    }
-                    if(smem.GetDbOperStat()!=1 || smem.GetcFace()!=cONLINE)
-                    {
-                        iDBLockCount = 0;
-                        _intervalTimer.vDBLockRequest(10);
-                    }
+
                     break;
 
 
@@ -820,7 +722,7 @@ void * intervalTimer::PTime(void *arg)
                                     break;
 
                 case( 600 ):
-
+//smem.junbo_LASC_object.delete_record_before_15day();
                     break;
 
                 default:

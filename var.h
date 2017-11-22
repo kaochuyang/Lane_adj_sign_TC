@@ -246,6 +246,16 @@ typedef union BCDSW{
         unsigned char command;
         unsigned char parameter[2];
     };
+
+
+    typedef struct junbo_lane_adj_memory_object
+    {
+        s_junbo_lane_adj
+
+         defaul_textID[9];
+        BYTE default_timeout;
+         BYTE brightness;
+    };
 //-----------------------------------------------
 typedef struct MESSAGEOK {
         int protocol;                                                           //�ϥΪ��q�T��w����,�аѦ�var.h�w�q�i�઺��w

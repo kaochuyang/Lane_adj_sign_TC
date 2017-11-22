@@ -10,7 +10,7 @@
 #include "junbo_cms.h"
 #include "power_reboot_group.h"
 #include "protocol_9F_m_curve.h"
-
+#include "junbo_lane_adj_light.h"
 #include <pthread.h>
 //---------------------------------------------------------------------------
 typedef struct MESSAGEWAITREPONSE
@@ -64,24 +64,18 @@ public:
     };
     junbo_to_light record_light[9],record_state[3][4],record_timeout[9],record_brightness[9];
 
-    typedef struct junbo_lane_adj_memory_object
-    {
-        s_junbo_lane_adj
 
-         defaul_textID[8],
-         _default_light_timeout[8],
-         brightness[8];
-    };
-
-
+   junbo_lane_adj_memory_object Lane_adj_memo_object;
 
     s_junbo_lane_adj
-    light_state[8],
-
-    module_state[8];
+    lane_adj_brightness_record[9],
+    lane_adj_light_record[9],
+    lane_adj_timeout_record[9],
+    lane_adj_module_state[9];
 
    int lane_adj_run_state[9];
 
+    // LSC=  Lane adjusted sign controler
 
  protocol_9F_m_curve protocol_9F_object;
     junli_vd junli_object;
@@ -89,7 +83,7 @@ public:
     power_reboot_group power_object;
     RS232 power_port;
     UDP revAPP_socket;
-
+junbo_lane_adj_light junbo_LASC_object;
     int count_vd_alive;
     STORAGE disk;                                                           //¼gÀÉ®×¥Î
     /*OTCombo0713*/

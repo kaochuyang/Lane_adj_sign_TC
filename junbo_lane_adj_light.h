@@ -12,7 +12,7 @@
 #include <iostream>
 #include <time.h>
 #include <signal.h>
-#include "SMEM.h"
+
 class junbo_lane_adj_light
 {
 public:
@@ -43,30 +43,19 @@ public:
     void report_light_brightness();
 
     void query_module_state();
-    void report_module_state();
+    BYTE *report_module_state();
     void link_ID_check();
 
-
-
-    typedef struct module_state_struct
-    {
-        BYTE bit_block_ID:4;
-        BYTE bit_0:1;
-        BYTE bit_1:1;
-        BYTE bit_2:1;
-        BYTE bit_3:1;
-    };
-
-
-    bool initial_module_state(module_state_struct *object);
-    module_state_struct module_state_object;
-
+    void store_lane_adj_setting(junbo_lane_adj_memory_object object);
+    void read_lane_adj_setting(junbo_lane_adj_memory_object *object);
+    void clear_s_junbo_lane_adj(s_junbo_lane_adj *object);
+    void delete_record_before_15day();
 protected:
 private:
 
     unsigned char junbo_send_packet[8];
     unsigned char junbo_receive_packet[8];
-
+    BYTE module_err[9];
 
     s_junbo_lane_adj
     light_on,

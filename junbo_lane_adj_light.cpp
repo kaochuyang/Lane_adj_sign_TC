@@ -1,5 +1,5 @@
 #include "junbo_lane_adj_light.h"
-
+#include "SMEM.h"
 junbo_lane_adj_light::junbo_lane_adj_light()
 {
     //ctor
@@ -85,7 +85,7 @@ junbo_packet junbo_lane_adj_light::junbo_Packeted(s_junbo_lane_adj Action)
 void junbo_lane_adj_light::junbo_light_send(junbo_packet send)
 {
 
-
+    BYTE command_type;
     int ID=0;
     struct tm* currenttime;
     time_t now = time(NULL);
@@ -121,6 +121,31 @@ void junbo_lane_adj_light::junbo_light_send(junbo_packet send)
     }
 
 
+    ID=send.packet[3];
+    switch(send.packet[4])
+    {
+    case 0xc0:
+    case 0xc1:
+        clear_s_junbo_lane_adj(&smem.lane_adj_light_record[ID]);
+        break;
+    case 0xc2:
+        clear_s_junbo_lane_adj(&smem.lane_adj_timeout_record[ID]);
+        break;
+
+    case 0xc4:
+        clear_s_junbo_lane_adj(&smem.lane_adj_module_state[ID]);
+        break;
+
+    case 0xc5:
+        clear_s_junbo_lane_adj(&smem.lane_adj_brightness_record[ID]);
+        break;
+
+    default:
+        printf("wrong command to junbo lane_adj_light\n");
+        break;
+    }
+
+
     junbo_lane_adj_port.Rs232Write(send.packet,8,tty_name);//write out
     memset(input_string,'0',sizeof(input_string));
     pf=fopen(cFileTmp,"a+");
@@ -150,7 +175,7 @@ void junbo_lane_adj_light::junbo_light_send_reference_select(BYTE ID,s_junbo_lan
         Action.ID=ID;
 
         if(smem.lane_adj_run_state[ID]==1)
-        junbo_light_send(junbo_Packeted(Action));
+            junbo_light_send(junbo_Packeted(Action));
 
     }
     catch(...) {}
@@ -191,45 +216,49 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
         {
 
 
-                       /* if((junbo_receive_packet[3]==0xb1)
-                                ||(junbo_receive_packet[3]==0xb0)
-                                ||(junbo_receive_packet[3]==0xb3))
-                        {
-                            ID=junbo_receive_packet[2];
-                            smem.record_light[ID].ID=junbo_receive_packet[2];
-                            smem.record_light[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                            smem.record_light[ID].parameter=junbo_receive_packet[4];
+            if((junbo_receive_packet[3]==0xb1)
+                    ||(junbo_receive_packet[3]==0xb0)
+              )
+            {
+                ID=junbo_receive_packet[3];
+                smem.lane_adj_light_record[ID].ID=junbo_receive_packet[3];//ID
+                smem.lane_adj_light_record[ID].command=junbo_receive_packet[4];
+                smem.lane_adj_light_record[ID].parameter[0]=junbo_receive_packet[5];
+                smem.lane_adj_light_record[ID].parameter[1]=junbo_receive_packet[6];
 
-                            if(smem.record_light[1].parameter==light_off.parameter&&smem.record_light[2].parameter==light_off.parameter)smem.protocol_9F_object.o_CMS_mannager._9f08_cms_off_report();
-                        }
-                        else if(junbo_receive_packet[3]==0xb2)
-                        {
-                            ID=junbo_receive_packet[2];
-                            smem.record_timeout[ID].ID=junbo_receive_packet[2];
-                            smem.record_timeout[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                            smem.record_timeout[ID].parameter=junbo_receive_packet[4];
-                        }
-                        else if(junbo_receive_packet[3]==0xb5)
-                        {
-                            ID=junbo_receive_packet[2];
-                            smem.record_brightness[ID].ID=junbo_receive_packet[2];
-                            smem.record_brightness[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                            smem.record_brightness[ID].parameter=junbo_receive_packet[4];
-                        }
-                        else if(junbo_receive_packet[3]==0xb4)
-                        {
-                            module_state_object.bit_block_ID=((junbo_receive_packet[4]>>4)&0xff);
-                            smem.record_state[ID][module_state_object.bit_block_ID].ID=junbo_receive_packet[2];
-                            smem.record_state[ID][module_state_object.bit_block_ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                            smem.record_state[ID][module_state_object.bit_block_ID].parameter=junbo_receive_packet[4];
-                        }
 
-                        else*/ if(junbo_receive_packet[4]==0xb6)
-                        {
+            }
+            else if(junbo_receive_packet[4]==0xb2)
+            {
+                ID=junbo_receive_packet[3];
+                smem.lane_adj_timeout_record[ID].ID=junbo_receive_packet[3];//ID
+                smem.lane_adj_timeout_record[ID].command=junbo_receive_packet[4];
+                smem.lane_adj_timeout_record[ID].parameter[0]=junbo_receive_packet[5];
+                smem.lane_adj_timeout_record[ID].parameter[1]=junbo_receive_packet[6];
+            }
+            else if(junbo_receive_packet[4]==0xb5)
+            {
+                ID=junbo_receive_packet[3];
+                smem.lane_adj_brightness_record[ID].ID=junbo_receive_packet[3];//ID
+                smem.lane_adj_brightness_record[ID].command=junbo_receive_packet[4];
+                smem.lane_adj_brightness_record[ID].parameter[0]=junbo_receive_packet[5];
+                smem.lane_adj_brightness_record[ID].parameter[1]=junbo_receive_packet[6];
+            }
+            else if(junbo_receive_packet[4]==0xb4)
+            {
+                ID=junbo_receive_packet[3];
+                smem.lane_adj_module_state[ID].ID=junbo_receive_packet[3];//ID
+                smem.lane_adj_module_state[ID].command=junbo_receive_packet[4];
+                smem.lane_adj_module_state[ID].parameter[0]=junbo_receive_packet[5];
+                smem.lane_adj_module_state[ID].parameter[1]=junbo_receive_packet[6];
+            }
 
-                            ID=junbo_receive_packet[3];
-                            smem.lane_adj_run_state[ID]=1;
-                        }
+            else if(junbo_receive_packet[4]==0xb6)
+            {
+
+                ID=junbo_receive_packet[3];
+                smem.lane_adj_run_state[ID]=1;
+            }
 
 
 
@@ -272,12 +301,13 @@ void junbo_lane_adj_light::link_ID_check()
 {
     try
     {
-     memset(smem.lane_adj_run_state,-1,sizeof(smem.lane_adj_run_state));
+        memset(smem.lane_adj_run_state,-1,sizeof(smem.lane_adj_run_state));
 
-     for(int ID=1;ID<9;ID++)junbo_light_send_reference_select(ID,query_state);
+        for(int ID=1; ID<9; ID++)junbo_light_send_reference_select(ID,query_state);
 
 
-    }catch(...){}
+    }
+    catch(...) {}
 }
 
 void junbo_lane_adj_light::light_timeout_control(int control_parameter)
@@ -286,76 +316,169 @@ void junbo_lane_adj_light::light_timeout_control(int control_parameter)
     {
 
         light_timeout.parameter[0]=control_parameter;
-     for(int i=0;i<8;i++)
-     junbo_light_send_reference_select(i,light_timeout);
+        if(control_parameter>99||control_parameter<0)control_parameter=90;
+
+        for(int i=0; i<8; i++)
+            junbo_light_send_reference_select(i,light_timeout);
 
 
-    }catch(...){}
+        smem.Lane_adj_memo_object.default_timeout=control_parameter;
+        store_lane_adj_setting(smem.Lane_adj_memo_object);
+
+    }
+    catch(...) {}
 }
 void junbo_lane_adj_light::brightness_control(int bright_parameter)
 {
     try
     {
+        if(bright_parameter>4||bright_parameter<1)bright_parameter=1;
+        brightness.parameter[0]=bright_parameter;
+        for(int i=0; i<8; i++)
+            junbo_light_send_reference_select(i,brightness);
+        smem.Lane_adj_memo_object.brightness=bright_parameter;
+        store_lane_adj_setting(smem.Lane_adj_memo_object);
 
-     brightness.parameter[0]=bright_parameter;
-     for(int i=0;i<8;i++)
-     junbo_light_send_reference_select(i,brightness);
-
-
-    }catch(...){}
+    }
+    catch(...) {}
 }
-void junbo_lane_adj_light::module_query()
+
+
+void junbo_lane_adj_light::query_module_state()
 {
     try
     {
-         initial_module_state(&module_state_object);
-        unsigned char ucSendTMP[6];
-        for(int ID=1; ID<3; ID++)
+
+        for(int ID=1; ID<9; ID++)
         {
 
+            for(int i=0; i<4; i++)
+                junbo_light_send_reference_select(ID,module_query[i]);
 
-            for(int query_block=0; query_block<4; query_block++)
-
-            {
-            /*     initial_module_state(&module_state_object);
-                smem.record_state[ID][query_block].ID=0;
-                smem.record_state[ID][query_block].command=0;
-                smem.record_state[ID][query_block].parameter=0;
-                ucSendTMP[0] = 0xAA;//head
-                ucSendTMP[1] =smem.GetSequence();
-                ucSendTMP[2] = ID;
-                ucSendTMP[3] = query[query_block].command;
-                ucSendTMP[4] = query[query_block].parameter;
-                ucSendTMP[5] = 0x0;//cks
-                for (int a=0; a<5; a++)
-                    ucSendTMP[5]^=ucSendTMP[a];
-                printf("\nquery light ID=%d\n",ID);
-                junbo_cms_send(ucSendTMP);
-
-
-
-           */
-
-
-            }
-
+        }
 
     }
-    catch(...){}
+    catch(...) {}
 }
-bool junbo_lane_adj_light::initial_module_state(module_state_struct *object)
+BYTE* junbo_lane_adj_light::report_module_state()
 {
     try
     {
-        object->bit_block_ID=0;
-        object->bit_0=0;
-        object->bit_1=0;
-        object->bit_2=0;
-        object->bit_3=0;
-        return true;
+
+        for(int ID=1; ID<9; ID++)
+        {
+            module_err[ID]=0;
+            if((smem.lane_adj_module_state[ID].parameter[0]&0x8)!=0)module_err[ID]++;
+            if((smem.lane_adj_module_state[ID].parameter[0]&0x4)!=0)module_err[ID]++;
+            if((smem.lane_adj_module_state[ID].parameter[0]&0x2)!=0)module_err[ID]++;
+            if((smem.lane_adj_module_state[ID].parameter[0]&0x1)!=0)module_err[ID]++;
+
+
+        }
+
+        return module_err;
     }
-    catch(...)
+    catch(...) {}
+
+
+}
+
+void junbo_lane_adj_light::store_lane_adj_setting(junbo_lane_adj_memory_object object)
+{
+    try
     {
+        printf("junbo_lane_adj_memory_object\n");
+        FILE *pf=NULL;
+        char filename[256]= {0};
+        sprintf(filename,"/cct/Data/SETTING/junbo_lane_adj_setting.bin");
+        pf=fopen(filename,"w+");
+        if(pf!=NULL)
+        {
+
+            fwrite(&object,sizeof(junbo_lane_adj_memory_object),1,pf);
+            fclose(pf);
+            printf("write junbo_lane_adj_memory_object success!.");
+            smem.vWriteMsgToDOM("write junbo_lane_adj_memory_object success\n");
+
+
+        }
+        else
+        {
+            smem.vWriteMsgToDOM("write junbo_lane_adj_memory_object error\n");
+            printf("write junbo_lane_adj_memory_object no file\n");
+
+        };
 
     }
+    catch(...) {}
+}
+void junbo_lane_adj_light::read_lane_adj_setting(junbo_lane_adj_memory_object *object)
+{
+
+    try
+    {
+
+        FILE *pf=NULL;
+        char filename[256]="/cct/Data/SETTING/cms_mark_object.bin";
+        pf=fopen(filename,"r");
+        if(pf!=NULL)
+        {
+            fread(&object,sizeof(junbo_lane_adj_memory_object),1,pf);
+            fclose(pf);
+            smem.vWriteMsgToDOM("read junbo_lane_adj_memory_object success\n");
+            printf("read junbo_lane_adj_memory_object success\n");
+
+
+        }
+        else
+        {
+            smem.vWriteMsgToDOM("read junbo_lane_adj_memory_object error\n");
+            printf("read junbo_lane_adj_memory_object object error\n");
+
+
+        }
+    }
+    catch(...) {}
+
+}
+
+void junbo_lane_adj_light::clear_s_junbo_lane_adj(s_junbo_lane_adj *object)
+{
+    try
+    {
+
+        object->ID=0;
+        object->command=0x0;
+        object->parameter[0]=0x0;
+        object->parameter[1]=0x0;
+
+    }
+    catch(...) {}
+}
+void junbo_lane_adj_light::delete_record_before_15day()
+{
+    try
+    {
+
+
+        struct tm* currenttime;
+        time_t now = time(NULL);
+        localtime(&now);
+        now=now-1296000;
+        currenttime = localtime(&now);
+        char buf[256];
+        buf[255] = '\0';
+        char dateTemp[32]= {0};
+        sprintf(dateTemp, "%#04d%#02d%#02d*", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday);
+        if (snprintf(buf, 255, "rm /cct/Data/junborecord/%s",dateTemp ) != -1)
+        {
+
+            printf("%s",buf);
+            system(buf);
+        }
+    }
+    catch(...) {}
+
+
+
 }
