@@ -50,6 +50,13 @@ void junbo_lane_adj_light::initial_junbo_control(char *output_tty_name)
     query_state.command=0xc6;
     query_state.parameter[0]=0x0;
 
+    left.command=right.command=straight.command=straight_left.command=straight_right.command=light_black.command=0xc1;
+    light_black.parameter[0]=0x0;
+    left.parameter[0]=0x2;
+    straight.parameter[0]=0x1;
+    right.parameter[0]=0x3;
+    straight_left.parameter[0]=0x4;
+    straight_right.parameter[0]=0x5;
 
 
 }
@@ -360,7 +367,7 @@ void junbo_lane_adj_light::query_module_state()
     }
     catch(...) {}
 }
-BYTE* junbo_lane_adj_light::report_module_state()
+BYTE *junbo_lane_adj_light::report_module_state()
 {
     try
     {

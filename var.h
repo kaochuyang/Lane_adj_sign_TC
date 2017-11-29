@@ -248,11 +248,24 @@ typedef union BCDSW{
     };
 
 
+typedef struct LAS_excute_info  // Lane adjusted sign excute information
+{
+    BYTE segmentcount;
+    BYTE lightcount;
+    BYTE light_select[9][24];
+    BYTE lightID[9];
+    int  hour[24];
+    int  min[24];
+    BYTE weekcount;
+    bool week[8];
+};
+
+
     typedef struct junbo_lane_adj_memory_object
     {
-        s_junbo_lane_adj
 
-         defaul_textID[9];
+
+        BYTE defaul_light[9];
         BYTE default_timeout;
          BYTE brightness;
     };

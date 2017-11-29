@@ -75,6 +75,10 @@ public:
 
    int lane_adj_run_state[9];
 
+
+    LAS_excute_info LAS_segmenttype[28];//1~7 common day, 8-20 special day, 0 no info.
+
+
     // LSC=  Lane adjusted sign controler
 
  protocol_9F_m_curve protocol_9F_object;

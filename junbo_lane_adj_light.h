@@ -40,7 +40,7 @@ public:
     void report_light_timeout();
 
     void brightness_control(int bright_parameter);
-    void report_light_brightness();
+ //   void report_light_brightness();
 
     void query_module_state();
     BYTE *report_module_state();
@@ -68,7 +68,8 @@ private:
     query_state,
     light_timeout,
     module_query[4],
-    brightness;
+    brightness,
+    light_black;
 
 
     char *tty_name;
