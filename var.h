@@ -252,14 +252,26 @@ typedef struct LAS_excute_info  // Lane adjusted sign excute information
 {
     BYTE segmentcount;
     BYTE lightcount;
-    BYTE light_select[9][24];
-    BYTE lightID[9];
+    BYTE light_select[9][24];//ID plan
+    bool check_ID[9];
     int  hour[24];
     int  min[24];
     BYTE weekcount;
-    bool week[8];
+
+
+
+
 };
 
+typedef struct LAS_YMD
+{
+    BYTE start_year;
+    BYTE start_month;
+    BYTE start_day;
+    BYTE end_year;
+    BYTE end_month;
+    BYTE end_day;
+};
 
     typedef struct junbo_lane_adj_memory_object
     {

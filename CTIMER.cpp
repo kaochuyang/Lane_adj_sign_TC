@@ -174,6 +174,26 @@ void intervalTimer::set_close_light_timer(int second)
     catch(...) {}
 
 }
+
+void intervalTimer::set_module_report_timer(int second)//it2
+{
+
+        _it2.it_value.tv_sec = second;
+        _it2.it_value.tv_nsec = 0;
+        _it2.it_interval.tv_sec = second;
+        _it2.it_interval.tv_nsec = 0;
+        if ( timer_settime( _t2, 0, & _it2, NULL ) ) exit( 1 );
+}
+void intervalTimer::set_light_report_timer(int hour)//it3
+{
+      _it3.it_value.tv_sec = 10;
+        _it3.it_value.tv_nsec = 0;
+        _it3.it_interval.tv_sec = hour*3600;
+        _it3.it_interval.tv_nsec = 0;
+        if ( timer_settime( _t3, 0, & _it3, NULL ) ) exit( 1 );
+}
+
+
 /*
 void intervalTimer::close_junbo_cms_light()
 {try
@@ -333,12 +353,12 @@ void intervalTimer::TimersCreating(void)
         _sig1.sigev_value.sival_int = 10;
         if ( timer_create( CLOCK_REALTIME, & _sig1, & _t1 ) ) exit( 1 );
 
-        _sig2.sigev_notify = SIGEV_SIGNAL;
+        _sig2.sigev_notify = SIGEV_SIGNAL;  //module act report cycle
         _sig2.sigev_signo = RTSIGNAL_Timer;
         _sig2.sigev_value.sival_int = 11;
         if ( timer_create( CLOCK_REALTIME, & _sig2, & _t2 ) ) exit( 1 );
 
-        _sig3.sigev_notify = SIGEV_SIGNAL;
+        _sig3.sigev_notify = SIGEV_SIGNAL;  //light act  report cycle
         _sig3.sigev_signo = RTSIGNAL_Timer;
         _sig3.sigev_value.sival_int = 12;
         if ( timer_create( CLOCK_REALTIME, & _sig3, & _t3 ) ) exit( 1 );

@@ -58,6 +58,9 @@ static struct itimerspec p_itimerspec;
   //  struct sigevent p_event;
 //void close_junbo_cms_light();//timer_settime
 void set_close_light_timer(int second);
+void set_module_report_timer(int second);
+void set_light_report_timer(int hour);
+
    private:
 
 

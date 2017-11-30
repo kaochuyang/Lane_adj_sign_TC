@@ -10,10 +10,10 @@
 1278409715 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CDataToMessageOK.h
 	"var.h"
 
-1511958603 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/var.h
+1512029547 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/var.h
 	<time.h>
 
-1511949851 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/SMEM.h
+1512029524 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/SMEM.h
 	"var.h"
 	"STORAGE.h"
 	"RS232.h"
@@ -216,7 +216,7 @@
 1205475064 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/screenStrategy.h
 	"SCREEN.h"
 
-1504689864 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CTIMER.h
+1512042971 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CTIMER.h
 	"power_reboot_group.h"
 	<pthread.h>
 
@@ -250,7 +250,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1511358962 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CTIMER.cpp
+1512043045 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CTIMER.cpp
 	"CTIMER.h"
 	"var.h"
 	"CDataToMessageOK.h"
@@ -2017,4 +2017,12 @@
 	<iostream>
 	<time.h>
 	<signal.h>
+
+1512040204 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/protocol_8F_LAS.cpp
+	"protocol_8F_LAS.h"
+	"SMEM.h"
+	"PTRAFFIC92COMM.h"
+
+1512036141 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/protocol_8F_LAS.h
+	"var.h"
 

@@ -15,14 +15,14 @@ class protocol_8F_LAS
         void _8fc0_commonday_report(BYTE segmenttype);
 
         void _8f11_specialday_set(MESSAGEOK messageIn);
-        void _8f41_specialday_query();
-        void _8fc1_specialday_report();
+        void _8f41_specialday_query(BYTE segmenttype);
+        void _8fc1_specialday_report(BYTE segmenttype);
 
         void _8f12_brightness_set(BYTE brightness);
         void _8f42_brightness_query();
         void _8fc2_brightness_report();
 
-        void _8f14_module_report_period_set(BYTE cycle);//  0<cycle<0x3c
+        void _8f14_module_report_period_set(int cycle);//  0<cycle<0x3c
         void _8f44_module_report_period_query();
         void _8fc4_module_report_period_report();
 
@@ -39,8 +39,21 @@ class protocol_8F_LAS
         void _8fc7_light_report();
         void _8f07_light_act_report();
 
+        void _8f18_light_report_period_set(int second);
+        void _8f48_light_report_period_query();
+        void _8fc8_light_report_preriod_report();
 
 
+
+        struct report_memory
+        {
+            int light_report_second;
+            int module_report_hour;
+        };
+
+        report_memory LAS_report_object;
+        void read_LAS_report_object();
+        void store_LAS_report_object();
 
 
     protected:
