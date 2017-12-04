@@ -246,7 +246,7 @@ int main(int argc, char* argv[])
 
             if (smem.centerSocket.GetPortAlreadyOpen()) FD_SET(smem.centerSocket.Getfd(),&readfs);
 
-
+            if(smem.junbo_LASC_object.junbo_lane_adj_port.GetPortAlreadyOpen())FD_SET(smem.junbo_LASC_object.junbo_lane_adj_port.Getfd(),&readfs);
 
             timeout.tv_sec=60;                                                      //timeout¬í¼Æ
             timeout.tv_usec=0;                                                      //³o­Ó¬O²@¬í,¼È¤£¨Ï¥Î
@@ -265,7 +265,27 @@ int main(int argc, char* argv[])
             {
 
 
+         if(smem.junbo_LASC_object.junbo_lane_adj_port.GetPortAlreadyOpen())
+                { printf("receive messgae LASC  111~~~~~~~~~~~\n");
+                    if(FD_ISSET(smem.junbo_LASC_object.junbo_lane_adj_port.Getfd(),&readfs))
+                    {     printf("receive messgae LASC~~~~~~~~~~~\n");
+                        readSelectLength=smem.junbo_LASC_object.junbo_lane_adj_port.Rs232Read();
+                        if(readSelectLength>0)
+                        {    printf("receive messgae LASC  parse~~~~~~~~~~~\n");
+                              for(int i =0; i<readSelectLength; i++)
+                                  printf("%x ",smem.junbo_object.junbo_cms_port.block[i]);
 
+                            //  printf("\n\n");
+
+                            smem.junbo_LASC_object.ParseBlock(readSelectLength,
+                                                              smem.junbo_object.junbo_cms_port.block,
+                                                              smem.junbo_object.junbo_cms_port.messageIn,
+                                                         &smem.junbo_object.junbo_cms_port.lastPacketIndex);
+
+                        }
+                    }
+
+                }
 
 
 

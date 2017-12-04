@@ -441,9 +441,9 @@ void intervalTimer::TimersSetting(void)
         _it4.it_interval.tv_nsec = 0;
         if ( timer_settime( _t4, 0, & _it4, NULL ) ) exit( 1 );
 
-        _it5.it_value.tv_sec = 0;
+        _it5.it_value.tv_sec = 5;
         _it5.it_value.tv_nsec = 0;
-        _it5.it_interval.tv_sec = 0;
+        _it5.it_interval.tv_sec = 5;
         _it5.it_interval.tv_nsec = 0;
         if ( timer_settime( _t5, 0, & _it5, NULL ) ) exit( 1 );
 
@@ -534,7 +534,7 @@ void * intervalTimer::PTime(void *arg)
 
         //OTMARKPRINTF  printf( "THREAD_VDINFO: pid=%d\n", getpid() );
 
-
+smem.junbo_LASC_object.initial_junbo_control("/dev/ttyUSB0");
 
         TimersCreating();
 
@@ -715,7 +715,7 @@ void * intervalTimer::PTime(void *arg)
                 case( 14 ):
 
                     printf("timer test 14\n");
-
+                smem.junbo_LASC_object.test_step();
                     break;
 
 

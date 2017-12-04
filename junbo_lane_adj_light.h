@@ -17,6 +17,7 @@ class junbo_lane_adj_light
 {
 public:
 
+    void test_step();
 
     static pthread_mutex_t _junbo_mutex;
     RS232 junbo_lane_adj_port;
