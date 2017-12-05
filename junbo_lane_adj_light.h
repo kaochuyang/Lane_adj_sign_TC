@@ -32,6 +32,9 @@ public:
     void junbo_light_send_reference_select(BYTE ID,s_junbo_lane_adj Action);
 
 
+    void step_control(int segment_type);
+    void determind_weekday_specialday();
+
 
     bool vClearMsg(MESSAGEOK *messageIn, unsigned short int msgID);
     bool ParseBlock(int receiveBlockLength,BYTE *block,MESSAGEOK *messageIn,int *lastPacketIndex);

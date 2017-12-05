@@ -324,6 +324,30 @@ int main(int argc, char* argv[])
                                     switch(revAPP_messagein.packet[1])
                                     {
 
+                                           case (0x10):
+                                        smem.vWriteMsgToDOM("vRebootIPC_0F10_revAPP by app");// 0f 10 52 52
+                                        oRev_protocol_0F.vRebootIPC_0F10_revAPP(revAPP_messagein);
+                                        break;
+
+                                    case (0x4a):
+                                        smem.vWriteMsgToDOM("WriteNetworkSetConfirm_RevAPP by app");
+                                        smem.disk.WriteNetworkSetConfirm_RevAPP(revAPP_messagein);
+                                        break;
+                                    case (0x18):
+                                        smem.vWriteMsgToDOM("dispalyLCN_NetworkIP_to_RevAPP by app");
+                                        smem.disk.dispalyLCN_NetworkIP_to_RevAPP();
+                                        break;
+                                    case(0xc1):
+                                        smem.vWriteMsgToDOM("vReportIPCTime_0FC2_revAPP by app");
+                                        oRev_protocol_0F.vReportIPCTime_0FC2_revAPP();
+                                        printf("hello\n\n\n");
+                                        break;
+                                    case(0x01):
+                                        smem.vWriteMsgToDOM("check link state by app");
+                                        if((revAPP_messagein.packet[2]==0x02)&&(revAPP_messagein.packet[3]=0x03))
+                                            oRev_protocol_0F.check_link_revAPP();
+                                        else printf("check link packet miss\n");
+
                                     default:
                                         smem.vWriteMsgToDOM("wrong revAPP 0F protocol!! by app");
                                         printf("wrong revAPP 0F protocol!!\n");

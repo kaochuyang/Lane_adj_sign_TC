@@ -76,8 +76,8 @@ public:
 
    int lane_adj_run_state[9];
 
-
-    LAS_excute_info LAS_segmenttype[28];//1~7 common day, 8-20 special day, 0 no info.
+    int segmenttype_8f;
+    LAS_excute_info LAS_segmenttype[21];//1~3 common day, 7-20 special day, 0 no info.
 
 
     // LSC=  Lane adjusted sign controler

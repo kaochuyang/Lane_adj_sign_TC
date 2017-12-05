@@ -11,6 +11,75 @@ protocol_8F_LAS::~protocol_8F_LAS()
 {
     //dtor
 }
+
+
+bool protocol_8F_LAS::DoWorkViaPTraffic92(MESSAGEOK mes)
+{
+
+    try
+    {
+
+
+        switch(mes.packet[8])
+        {
+        case 0x10:
+        _8f10_commonday_set(mes);
+
+            break;
+
+        case 0x40:
+        _8f40_commanday_query(mes.packet[9]);
+            break;
+        case 0x11:
+        _8f11_specialday_set(mes);
+            break;
+        case 0x41:
+        _8f41_specialday_query(mes.packet[9]);
+            break;
+        case 0x12:
+        _8f12_brightness_set(mes.packet[9]);
+            break;
+        case 0x42:
+        _8f42_brightness_query();
+            break;
+        case 0x14:
+         _8f14_module_report_period_set(mes.packet[9]);
+            break;
+        case 0x44:
+        _8f44_module_report_period_query();
+            break;
+        case 0x45:
+        _8f45_module_query();
+            break;
+        case 0x16:
+        _8f16_default_light_set(mes);
+            break;
+        case 0x46:
+        _8f46_default_light_query();
+            break;
+        case 0x47:
+        _8f47_light_query();
+            break;
+        case 0x18:
+        _8f18_light_report_period_set(mes.packet[9]);
+            break;
+        case 0x48:
+        _8f48_light_report_period_query();
+            break;
+
+        default:
+
+            vReturnToCenterNACK(0x8f,mes.packet[8],0,0);
+            break;
+        }
+
+
+    }
+    catch(...) {}
+
+
+}
+
 void protocol_8F_LAS::send_to_center_2(BYTE head,BYTE type)
 {
     try
@@ -389,8 +458,8 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
                 break;
 
 
-            case 7:
-                smem.LAS_week_type_info[7]=typeID;
+            case 0:
+                smem.LAS_week_type_info[0]=typeID;//sunday
                 break;
 
 
@@ -641,8 +710,8 @@ void protocol_8F_LAS::_8f11_specialday_set(MESSAGEOK mes)
         smem.specialtype[typeID].start_month=mes.packet[4+light_series*segmentcount+2];
         smem.specialtype[typeID].start_day=mes.packet[4+light_series*segmentcount+3];
         smem.specialtype[typeID].end_year=mes.packet[4+light_series*segmentcount+4];
-        smem.specialtype[typeID].end_year=mes.packet[4+light_series*segmentcount+5];
-        smem.specialtype[typeID].end_year=mes.packet[4+light_series*segmentcount+6];
+        smem.specialtype[typeID].end_month=mes.packet[4+light_series*segmentcount+5];
+        smem.specialtype[typeID].end_day=mes.packet[4+light_series*segmentcount+6];
 
 
 
@@ -1024,15 +1093,15 @@ void protocol_8F_LAS::_8f18_light_report_period_set(int report_cycle)
 
 
         if(report_cycle<1||report_cycle>60)vReturnToCenterNACK(0x8f,0x18,0x4,0x1);
-            else
-            {
-                printf("_8f18_light_report_period_set second=%d\n",report_cycle);
+        else
+        {
+            printf("_8f18_light_report_period_set second=%d\n",report_cycle);
 
-                _intervalTimer.set_light_report_timer(report_cycle);
-                LAS_report_object.light_report_second=report_cycle;
+            _intervalTimer.set_light_report_timer(report_cycle);
+            LAS_report_object.light_report_second=report_cycle;
 
-                vReturnToCenterACK(0x8f,0x18);
-            }
+            vReturnToCenterACK(0x8f,0x18);
+        }
 
 
 
@@ -1092,7 +1161,7 @@ void protocol_8F_LAS::_8f14_module_report_period_set(int cycle)
 
 
     }
-    catch(...){    }
+    catch(...) {    }
 
 
 }

@@ -8,6 +8,8 @@ class protocol_8F_LAS
         protocol_8F_LAS();
         virtual ~protocol_8F_LAS();
             void send_to_center_3(BYTE head,BYTE type,BYTE value);
+
+            bool DoWorkViaPTraffic92(MESSAGEOK message);
     void send_to_center_2(BYTE head,BYTE type);//for act report
 
         void _8f10_commonday_set(MESSAGEOK messageIn);

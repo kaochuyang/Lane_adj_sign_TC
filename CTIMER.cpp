@@ -534,7 +534,7 @@ void * intervalTimer::PTime(void *arg)
 
         //OTMARKPRINTF  printf( "THREAD_VDINFO: pid=%d\n", getpid() );
 
-smem.junbo_LASC_object.initial_junbo_control("/dev/ttyUSB0");
+smem.junbo_LASC_object.initial_junbo_control("/dev/ttyS0");
 
         TimersCreating();
 
@@ -715,7 +715,8 @@ smem.junbo_LASC_object.initial_junbo_control("/dev/ttyUSB0");
                 case( 14 ):
 
                     printf("timer test 14\n");
-                smem.junbo_LASC_object.test_step();
+             //   smem.junbo_LASC_object.test_step();
+                smem.junbo_LASC_object.step_control(smem.segmenttype_8f);
                     break;
 
 
