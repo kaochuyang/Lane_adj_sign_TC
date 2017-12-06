@@ -220,7 +220,7 @@ void junbo_lane_adj_light::test_step()
 
             }//weekday
 
-
+else select=4;
 
 
 
@@ -446,7 +446,11 @@ void junbo_lane_adj_light::determind_weekday_specialday()
 }
 
 bool junbo_lane_adj_light::ParseBlock(int receiveBlockLength,BYTE *block,MESSAGEOK *messageIn,int *lastPacketIndex)
-{
+{/*printf("ParseBlock  junbo_lane_adj_light\n ");
+
+  for(int i =0; i<messageIn->packetLength; i++)
+                                  printf("%x ",messageIn->packet[i]);*/
+
     int i,j,k;
 
     i=0;                         //block[i]
@@ -457,7 +461,7 @@ bool junbo_lane_adj_light::ParseBlock(int receiveBlockLength,BYTE *block,MESSAGE
     {
 //      printf("_%C", messageIn[j].packet[k]=block[i]);
 
-        if ( block[i] == 0xaa&&block[i+1]==0xbb)
+        if ( block[i] == 0xaa)
         {
             if((i>0)&&(messageIn[j].success==true))
             {
@@ -608,7 +612,7 @@ junbo_packet junbo_lane_adj_light::junbo_Packeted(s_junbo_lane_adj Action)
 }
 void junbo_lane_adj_light::junbo_light_send(junbo_packet send)
 {
-    printf("here hre hre \n");
+
 
 
     BYTE command_type;
@@ -699,7 +703,7 @@ void junbo_lane_adj_light::junbo_light_send_reference_select(BYTE ID,s_junbo_lan
     try
     {
 
-        printf("help help help\n");
+
 
         Action.ID=ID;
 
@@ -745,10 +749,10 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
         {
 
 
-            if((junbo_receive_packet[3]==0xb1)
-                    ||(junbo_receive_packet[3]==0xb0)
+            if((junbo_receive_packet[4]==0xb1)
+                    ||(junbo_receive_packet[4]==0xb0)
               )
-            {
+            {  printf("receive lightID message\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_light_record[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_light_record[ID].command=junbo_receive_packet[4];
@@ -758,7 +762,7 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
 
             }
             else if(junbo_receive_packet[4]==0xb2)
-            {
+            {   printf("printf timeout messgae\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_timeout_record[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_timeout_record[ID].command=junbo_receive_packet[4];
@@ -766,7 +770,7 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
                 smem.lane_adj_timeout_record[ID].parameter[1]=junbo_receive_packet[6];
             }
             else if(junbo_receive_packet[4]==0xb5)
-            {
+            {   printf("receive brightness message\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_brightness_record[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_brightness_record[ID].command=junbo_receive_packet[4];
@@ -774,7 +778,7 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
                 smem.lane_adj_brightness_record[ID].parameter[1]=junbo_receive_packet[6];
             }
             else if(junbo_receive_packet[4]==0xb4)
-            {
+            {   printf("receive module message\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_module_state[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_module_state[ID].command=junbo_receive_packet[4];
@@ -783,7 +787,7 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
             }
 
             else if(junbo_receive_packet[4]==0xb6)
-            {
+            {   printf("receive check link message\n");
 
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_run_state[ID]=1;
@@ -826,6 +830,9 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
     }
     catch(...) {}
 }
+
+
+
 void junbo_lane_adj_light::link_ID_check()
 {
     try
@@ -948,7 +955,7 @@ void junbo_lane_adj_light::read_lane_adj_setting(junbo_lane_adj_memory_object *o
     {
 
         FILE *pf=NULL;
-        char filename[256]="/cct/Data/SETTING/cms_mark_object.bin";
+        char filename[256]="/cct/Data/SETTING/junbo_lane_adj_setting.bin";
         pf=fopen(filename,"r");
         if(pf!=NULL)
         {

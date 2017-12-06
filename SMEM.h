@@ -63,8 +63,8 @@ public:
         unsigned char parameter;
     };
     junbo_to_light record_light[9],record_state[3][4],record_timeout[9],record_brightness[9];
-    int LAS_week_type_info[8];
-    LAS_YMD specialtype[28];
+    int LAS_week_type_info[7];
+    LAS_YMD specialtype[21];
 
    junbo_lane_adj_memory_object Lane_adj_memo_object;
 

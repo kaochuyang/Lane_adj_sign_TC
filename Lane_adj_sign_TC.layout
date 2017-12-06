@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="CTIMER.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="21479" topLine="692" />
+	</File>
+	<File name="CTIMER.h" open="1" top="0" tabpos="10">
+		<Cursor position="189" topLine="0" />
+	</File>
+	<File name="PROTOCOL.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1154" topLine="0" />
+	</File>
+	<File name="PTRAFFIC.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1233" topLine="0" />
+	</File>
+	<File name="PTRAFFIC92.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="498" topLine="18" />
+	</File>
+	<File name="READJOB.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="9450" topLine="167" />
+	</File>
+	<File name="RS232.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5690" topLine="169" />
+	</File>
+	<File name="SMEM.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="112328" topLine="3607" />
+	</File>
+	<File name="SMEM.h" open="1" top="0" tabpos="7">
+		<Cursor position="1211" topLine="59" />
+	</File>
+	<File name="STORAGE.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="48250" topLine="1384" />
+	</File>
+	<File name="junbo_lane_adj_light.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="10700" topLine="178" />
+	</File>
+	<File name="junbo_lane_adj_light.h" open="1" top="0" tabpos="5">
+		<Cursor position="1304" topLine="13" />
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="16745" topLine="306" />
+	</File>
+	<File name="main.h" open="0" top="0" tabpos="0">
+		<Cursor position="244" topLine="0" />
+	</File>
+	<File name="protocol_8F_LAS.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="21177" topLine="940" />
+	</File>
+	<File name="protocol_8F_LAS.h" open="1" top="0" tabpos="3">
+		<Cursor position="1030" topLine="7" />
+	</File>
+	<File name="protocol_9F_m_curve.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="4275" topLine="161" />
+	</File>
+	<File name="protocol_9F_m_curve.h" open="0" top="0" tabpos="0">
+		<Cursor position="350" topLine="0" />
+	</File>
+	<File name="var.h" open="1" top="0" tabpos="9">
+		<Cursor position="8093" topLine="224" />
+	</File>
+</CodeBlocks_layout_file>

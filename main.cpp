@@ -130,6 +130,8 @@ int main(int argc, char* argv[])
 
         */
 
+        smem.junbo_LASC_object.initial_junbo_control("/dev/ttyUSB0");
+
         if (smem.lightPort.SetConnDevice(DEVICETRAFFICLIGHT))
             if ((tempmax=smem.lightPort.OpenRs232Port("/dev/ttyS3",9600,false))>0)
             {
@@ -266,21 +268,21 @@ int main(int argc, char* argv[])
 
 
          if(smem.junbo_LASC_object.junbo_lane_adj_port.GetPortAlreadyOpen())
-                { printf("receive messgae LASC  111~~~~~~~~~~~\n");
+                { //printf("receive messgae LASC  111~~~~~~~~~~~\n");
                     if(FD_ISSET(smem.junbo_LASC_object.junbo_lane_adj_port.Getfd(),&readfs))
-                    {     printf("receive messgae LASC~~~~~~~~~~~\n");
+                    {     //printf("receive messgae LASC~~~~~~~~~~~\n");
                         readSelectLength=smem.junbo_LASC_object.junbo_lane_adj_port.Rs232Read();
                         if(readSelectLength>0)
-                        {    printf("receive messgae LASC  parse~~~~~~~~~~~\n");
-                              for(int i =0; i<readSelectLength; i++)
-                                  printf("%x ",smem.junbo_object.junbo_cms_port.block[i]);
+                        {   // printf("receive messgae LASC  parse~~~~~~~~~~~\n");
+                             /* for(int i =0; i<readSelectLength; i++)
+                                  printf("%x ",smem.junbo_LASC_object.junbo_lane_adj_port.block[i]);
 
-                            //  printf("\n\n");
+                              printf("\n\n");*/
 
                             smem.junbo_LASC_object.ParseBlock(readSelectLength,
-                                                              smem.junbo_object.junbo_cms_port.block,
-                                                              smem.junbo_object.junbo_cms_port.messageIn,
-                                                         &smem.junbo_object.junbo_cms_port.lastPacketIndex);
+                                                              smem.junbo_LASC_object.junbo_lane_adj_port.block,
+                                                              smem.junbo_LASC_object.junbo_lane_adj_port.messageIn,
+                                                         &smem.junbo_LASC_object.junbo_lane_adj_port.lastPacketIndex);
 
                         }
                     }
