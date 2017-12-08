@@ -221,31 +221,33 @@ void SendRequestToKeypad(void);                                                 
 
 //---------------------------------------------------------------------------
 //Copy From ParseTraffic
-  typedef  struct cms_mark
+typedef  struct cms_mark
 {
     BYTE brightness;
 
 };
-       typedef struct junbo_packet
-    {
-      BYTE  packet[8];
-    };
+typedef struct junbo_packet
+{
+    BYTE  packet[8];
+};
 
 
-typedef struct BCD{
-        BYTE b1:4;
-        BYTE b2:4;
-}BCD;
-typedef union BCDSW{
-        BCD bcdHiLo;
-        BYTE bcdCode;
-}BCDSW;
-    typedef  struct s_junbo_lane_adj
-    {
-        BYTE ID;
-        unsigned char command;
-        unsigned char parameter[2];
-    };
+typedef struct BCD
+{
+    BYTE b1:4;
+    BYTE b2:4;
+} BCD;
+typedef union BCDSW
+{
+    BCD bcdHiLo;
+    BYTE bcdCode;
+} BCDSW;
+typedef  struct s_junbo_lane_adj
+{
+    BYTE ID;
+    unsigned char command;
+    unsigned char parameter[2];
+};
 
 
 typedef struct LAS_excute_info  // Lane adjusted sign excute information
@@ -273,68 +275,73 @@ typedef struct LAS_YMD
     BYTE end_day;
 };
 
-    typedef struct junbo_lane_adj_memory_object
-    {
+typedef struct junbo_lane_adj_memory_object
+{
 
 
-        BYTE defaul_light[9];
-        BYTE default_timeout;
-         BYTE brightness;
-    };
+    BYTE defaul_light[9];
+    BYTE default_timeout;
+    BYTE brightness;
+};
 //-----------------------------------------------
-typedef struct MESSAGEOK {
-        int protocol;                                                           //�ϥΪ��q�T��w����,�аѦ�var.h�w�q�i�઺��w
-        BYTE packet[BUFFERSIZE];                                                //��ڨ�w�ʥ]���e
-        int packetLcn;                                                          //����w����f�s��,�u�A�Ω�PTRAFFIC(��q���q�T��w)�ΥõaCMS...��
-        int packetLength;                                                       //����w���\uFFFD
-        bool cksStatus;                                                         //�P�O���ʥ]��checkSum���T�P�_,�i�a��
-        bool success;                                                           //�P�O���ʥ]����w��׵���L�ԭ����P�O,�i�a��
-        int UDPorRS232;                                                         //���ʥ]�Ӧۦ�B
-        int ReadorWrite;                                                        //�M�w���ʥ]�OŪ�J���μg�X���ʥ] read or write
-        int InnerOrOutWard;                                                     //�����ǿ��٬O�z�LI/O mtyu
+typedef struct MESSAGEOK
+{
+    int protocol;                                                           //�ϥΪ��q�T��w����,�аѦ�var.h�w�q�i�઺��w
+    BYTE packet[BUFFERSIZE];                                                //��ڨ�w�ʥ]���e
+    int packetLcn;                                                          //����w����f�s��,�u�A�Ω�PTRAFFIC(��q���q�T��w)�ΥõaCMS...��
+    int packetLength;                                                       //����w���\uFFFD
+    bool cksStatus;                                                         //�P�O���ʥ]��checkSum���T�P�_,�i�a��
+    bool success;                                                           //�P�O���ʥ]����w��׵���L�ԭ����P�O,�i�a��
+    int UDPorRS232;                                                         //���ʥ]�Ӧۦ�B
+    int ReadorWrite;                                                        //�M�w���ʥ]�OŪ�J���μg�X���ʥ] read or write
+    int InnerOrOutWard;                                                     //�����ǿ��٬O�z�LI/O mtyu
 
-        bool bGetDLE;
-        bool bGetSOH; //the same with STX
-        bool bGetACK;
-        bool bGetNAK;
-        unsigned int uiPacketTEXTLEN;
+    bool bGetDLE;
+    bool bGetSOH; //the same with STX
+    bool bGetACK;
+    bool bGetNAK;
+    unsigned int uiPacketTEXTLEN;
 
 
 } MESSAGEOK;
 
-typedef struct SwitchBIT {
-        BYTE b1:1;
-        BYTE b2:1;
-        BYTE b3:1;
-        BYTE b4:1;
-        BYTE b5:1;
-        BYTE b6:1;
-        BYTE b7:1;
-        BYTE b8:1;
+typedef struct SwitchBIT
+{
+    BYTE b1:1;
+    BYTE b2:1;
+    BYTE b3:1;
+    BYTE b4:1;
+    BYTE b5:1;
+    BYTE b6:1;
+    BYTE b7:1;
+    BYTE b8:1;
 } SwitchBIT;
-typedef union  DATA_Bit{
-        SwitchBIT switchBit;
-        BYTE DBit;
+typedef union  DATA_Bit
+{
+    SwitchBIT switchBit;
+    BYTE DBit;
 } DATA_Bit;
 
-typedef struct sChildChain{
-        bool bHaveReasonableChildChainSignal;
-        time_t oldStartTime;
-        time_t newStartTime;
-        time_t oldEndTime;
-        time_t newEndTime;
-        int iChainCycle;
-        int iStartKeepTime;
-        int iEndKeepTime;
+typedef struct sChildChain
+{
+    bool bHaveReasonableChildChainSignal;
+    time_t oldStartTime;
+    time_t newStartTime;
+    time_t oldEndTime;
+    time_t newEndTime;
+    int iChainCycle;
+    int iStartKeepTime;
+    int iEndKeepTime;
 } sChildChain;
 
 
-typedef struct sRevSyncStatus{
-  bool bYMD_OK;
-  bool bTime_OK;
-  bool bRevStep_OK;
-  bool bRevSegSet_OK;
-  bool bRevTime_OK;
+typedef struct sRevSyncStatus
+{
+    bool bYMD_OK;
+    bool bTime_OK;
+    bool bRevStep_OK;
+    bool bRevSegSet_OK;
+    bool bRevTime_OK;
 } sRevSyncStatus;
 
 
@@ -646,78 +653,85 @@ typedef struct sRevSyncStatus{
 //---------------------------------------------------------------------------
 
 
-typedef struct YMDHMS {
-        BYTE Year;
-        BYTE Month;
-        BYTE Day;
-        BYTE Hour;
-        BYTE Min;
-        BYTE Sec;
+typedef struct YMDHMS
+{
+    BYTE Year;
+    BYTE Month;
+    BYTE Day;
+    BYTE Hour;
+    BYTE Min;
+    BYTE Sec;
 } YMDHMS;
 
 
-typedef struct st92VDLaneContent {
-        short int BigVolume;                                                    //�j���y�q
-        short int BigSpeed;                                                     //�j���t��
-        short int CarVolume;                                                    //�@�먮�y�q
-        short int CarSpeed;                                                     //�@�먮�t��
-        short int MotorVolume;                                                  //��y�q
-        short int MotorSpeed;
-        short int AvgSpeed;                                                     //�j�p�������t��
-        short int LaneOccupy;                                                   //���D��v
-        short int AvgInt;                                                       //�����樮���Z 1/10��  �YAvgInt>250 -> AvgInt = 250
+typedef struct st92VDLaneContent
+{
+    short int BigVolume;                                                    //�j���y�q
+    short int BigSpeed;                                                     //�j���t��
+    short int CarVolume;                                                    //�@�먮�y�q
+    short int CarSpeed;                                                     //�@�먮�t��
+    short int MotorVolume;                                                  //��y�q
+    short int MotorSpeed;
+    short int AvgSpeed;                                                     //�j�p�������t��
+    short int LaneOccupy;                                                   //���D��v
+    short int AvgInt;                                                       //�����樮���Z 1/10��  �YAvgInt>250 -> AvgInt = 250
 
-        short int TotalOccupyTime;
+    short int TotalOccupyTime;
 } st92VDLaneContent;
 
-typedef struct SeqNoContent {
-        st92VDLaneContent DataLane[8];  //�����Ҧ������D��
+typedef struct SeqNoContent
+{
+    st92VDLaneContent DataLane[8];  //�����Ҧ������D��
 } SeqNoContent;
 
-typedef struct SmartSensorINFO {
-        unsigned char cSerialNumber[18];
-        unsigned char cModemIP[17];
-        unsigned char cServerIP[17];
-        unsigned char cServerIPPort[4];
-        unsigned char cDataScript[10];
-        unsigned char cConfigScript[8];
-        unsigned char cRtmsID[6];
-        unsigned char cMultiDropID[6];
-        unsigned char cVarName[8];
-        unsigned char cOrientation[4];
-        unsigned char cLocation[34];
-        unsigned char cDescription[32];
-        unsigned char cTimeInterval[10];
-        unsigned char cBufferFlag[3];
-        unsigned char cBCRStr[6];
-        unsigned char cDACRStr[6];
-        unsigned char cDirection[10];
+typedef struct SmartSensorINFO
+{
+    unsigned char cSerialNumber[18];
+    unsigned char cModemIP[17];
+    unsigned char cServerIP[17];
+    unsigned char cServerIPPort[4];
+    unsigned char cDataScript[10];
+    unsigned char cConfigScript[8];
+    unsigned char cRtmsID[6];
+    unsigned char cMultiDropID[6];
+    unsigned char cVarName[8];
+    unsigned char cOrientation[4];
+    unsigned char cLocation[34];
+    unsigned char cDescription[32];
+    unsigned char cTimeInterval[10];
+    unsigned char cBufferFlag[3];
+    unsigned char cBCRStr[6];
+    unsigned char cDACRStr[6];
+    unsigned char cDirection[10];
 } SmartSensorINFO;
 
-typedef struct SSXDLaneContent {
-       short int Volume;
-       float AverageSpeed;
-       float Occupancy;
-       float SmallClass;
-       float MediumClass;
-       float LargeClass;
-}SSXDLaneContent;
+typedef struct SSXDLaneContent
+{
+    short int Volume;
+    float AverageSpeed;
+    float Occupancy;
+    float SmallClass;
+    float MediumClass;
+    float LargeClass;
+} SSXDLaneContent;
 
-typedef struct tsUDPMappingLCN {
-        char cLocalIP[15];
-        int iListenPort;
-        char cRemoteIP[15];
-        int iSendPort;
-        int iMachineLCN;
-}tsUDPMappingLCN;
+typedef struct tsUDPMappingLCN
+{
+    char cLocalIP[15];
+    int iListenPort;
+    char cRemoteIP[15];
+    int iSendPort;
+    int iMachineLCN;
+} tsUDPMappingLCN;
 
 /*OT990618*/
-typedef struct tsUDPInfo {
-        char *cLocalIP;
-        int iListenPort;
-        char *cRemoteIP;
-        int iSendPort;
-        int iMachineLCN;
+typedef struct tsUDPInfo
+{
+    char *cLocalIP;
+    int iListenPort;
+    char *cRemoteIP;
+    int iSendPort;
+    int iMachineLCN;
 } tsUDPInfo;
 
 #define messageInBuf 20

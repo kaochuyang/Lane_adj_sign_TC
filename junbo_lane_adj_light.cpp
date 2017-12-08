@@ -13,6 +13,68 @@ junbo_lane_adj_light::~junbo_lane_adj_light()
 {
     //dtor
 }
+void junbo_lane_adj_light::test_LAS_function(int command,int p)
+{
+
+    s_junbo_lane_adj *pf=NULL;
+
+    switch(command)
+    {
+        case 0:
+        if(p==0)pf=&light_off;
+        if(p==1)pf=&light_on;
+        break;
+
+        case 1:
+        if (p==0)pf=&light_black;
+        if (p==1)pf=&straight;
+        if (p==2)pf=&left;
+        if (p==3)pf=&right;
+        if (p==4)pf=&straight_left;
+        if (p==5)pf=&straight_right;
+
+        break;
+
+        case 2:
+        if(0<p&&p<100)
+        light_timeout.parameter[0]=p;
+        else light_timeout.parameter[0]=0;
+        pf=&light_timeout;
+
+        break;
+
+        case 3:
+        break;
+
+        case 4:
+            for(int ID=1;ID<9;ID++)
+        {
+
+          for(int i=0; i<4; i++)
+                junbo_light_send_reference_select(ID,module_query[i]);}
+        pf=&light_black;
+        break;
+
+        case 5:
+             if(0<p&&p<5)
+        brightness.parameter[0]=p;
+        else p=0;
+        pf=&brightness;
+
+        break;
+
+
+
+
+    }
+
+
+    for(int ID=1;ID<9;ID++)
+    smem.junbo_LASC_object.junbo_light_send_reference_select(ID,*pf);
+
+
+
+}
 
 void junbo_lane_adj_light::test_step()
 {
@@ -220,7 +282,7 @@ void junbo_lane_adj_light::test_step()
 
             }//weekday
 
-else select=4;
+            else select=4;
 
 
 
@@ -259,8 +321,8 @@ void junbo_lane_adj_light::step_control(int segment_type)
 {
     try
     {
-
-
+        int count=0;
+        printf("step control\n");
         time_t now;
         struct tm* currenttime;
         now = time(NULL);
@@ -269,125 +331,148 @@ void junbo_lane_adj_light::step_control(int segment_type)
         s_junbo_lane_adj* p_act=NULL;
 
         LAS_excute_info* pf_l=NULL;
-        *pf_l=smem.LAS_segmenttype[segment_type];
-
+        pf_l=&smem.LAS_segmenttype[segment_type];
+        printf("segment count=%d\n",pf_l->segmentcount);
         for(int i=1; i<pf_l->segmentcount+1; i++)
         {
+//printf("mark 1\n");
 
-            if((i+1)<pf_l->segmentcount+1)
+
+            if(current_sec>=(pf_l->hour[i]*3600+pf_l->min[i]*60-6&&current_sec<(pf_l->hour[i]*3600+pf_l->min[i]*60)))//transfer step
             {
-
-
-                if(current_sec>=(pf_l->hour[i]*3600+pf_l->min[i]*60-6&&current_sec<(pf_l->hour[i]*3600+pf_l->min[i]*60)))//transfer step
+                //printf("mark 2\n");
+                for(int ID=1; ID<3; ID++)
                 {
-                     for(int ID=1; ID<9; ID++)
-                    {
-
-                        if(pf_l->check_ID[ID]==true)
-                            junbo_light_send_reference_select(ID,light_black);
-
-                    }
+                    printf("check[%d]=%d\n",ID,pf_l->check_ID[ID]);
+                    if(pf_l->check_ID[ID]==1)
+                        junbo_light_send_reference_select(ID,straight_left);
+                    count++;
                 }
+            }
 
-                else if(current_sec>=(pf_l->hour[i]*3600+pf_l->min[i]*60&&current_sec<(pf_l->hour[i+1]*3600+pf_l->min[i+1]*60)))
+            else if(current_sec>=(pf_l->hour[i]*3600+pf_l->min[i]*60&&current_sec<(pf_l->hour[i+1]*3600+pf_l->min[i+1]*60)))
 
             {
+                //printf("mark 3\n");
                 for(int ID=1; ID<9; ID++)
+                {
+                    switch(pf_l->light_select[ID][pf_l->segmentcount])
                     {
-                        switch(pf_l->light_select[ID][pf_l->segmentcount])
-                        {
-                        case 0:
-                            *p_act=light_black;
-                            break;
+                    case 0:
+                     if(pf_l->check_ID[ID]==1)
+                   junbo_light_send_reference_select(ID,light_black);
+                        p_act=&smem.junbo_LASC_object.light_black;
+                        break;
 
-                        case 1:
-                            *p_act=straight;
-                            break;
+                    case 1:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight);
 
-                        case 2:
-                            *p_act=left;
-                            break;
+                        break;
 
-                        case 3:
-                            *p_act=right;
-                            break;
+                    case 2:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,left);
 
-                        case 4:
-                            *p_act=straight_left;
-                            break;
+                        break;
 
-                        case 5:
-                            *p_act=straight_right;
-                            break;
+                    case 3:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,right);
+
+                        break;
+
+                    case 4:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight_left);
+
+                        break;
+
+                    case 5:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight_right);
+
+                        break;
 
 
-                        default:
-                            break;
-                        }
-                        if(pf_l->check_ID[ID]==true)
-                            junbo_light_send_reference_select(ID,*p_act);
+                    default:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight_left);
 
+                        break;
                     }
+
+
                 }
-        else
-        {
-             for(int ID=1; ID<9; ID++)
+            }
+            else
+            {
+                //printf("mark 4\n");
+                for(int ID=1; ID<9; ID++)
+                {  switch(pf_l->light_select[ID][pf_l->segmentcount])
                     {
+                    case 0:
+                     if(pf_l->check_ID[ID]==1)
+                   junbo_light_send_reference_select(ID,light_black);
+                        p_act=&smem.junbo_LASC_object.light_black;
+                        break;
 
-                        switch(smem.Lane_adj_memo_object.defaul_light[ID])
-                        {
-                        case 0:
-                            *p_act=light_black;
-                            break;
+                    case 1:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight);
 
-                        case 1:
-                            *p_act=straight;
-                            break;
+                        break;
 
-                        case 2:
-                            *p_act=left;
-                            break;
+                    case 2:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,left);
 
-                        case 3:
-                            *p_act=right;
-                            break;
+                        break;
 
-                        case 4:
-                            *p_act=straight_left;
-                            break;
+                    case 3:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,right);
 
-                        case 5:
-                            *p_act=straight_right;
-                            break;
+                        break;
+
+                    case 4:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight_left);
+
+                        break;
+
+                    case 5:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight_right);
+
+                        break;
 
 
-                        default:
-                            break;
-                        }
+                    default:
+                     if(pf_l->check_ID[ID]==1)
+                     junbo_light_send_reference_select(ID,straight_left);
 
-                        if(pf_l->check_ID[ID]==true)
-                            junbo_light_send_reference_select(ID,*p_act);
-
+                        break;
+                    }
                     }
 
-
-
-        }
-
-            }
-        }
-
-
-   // else printf("segment type error by step control\n");
+               } }
 
 
 
 
-}
-catch(...)
-{
 
-}
+        // else printf("segment type error by step control\n");
+
+
+
+
+        printf("count=%d\n",count);
+    }
+    catch(...)
+    {
+
+    }
 }
 
 void junbo_lane_adj_light::determind_weekday_specialday()
@@ -410,13 +495,13 @@ void junbo_lane_adj_light::determind_weekday_specialday()
         for(int i=4; i<21; i++)
         {
 
-            printf("smem.specialtype[%d].start_year: %d\n", i, smem.specialtype[i].start_year);
-            printf("smem.specialtype[%d]._start_month: %d\n", i, smem.specialtype[i].start_month);
-            printf("smem.specialtype[%d]._start_day: %d\n", i, smem.specialtype[i].start_day);
-            printf("smem.specialtype[%d]._end_year: %d\n", i, smem.specialtype[i].end_year);
-            printf("smem.specialtype[%d]._end_month: %d\n", i, smem.specialtype[i].end_month);
-            printf("smem.specialtype[%d]._end_day: %d\n", i, smem.specialtype[i].end_day);
-
+            /*  printf("smem.specialtype[%d].start_year: %d\n", i, smem.specialtype[i].start_year);
+              printf("smem.specialtype[%d]._start_month: %d\n", i, smem.specialtype[i].start_month);
+              printf("smem.specialtype[%d]._start_day: %d\n", i, smem.specialtype[i].start_day);
+              printf("smem.specialtype[%d]._end_year: %d\n", i, smem.specialtype[i].end_year);
+              printf("smem.specialtype[%d]._end_month: %d\n", i, smem.specialtype[i].end_month);
+              printf("smem.specialtype[%d]._end_day: %d\n", i, smem.specialtype[i].end_day);
+            */
 
             if(    (    ( (currenttime->tm_year-11) > smem.specialtype[i].start_year )
                         || ( (currenttime->tm_year-11)== smem.specialtype[i].start_year && (currenttime->tm_mon+1) > smem.specialtype[i].start_month )
@@ -438,18 +523,21 @@ void junbo_lane_adj_light::determind_weekday_specialday()
 
 
         }
-            smem.segmenttype_8f=segment_type;
-        step_control(smem.segmenttype_8f);
+        printf("segment_type=%d\n",segment_type);
+        if(segment_type==0)segment_type=1;
+        smem.segmenttype_8f=segment_type;
+       // step_control(smem.segmenttype_8f);
 
     }
     catch(...) {}
 }
 
 bool junbo_lane_adj_light::ParseBlock(int receiveBlockLength,BYTE *block,MESSAGEOK *messageIn,int *lastPacketIndex)
-{/*printf("ParseBlock  junbo_lane_adj_light\n ");
+{
+    /*printf("ParseBlock  junbo_lane_adj_light\n ");
 
-  for(int i =0; i<messageIn->packetLength; i++)
-                                  printf("%x ",messageIn->packet[i]);*/
+     for(int i =0; i<messageIn->packetLength; i++)
+                                     printf("%x ",messageIn->packet[i]);*/
 
     int i,j,k;
 
@@ -687,7 +775,7 @@ void junbo_lane_adj_light::junbo_light_send(junbo_packet send)
         for(int i=0; i<8; i++)
         {
             sprintf(input_string," %x ",send.packet[i]);
-            fwrite(input_string,3*sizeof(char),sizeof(char),pf);
+           // fwrite(input_string,3*sizeof(char),sizeof(char),pf);
         }
         fwrite( cTimeHeader, length, 1, pf );
         fclose(pf);
@@ -702,7 +790,8 @@ void junbo_lane_adj_light::junbo_light_send_reference_select(BYTE ID,s_junbo_lan
 
     try
     {
-
+//printf("junbo_light_send_reference_select ");
+//printf("ID=%d action=%x %d\n",ID,Action.command,Action.parameter[0]);
 
 
         Action.ID=ID;
@@ -752,7 +841,8 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
             if((junbo_receive_packet[4]==0xb1)
                     ||(junbo_receive_packet[4]==0xb0)
               )
-            {  printf("receive lightID message\n");
+            {
+                printf("receive lightID message\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_light_record[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_light_record[ID].command=junbo_receive_packet[4];
@@ -762,7 +852,8 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
 
             }
             else if(junbo_receive_packet[4]==0xb2)
-            {   printf("printf timeout messgae\n");
+            {
+                printf("printf timeout messgae\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_timeout_record[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_timeout_record[ID].command=junbo_receive_packet[4];
@@ -770,7 +861,8 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
                 smem.lane_adj_timeout_record[ID].parameter[1]=junbo_receive_packet[6];
             }
             else if(junbo_receive_packet[4]==0xb5)
-            {   printf("receive brightness message\n");
+            {
+                printf("receive brightness message\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_brightness_record[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_brightness_record[ID].command=junbo_receive_packet[4];
@@ -778,7 +870,8 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
                 smem.lane_adj_brightness_record[ID].parameter[1]=junbo_receive_packet[6];
             }
             else if(junbo_receive_packet[4]==0xb4)
-            {   printf("receive module message\n");
+            {
+                printf("receive module message\n");
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_module_state[ID].ID=junbo_receive_packet[3];//ID
                 smem.lane_adj_module_state[ID].command=junbo_receive_packet[4];
@@ -787,7 +880,8 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
             }
 
             else if(junbo_receive_packet[4]==0xb6)
-            {   printf("receive check link message\n");
+            {
+                printf("receive check link message\n");
 
                 ID=junbo_receive_packet[3];
                 smem.lane_adj_run_state[ID]=1;
@@ -837,7 +931,7 @@ void junbo_lane_adj_light::link_ID_check()
 {
     try
     {
-        memset(smem.lane_adj_run_state,-1,sizeof(smem.lane_adj_run_state));
+        memset(smem.lane_adj_run_state,0,sizeof(smem.lane_adj_run_state));
 
         for(int ID=1; ID<9; ID++)junbo_light_send_reference_select(ID,query_state);
 
@@ -854,7 +948,7 @@ void junbo_lane_adj_light::light_timeout_control(int control_parameter)
         light_timeout.parameter[0]=control_parameter;
         if(control_parameter>99||control_parameter<0)control_parameter=90;
 
-        for(int i=0; i<8; i++)
+        for(int i=1; i<9; i++)
             junbo_light_send_reference_select(i,light_timeout);
 
 
@@ -870,7 +964,7 @@ void junbo_lane_adj_light::brightness_control(int bright_parameter)
     {
         if(bright_parameter>4||bright_parameter<1)bright_parameter=1;
         brightness.parameter[0]=bright_parameter;
-        for(int i=0; i<8; i++)
+        for(int i=1; i<9; i++)
             junbo_light_send_reference_select(i,brightness);
         smem.Lane_adj_memo_object.brightness=bright_parameter;
         store_lane_adj_setting(smem.Lane_adj_memo_object);
@@ -881,6 +975,7 @@ void junbo_lane_adj_light::brightness_control(int bright_parameter)
 
 
 void junbo_lane_adj_light::query_module_state()
+
 {
     try
     {
@@ -935,7 +1030,7 @@ void junbo_lane_adj_light::store_lane_adj_setting(junbo_lane_adj_memory_object o
             fclose(pf);
             printf("write junbo_lane_adj_memory_object success!.");
             smem.vWriteMsgToDOM("write junbo_lane_adj_memory_object success\n");
-
+            smem.Lane_adj_memo_object=object;
 
         }
         else
@@ -1019,3 +1114,82 @@ void junbo_lane_adj_light::delete_record_before_15day()
 
 }
 
+
+void junbo_lane_adj_light::auto_minus_bright()
+{
+
+
+    try
+    {
+
+        int i=1;
+         struct tm* currenttime;
+        time_t now = time(NULL);
+        localtime(&now);
+
+
+        switch(currenttime->tm_hour)
+        {   case 6:
+        case 23:
+        case 22:
+        case 21:
+        case 20:
+        case 19:
+
+
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            i=4;
+            break;
+
+            case 18:
+            case 17:
+            case 16:
+            i=3;
+            break ;
+
+
+            case 15:
+            case 14:
+            case 13:
+            case 12:
+            case 11:
+            case 10:
+            case 9:
+            case 8:
+            case 7:
+            i=2;
+            break;
+
+
+            default:
+            i=4;
+            break;
+
+
+
+        }
+
+
+         brightness.parameter[0]=i;
+
+
+         for(int i=1; i<9; i++)
+            junbo_light_send_reference_select(i,brightness);
+        smem.Lane_adj_memo_object.brightness=i;
+
+
+
+    }
+    catch(...)
+    {
+
+    }
+
+
+
+}

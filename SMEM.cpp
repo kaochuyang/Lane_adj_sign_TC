@@ -377,9 +377,9 @@ try {
     bTCSegmentTypeUpdate = false;
     ucCSTCControlStrategy = 10; //TOD
 
-    iFirmwareYear = 2016;
-    iFirmwareMonth = 02;
-    iFirmwareDay = 18;
+    iFirmwareYear = 2017;
+    iFirmwareMonth = 12;
+    iFirmwareDay = 7;
 
     //20140415, add dynamic seg for HsinChu dynamic control.
     //20140211, add special version for SIPA ped.
@@ -4384,12 +4384,13 @@ bool SMEM::vSetSystemClockTime(unsigned short int usiYear, unsigned char ucMonth
                                unsigned char ucDay,  unsigned char ucHour,
                                unsigned char ucMin,  unsigned char ucSec         )
 {
-try {
+try {printf("set systemclock\m");
     char date[64] = {0}, ctime[24] = {0};
 
     if(ucMBType == MB_ICOP6115) {
       pthread_mutex_lock(&mutexSmem);
       sprintf(date,"date -s %#02d%#02d%#02d%#02d%#04d.%#02d",ucMonth,ucDay,ucHour,ucMin,usiYear, ucSec);
+      printf(date,"date -s %#02d%#02d%#02d%#02d%#04d.%#02d",ucMonth,ucDay,ucHour,ucMin,usiYear, ucSec);
       system(date);
       pthread_mutex_unlock(&mutexSmem);
 

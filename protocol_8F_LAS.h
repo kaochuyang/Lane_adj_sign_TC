@@ -13,8 +13,8 @@ class protocol_8F_LAS
     void send_to_center_2(BYTE head,BYTE type);//for act report
 
         void _8f10_commonday_set(MESSAGEOK messageIn);
-        void _8f40_commanday_query(BYTE segmenttype);
-        void _8fc0_commonday_report(BYTE segmenttype);
+        void _8f40_commanday_query(int segmenttype);
+        void _8fc0_commonday_report(int segmenttype);
 
         void _8f11_specialday_set(MESSAGEOK messageIn);
         void _8f41_specialday_query(BYTE segmenttype);
@@ -57,6 +57,8 @@ class protocol_8F_LAS
         void read_LAS_report_object();
         void store_LAS_report_object();
 
+        void read_LSA_segment_data();
+        void default_LAS_object(LAS_excute_info *pf);
 
     protected:
     private:

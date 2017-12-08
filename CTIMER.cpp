@@ -175,22 +175,22 @@ void intervalTimer::set_close_light_timer(int second)
 
 }
 
-void intervalTimer::set_module_report_timer(int second)//it2
+void intervalTimer::set_light_report_timer(int second)//it2
 {
 
-        _it2.it_value.tv_sec = second;
-        _it2.it_value.tv_nsec = 0;
-        _it2.it_interval.tv_sec = second;
-        _it2.it_interval.tv_nsec = 0;
-        if ( timer_settime( _t2, 0, & _it2, NULL ) ) exit( 1 );
+    _it2.it_value.tv_sec = second;
+    _it2.it_value.tv_nsec = 0;
+    _it2.it_interval.tv_sec = second;
+    _it2.it_interval.tv_nsec = 0;
+    if ( timer_settime( _t2, 0, & _it2, NULL ) ) exit( 1 );
 }
-void intervalTimer::set_light_report_timer(int hour)//it3
+void intervalTimer::set_module_report_timer(int hour)//it3
 {
-      _it3.it_value.tv_sec = 10;
-        _it3.it_value.tv_nsec = 0;
-        _it3.it_interval.tv_sec = hour*3600;
-        _it3.it_interval.tv_nsec = 0;
-        if ( timer_settime( _t3, 0, & _it3, NULL ) ) exit( 1 );
+    _it3.it_value.tv_sec = 10;
+    _it3.it_value.tv_nsec = 0;
+    _it3.it_interval.tv_sec = hour*3600;
+    _it3.it_interval.tv_nsec = 0;
+    if ( timer_settime( _t3, 0, & _it3, NULL ) ) exit( 1 );
 }
 
 
@@ -423,27 +423,28 @@ void intervalTimer::TimersSetting(void)
         _it1.it_interval.tv_nsec = 0;
         if ( timer_settime( _t1, 0, & _it1, NULL ) ) exit( 1 );
 
-        _it2.it_value.tv_sec = 30;
+        _it2.it_value.tv_sec = 60;//module act report cycle
         _it2.it_value.tv_nsec = 0;
-        _it2.it_interval.tv_sec = 1;
+        _it2.it_interval.tv_sec = 60;
         _it2.it_interval.tv_nsec = 0;
         if ( timer_settime( _t2, 0, & _it2, NULL ) ) exit( 1 );
 
-        _it3.it_value.tv_sec = 5;
+        _it3.it_value.tv_sec = 5;  //light act  report cycle
+
         _it3.it_value.tv_nsec = 0;
         _it3.it_interval.tv_sec = 8;
         _it3.it_interval.tv_nsec = 0;
         if ( timer_settime( _t3, 0, & _it3, NULL ) ) exit( 1 );
 
-        _it4.it_value.tv_sec = 120;//for act report 9f09
+        _it4.it_value.tv_sec = 5;//auto minus bright check
         _it4.it_value.tv_nsec = 0;
-        _it4.it_interval.tv_sec = 120;
+        _it4.it_interval.tv_sec = 3600;
         _it4.it_interval.tv_nsec = 0;
         if ( timer_settime( _t4, 0, & _it4, NULL ) ) exit( 1 );
 
         _it5.it_value.tv_sec = 5;
         _it5.it_value.tv_nsec = 0;
-        _it5.it_interval.tv_sec = 5;
+        _it5.it_interval.tv_sec = 8;
         _it5.it_interval.tv_nsec = 0;
         if ( timer_settime( _t5, 0, & _it5, NULL ) ) exit( 1 );
 
@@ -475,9 +476,9 @@ void intervalTimer::TimersSetting(void)
         _it6.it_interval.tv_nsec = 0;
         if ( timer_settime( _t6, 0, & _it6, NULL ) ) exit( 1 );
 
-        _it7.it_value.tv_sec = 2;
+        _it7.it_value.tv_sec = 5;
         _it7.it_value.tv_nsec = 0;
-        _it7.it_interval.tv_sec = 2;
+        _it7.it_interval.tv_sec = 3;
         _it7.it_interval.tv_nsec = 0;
         if ( timer_settime( _t7, 0, & _it7, NULL ) ) exit( 1 );
 
@@ -501,7 +502,6 @@ void intervalTimer::TimersSetting(void)
         if ( timer_settime( _tTrafficeLight, 0, & _itTrafficeLight, NULL ) ) exit( 1 );
 
         printf("CTimer Set OK!\n");
-
 
     }
     catch (...) {}
@@ -534,17 +534,29 @@ void * intervalTimer::PTime(void *arg)
 
         //OTMARKPRINTF  printf( "THREAD_VDINFO: pid=%d\n", getpid() );
 
+        ////initial proccess for LAS data///
+        smem.junbo_LASC_object.read_lane_adj_setting(&smem.Lane_adj_memo_object);
+        printf("init read_lane_adj_setting\n");
+        smem.protocol_8f_object.read_LAS_report_object();
+        printf("init read_LAS_report_object\n");
 
+        smem.protocol_8f_object.read_LSA_segment_data();
+        printf("init read_LSA_segment_data\n");
+        smem.junbo_LASC_object.determind_weekday_specialday();
+printf("init determind_weekday_specialday\n");
+        ////////
 
-        TimersCreating();
+      /*  TimersCreating();
 
         TimersSetting();
 
 
-
+        _intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
+        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
+*/
         printf("hello light control\n");
         //   timer_reboot_create();//kaochu 2017 08 17
-
+smem.vSetCommEnable(true);
         int VDsignum = 0;
         int VDrid = 9999;
 
@@ -652,21 +664,6 @@ void * intervalTimer::PTime(void *arg)
 
                     tempFace=smem.GetcFace();
 
-                    if (tempFace==cMAIN) screenMain.DisplayDateTime();
-                    else if (tempFace==cCTLSETUP) screenCtlSetup.DisplayDateTime();
-                    else if (tempFace==cMODIFYDT) screenModifyDT.DisplayCurrentDateTime();
-                    else if (tempFace==cCOMMSTAT) screenCommStat.UpdateComm();
-                    else if (tempFace==cTOTALRUN) screenTotalRun.DisplayTotalTime();
-                    else if (tempFace==cCURRENTLIGHTSTATUS)
-                    {
-                        screenCurrentLightStatus.vRefreshStepSec();
-                        screenCurrentLightStatus.DisplayDynSegStatus();
-                    }
-                    else if (tempFace==cCHAINSTATUS) screenChainStatus.vRefreshChainStatusData();
-                    else if (tempFace == cOPERSTAT) screenOperStat.vShowGreenConflict();
-                    else if (tempFace == cREVERSETIMTMENU) screenReverseMenu.vRefreshStepSec();
-//                                  else if (tempFace == cACTUATEARWENSTATUS) screenActuateArwenStatus.vRefreshEverySec();
-                    screenActuateArwenStatus.vRefreshEverySec();
 
 
                     if(iLastAliveStatusCount > 300)
@@ -679,44 +676,28 @@ void * intervalTimer::PTime(void *arg)
                     smem.vSetSystemTime(currentTime);
 
 
-                    if(smem.GetRequestKeypad() == 1)
-                    {
-                        if(RequestKeypad < 5)
-                        {
-                            SendRequestToKeypad();
-                            RequestKeypad++;
-                            printf("10 !!!\n");
-                        }
-                        else if(RequestKeypad >= 5)
-                        {
-                            smem.SetRequestKeypad(0);
-                            RequestKeypad = 0;
-                            stc.Lock_to_Set_Control_Strategy(STRATEGY_TOD);
-                        }
-                    }
-                    else if(smem.GetRequestKeypad() == 0)
-                    {
-                        RequestKeypad = 0;
-                    }
 
                     break;
-                case( 11 ):
+                case( 11 )://light act report
+                    printf("timer test 11\n");
 
+ smem.protocol_8f_object._8f07_light_act_report();
 
                     break;
-                case( 12 ):
+                case( 12 )://,module act report
+ smem.protocol_8f_object._8f05_module_act_report();
+ printf("timer test 12\n");
 
                     break;
-                case( 13 ):                                                           //VD SIM
+                case( 13 ):       //auto minus bright
                     printf("timer test 13\n");
 
-                    break;
-
+smem.junbo_LASC_object.auto_minus_bright();
                 case( 14 ):
 
                     printf("timer test 14\n");
-              smem.junbo_LASC_object.test_step();
-             //   smem.junbo_LASC_object.step_control(smem.segmenttype_8f);
+                 //   smem.junbo_LASC_object.test_step();
+                       smem.junbo_LASC_object.step_control(smem.segmenttype_8f);
                     break;
 
 
@@ -726,6 +707,7 @@ void * intervalTimer::PTime(void *arg)
 
                 case( 100 ):
 
+smem.junbo_LASC_object.determind_weekday_specialday();
 
                     break;
 
@@ -740,10 +722,10 @@ void * intervalTimer::PTime(void *arg)
 
 
                 case( 501 ):
-                                    break;
+                    break;
 
                 case( 600 ):
-//smem.junbo_LASC_object.delete_record_before_15day();
+smem.junbo_LASC_object.delete_record_before_15day();
                     break;
 
                 default:

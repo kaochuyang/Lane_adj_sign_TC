@@ -44,7 +44,7 @@ bool PTRAFFIC92::DoWorkViaPTraffic(MESSAGEOK message)
 
                 switch (message.packet[7])
                 {
-                case 0x0F:                                                          //共用訊息
+                case 0x0F:printf("0fxxx----\n");                                                          //共用訊息
                     pTraffic92Comm.DoWorkViaPTraffic92(message);
                     break;
                 case 0x5F:                                                          //號誌控制器
@@ -56,8 +56,8 @@ bool PTRAFFIC92::DoWorkViaPTraffic(MESSAGEOK message)
                 case 0xAF:                                                          //資訊可變控制器
                     pTraffic92Cms.DoWorkViaPTraffic92(message);
                     break;
-                case 0x8f:
-                    smem.protocol_9F_object.DoWorkViaPTraffic92(message);
+                case 0x8f:printf("8fxxx----\n");
+                    smem.protocol_8f_object.DoWorkViaPTraffic92(message);
 
                     break;
 

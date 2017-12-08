@@ -10,10 +10,10 @@
 1278409715 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CDataToMessageOK.h
 	"var.h"
 
-1512029547 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/var.h
+1512702271 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/var.h
 	<time.h>
 
-1512564125 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/SMEM.h
+1512716459 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/SMEM.h
 	"var.h"
 	"STORAGE.h"
 	"RS232.h"
@@ -22,6 +22,7 @@
 	"junli_vd.h"
 	"junbo_cms.h"
 	"power_reboot_group.h"
+	"protocol_8F_LAS.h"
 	"protocol_9F_m_curve.h"
 	"junbo_lane_adj_light.h"
 	<pthread.h>
@@ -162,7 +163,7 @@
 1277113611 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CReverseTime.h
 	<pthread.h>
 
-1442368109 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CSTC.cpp
+1512753138 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CSTC.cpp
 	"CSTC.h"
 	"light.h"
 	"CTools.h"
@@ -250,7 +251,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1512562000 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CTIMER.cpp
+1512752568 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/CTIMER.cpp
 	"CTIMER.h"
 	"var.h"
 	"CDataToMessageOK.h"
@@ -851,10 +852,10 @@
 	"CSTORINI.h"
 	<stdio.h>
 
-1278401889 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PROTOCOL.cpp
+1512657666 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PROTOCOL.cpp
 	"PROTOCOL.h"
 
-1278402223 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC.cpp
+1512657686 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC.cpp
 	"PTRAFFIC.h"
 
 1205475584 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC77.cpp
@@ -875,7 +876,7 @@
 1205475577 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC87VD.cpp
 	"PTRAFFIC87VD.h"
 
-1512478792 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC92.cpp
+1512644602 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC92.cpp
 	"PTRAFFIC92.h"
 	"WRITEJOB.h"
 	"SMEM.h"
@@ -889,7 +890,7 @@
 	<stdlib.h>
 	<error.h>
 
-1510909768 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC92COMM.cpp
+1512646925 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/PTRAFFIC92COMM.cpp
 	"PTRAFFIC92COMM.h"
 	"CDataToMessageOK.h"
 	"WRITEJOB.h"
@@ -996,7 +997,7 @@
 	<stdio.h>
 	<math.h>
 
-1307666846 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/READJOB.cpp
+1512657666 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/READJOB.cpp
 	"READJOB.h"
 	"PROTOCOL.h"
 	"SMEM.h"
@@ -1397,7 +1398,7 @@
 	<error.h>
 	"CSTC.h"
 
-1511273698 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/SMEM.cpp
+1512645807 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/SMEM.cpp
 	"SMEM.h"
 	"WRITEJOB.h"
 	"CDataToMessageOK.h"
@@ -1434,7 +1435,7 @@
 
 1502283002 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/variable.h
 
-1503654172 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/WRITEJOB.cpp
+1512637353 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/WRITEJOB.cpp
 	"WRITEJOB.h"
 	"SMEM.h"
 	"PROTOCOL.h"
@@ -1482,7 +1483,7 @@
 	<sys/perm.h>
 	<sys/io.h>
 
-1512563118 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/main.cpp
+1512752568 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/main.cpp
 	"var.h"
 	"SMEM.h"
 	"PARSETRAFFIC.h"
@@ -2000,11 +2001,11 @@
 
 1502111123 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/writejob.h
 
-1512564231 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/junbo_lane_adj_light.cpp
+1512753399 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/junbo_lane_adj_light.cpp
 	"junbo_lane_adj_light.h"
 	"SMEM.h"
 
-1512481758 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/junbo_lane_adj_light.h
+1512750808 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/junbo_lane_adj_light.h
 	"pthread.h"
 	"var.h"
 	"RS232.h"
@@ -2018,12 +2019,18 @@
 	<time.h>
 	<signal.h>
 
-1512481758 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/protocol_8F_LAS.cpp
+1512740754 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/protocol_8F_LAS.cpp
 	"protocol_8F_LAS.h"
 	"SMEM.h"
 	"PTRAFFIC92COMM.h"
 	"CTIMER.h"
 
-1512477710 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/protocol_8F_LAS.h
+1512725846 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/protocol_8F_LAS.h
 	"var.h"
+
+1512750820 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/LAS_test_button.cpp
+	"LAS_test_button.h"
+	"SMEM.h"
+
+1512750808 /home/cct/Desktop/Untitled4/Lane_adj_sign_TC/LAS_test_button.h
 

@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1512718691 source:/home/cct/Desktop/Untitled4/Lane_adj_sign_TC/LAS_default_set/main.cpp
+	<iostream>
+	<stdio.h>
+	<string.h>
+	<unistd.h>
+

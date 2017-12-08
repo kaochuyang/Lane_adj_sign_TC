@@ -9,6 +9,7 @@
 #include "junli_vd.h"
 #include "junbo_cms.h"
 #include "power_reboot_group.h"
+#include "protocol_8F_LAS.h"
 #include "protocol_9F_m_curve.h"
 #include "junbo_lane_adj_light.h"
 #include <pthread.h>
@@ -77,11 +78,11 @@ public:
    int lane_adj_run_state[9];
 
     int segmenttype_8f;
-    LAS_excute_info LAS_segmenttype[21];//1~3 common day, 7-20 special day, 0 no info.
+    LAS_excute_info LAS_segmenttype[21];//1~7 common day, 8-20 special day, 0 no info.
 
 
     // LSC=  Lane adjusted sign controler
-
+ protocol_8F_LAS protocol_8f_object;
  protocol_9F_m_curve protocol_9F_object;
     junli_vd junli_object;
     junbo_cms junbo_object;
@@ -106,7 +107,7 @@ junbo_lane_adj_light junbo_LASC_object;
     UDP revSyncSocket;
 
 //OTSS++
-    UDP centerSocket,testerSocket,tempSocket;                               //交控中心,手提測試機,保留
+    UDP centerSocket,centerSocket2,tempSocket;                               //交控中心,手提測試機,保留
 //        UDP VDBcastForListen5003Socket;                                         //VD廣撥Socket
     UDP DynCalServerInCrossSocket, DynCalServerInCenterSocket;              //全動態計算主機
     UDP SSVD01Socket, SSVD02Socket, SSVD03Socket, SSVD04Socket;

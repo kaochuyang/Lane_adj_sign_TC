@@ -14,6 +14,8 @@ PROTOCOL::~PROTOCOL(void)
 bool PROTOCOL::DoWork(MESSAGEOK message)
 {
 try {
+
+
     switch (message.protocol) {
             //第一種分類:交通部通訊協定
             case PROTOCOL77:                                                    //交通部77年版通訊協定

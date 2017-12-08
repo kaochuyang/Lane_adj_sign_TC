@@ -16,7 +16,7 @@
 class junbo_lane_adj_light
 {
 public:
-
+ void test_LAS_function(int commnd,int parameter_1);
     void test_step();
 
     static pthread_mutex_t _junbo_mutex;
@@ -45,7 +45,7 @@ public:
 
     void brightness_control(int bright_parameter);
  //   void report_light_brightness();
-
+void auto_minus_bright();
     void query_module_state();
     BYTE *report_module_state();
     void link_ID_check();
@@ -54,12 +54,14 @@ public:
     void read_lane_adj_setting(junbo_lane_adj_memory_object *object);
     void clear_s_junbo_lane_adj(s_junbo_lane_adj *object);
     void delete_record_before_15day();
+
+
+
+
 protected:
 private:
 
-    unsigned char junbo_send_packet[8];
-    unsigned char junbo_receive_packet[8];
-    BYTE module_err[9];
+
 
     s_junbo_lane_adj
     light_on,
@@ -75,6 +77,10 @@ private:
     brightness,
     light_black;
 
+
+    unsigned char junbo_send_packet[8];
+    unsigned char junbo_receive_packet[8];
+    BYTE module_err[9];
 
     char *tty_name;
     char input_string[25];
