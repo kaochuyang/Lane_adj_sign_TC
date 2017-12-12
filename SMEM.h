@@ -73,7 +73,7 @@ public:
     lane_adj_brightness_record[9],
     lane_adj_light_record[9],
     lane_adj_timeout_record[9],
-    lane_adj_module_state[9];
+    lane_adj_module_state[29];
 
    int lane_adj_run_state[9];
 

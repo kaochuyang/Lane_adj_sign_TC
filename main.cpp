@@ -186,14 +186,14 @@ int main(int argc, char* argv[])
     } else printf("open centerSocket2-%s:%d Fail!!\n",localIP1,localPort1+64);
 
 ////-----------------------------------------------------------------------------------------------------//
-       /* system("ifconfig eth1 192.168.2.1");//for VSX-6156
+        system("ifconfig eth1 192.168.2.1");//for VSX-6156
         if ( smem.revAPP_socket.SetConnDevice(1000))
             if ((tempmax= smem.revAPP_socket.OpenUdpSocket("192.168.2.1",7002,"192.168.2.2",7002))>0)
             {
                 if (tempmax>maxport)  maxport=tempmax;
                 printf("open rev_socket-%s:%d (fdValue:%d) Success!!\n","192.168.2.1",7002,tempmax);
             }
-            else printf("open CenterSocket-%s:%d Fail!!\n","192.168.2.2",7002);*/
+            else printf("open CenterSocket-%s:%d Fail!!\n","192.168.2.2",7002);
         PTRAFFIC92TC oRev_protocol_5F;
         PTRAFFIC92COMM oRev_protocol_0F;
         MESSAGEOK revAPP_messagein;
@@ -227,7 +227,7 @@ int main(int argc, char* argv[])
 
         _intervalTimer.ThreadsGenerate();                                           //°_Interval Timer Thread
 
-    stc.ThreadsGenerate();
+   // stc.ThreadsGenerate();
 
         //OT Fix 950727   LCN0000
 //   SendRequestToKeypad();                                                      //°Ýkeypad¥Ø«e­±ªO³]©w

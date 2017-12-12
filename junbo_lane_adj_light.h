@@ -16,7 +16,7 @@
 class junbo_lane_adj_light
 {
 public:
- void test_LAS_function(int commnd,int parameter_1);
+ void test_LAS_function(int commnd,int parameter_1,int ID);
     void test_step();
 
     static pthread_mutex_t _junbo_mutex;
@@ -46,6 +46,8 @@ public:
     void brightness_control(int bright_parameter);
  //   void report_light_brightness();
 void auto_minus_bright();
+
+    void do_query_module();
     void query_module_state();
     BYTE *report_module_state();
     void link_ID_check();

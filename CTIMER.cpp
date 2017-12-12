@@ -177,22 +177,64 @@ void intervalTimer::set_close_light_timer(int second)
 
 void intervalTimer::set_light_report_timer(int second)//it2
 {
+    try
+    {
 
-    _it2.it_value.tv_sec = second;
-    _it2.it_value.tv_nsec = 0;
-    _it2.it_interval.tv_sec = second;
-    _it2.it_interval.tv_nsec = 0;
-    if ( timer_settime( _t2, 0, & _it2, NULL ) ) exit( 1 );
+        _it2.it_value.tv_sec = second;
+        _it2.it_value.tv_nsec = 0;
+        _it2.it_interval.tv_sec = second;
+        _it2.it_interval.tv_nsec = 0;
+        if ( timer_settime( _t2, 0, & _it2, NULL ) ) exit( 1 );
+    }
+    catch(...) {}
+
 }
 void intervalTimer::set_module_report_timer(int hour)//it3
 {
-    _it3.it_value.tv_sec = 10;
-    _it3.it_value.tv_nsec = 0;
-    _it3.it_interval.tv_sec = hour*3600;
-    _it3.it_interval.tv_nsec = 0;
-    if ( timer_settime( _t3, 0, & _it3, NULL ) ) exit( 1 );
+    try
+    {
+        _it3.it_value.tv_sec = 10;
+        _it3.it_value.tv_nsec = 0;
+        _it3.it_interval.tv_sec = hour*3600;
+        _it3.it_interval.tv_nsec = 0;
+        if ( timer_settime( _t3, 0, & _it3, NULL ) ) exit( 1 );
+    }
+    catch(...) {}
 }
+void intervalTimer::set_module_query_timer()
+{
+    try
+    {
+        struct tm* currenttime;
+        time_t now = time(NULL);
+        currenttime = localtime(&now);
+        int now_sec=currenttime->tm_hour*3600+currenttime->tm_min*60+currenttime->tm_sec;
+        int tomorrow_sec_3=0;
 
+
+        if(currenttime->tm_hour>=3)
+        {
+            tomorrow_sec_3=(27-currenttime->tm_hour)*3600
+                           -currenttime->tm_min*60
+                           -currenttime->tm_sec;
+                       };
+        if(currenttime->tm_hour<3)
+        {
+            tomorrow_sec_3=(3-currenttime->tm_hour)*3600
+                           -currenttime->tm_min*60
+                           -currenttime->tm_sec;
+                       };
+
+
+        _it6.it_value.tv_sec =tomorrow_sec_3;
+        _it6.it_value.tv_nsec = 0;
+        _it6.it_interval.tv_sec =0;
+        _it6.it_interval.tv_nsec = 0;
+        if ( timer_settime( _t6, 0, & _it6, NULL ) ) exit( 1 );
+
+    }
+    catch(...) {}
+}
 
 /*
 void intervalTimer::close_junbo_cms_light()
@@ -448,37 +490,39 @@ void intervalTimer::TimersSetting(void)
         _it5.it_interval.tv_nsec = 0;
         if ( timer_settime( _t5, 0, & _it5, NULL ) ) exit( 1 );
 
-        ucTmp = smem.vGetHWCycleCodeFor_0F14_0FC4();
-        switch (ucTmp)
-        {
-        case(0):
-            iTmp = 0;
-            break;
-        case(1):
-            iTmp = 1;
-            break;
-        case(2):
-            iTmp = 2;
-            break;
-        case(3):
-            iTmp = 5;
-            break;
-        case(4):
-            iTmp = 60;
-            break;
-        case(5):
-            iTmp = 300;
-            break;
-        }
-        _it6.it_value.tv_sec = iTmp;
+
+
+        /* ucTmp = smem.vGetHWCycleCodeFor_0F14_0FC4();
+         switch (ucTmp)
+         {
+         case(0):
+             iTmp = 0;
+             break;
+         case(1):
+             iTmp = 1;
+             break;
+         case(2):
+             iTmp = 2;
+             break;
+         case(3):
+             iTmp = 5;
+             break;
+         case(4):
+             iTmp = 60;
+             break;
+         case(5):
+             iTmp = 300;
+             break;
+         }*/
+        _it6.it_value.tv_sec = 5;
         _it6.it_value.tv_nsec = 0;
-        _it6.it_interval.tv_sec = iTmp;
+        _it6.it_interval.tv_sec = 0;
         _it6.it_interval.tv_nsec = 0;
         if ( timer_settime( _t6, 0, & _it6, NULL ) ) exit( 1 );
 
         _it7.it_value.tv_sec = 5;
         _it7.it_value.tv_nsec = 0;
-        _it7.it_interval.tv_sec = 3;
+        _it7.it_interval.tv_sec = 3600;
         _it7.it_interval.tv_nsec = 0;
         if ( timer_settime( _t7, 0, & _it7, NULL ) ) exit( 1 );
 
@@ -536,6 +580,8 @@ void * intervalTimer::PTime(void *arg)
 
         ////initial proccess for LAS data///
         smem.junbo_LASC_object.read_lane_adj_setting(&smem.Lane_adj_memo_object);
+
+
         printf("init read_lane_adj_setting\n");
         smem.protocol_8f_object.read_LAS_report_object();
         printf("init read_LAS_report_object\n");
@@ -543,20 +589,24 @@ void * intervalTimer::PTime(void *arg)
         smem.protocol_8f_object.read_LSA_segment_data();
         printf("init read_LSA_segment_data\n");
         smem.junbo_LASC_object.determind_weekday_specialday();
-printf("init determind_weekday_specialday\n");
+        printf("init determind_weekday_specialday\n");
+
+
         ////////
 
-      /*  TimersCreating();
+        TimersCreating();
 
         TimersSetting();
 
 
         _intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
         _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
-*/
+////////////////////////////////////
+ smem.junbo_LASC_object.link_ID_check();//check LSA[ID] was equipment.
+
         printf("hello light control\n");
         //   timer_reboot_create();//kaochu 2017 08 17
-smem.vSetCommEnable(true);
+        smem.vSetCommEnable(true);
         int VDsignum = 0;
         int VDrid = 9999;
 
@@ -681,33 +731,35 @@ smem.vSetCommEnable(true);
                 case( 11 )://light act report
                     printf("timer test 11\n");
 
- smem.protocol_8f_object._8f07_light_act_report();
+                    smem.protocol_8f_object._8f07_light_act_report();
 
                     break;
                 case( 12 )://,module act report
- smem.protocol_8f_object._8f05_module_act_report();
- printf("timer test 12\n");
+                    smem.protocol_8f_object._8f05_module_act_report();
+                    printf("timer test 12\n");
 
                     break;
                 case( 13 ):       //auto minus bright
                     printf("timer test 13\n");
-
-smem.junbo_LASC_object.auto_minus_bright();
+                    smem.junbo_LASC_object.link_ID_check();
+                    smem.junbo_LASC_object.auto_minus_bright();
+                    smem.junbo_LASC_object.query_module_state();
                 case( 14 ):
 
                     printf("timer test 14\n");
-                 //   smem.junbo_LASC_object.test_step();
-                       smem.junbo_LASC_object.step_control(smem.segmenttype_8f);
+                      // smem.junbo_LASC_object.test_step();
+                    smem.junbo_LASC_object.step_control(smem.segmenttype_8f);
                     break;
 
 
-                case( 15 ):  //0F04, HwStatus AutoReport
+                case( 15 ):  //HwStatus AutoReport
+                    smem.junbo_LASC_object.do_query_module();
 
                     break;
 
                 case( 100 ):
 
-smem.junbo_LASC_object.determind_weekday_specialday();
+                    smem.junbo_LASC_object.determind_weekday_specialday();
 
                     break;
 
@@ -725,7 +777,7 @@ smem.junbo_LASC_object.determind_weekday_specialday();
                     break;
 
                 case( 600 ):
-smem.junbo_LASC_object.delete_record_before_15day();
+                    smem.junbo_LASC_object.delete_record_before_15day();
                     break;
 
                 default:

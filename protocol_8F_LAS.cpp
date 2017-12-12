@@ -23,48 +23,48 @@ bool protocol_8F_LAS::DoWorkViaPTraffic92(MESSAGEOK mes)
         switch(mes.packet[8])
         {
         case 0x10:
-        _8f10_commonday_set(mes);
+            _8f10_commonday_set(mes);
 
             break;
 
         case 0x40:
-        _8f40_commanday_query(mes.packet[9]);
+            _8f40_commanday_query(mes.packet[9]);
             break;
         case 0x11:
-        _8f11_specialday_set(mes);
+            _8f11_specialday_set(mes);
             break;
         case 0x41:
-        _8f41_specialday_query(mes.packet[9]);
+            _8f41_specialday_query(mes.packet[9]);
             break;
         case 0x12:
-        _8f12_brightness_set(mes.packet[9]);
+            _8f12_brightness_set(mes.packet[9]);
             break;
         case 0x42:
-        _8f42_brightness_query();
+            _8f42_brightness_query();
             break;
         case 0x14:
-         _8f14_module_report_period_set(mes.packet[9]);
+            _8f14_module_report_period_set(mes.packet[9]);
             break;
         case 0x44:
-        _8f44_module_report_period_query();
+            _8f44_module_report_period_query();
             break;
         case 0x45:
-        _8f45_module_query();
+            _8f45_module_query();
             break;
         case 0x16:
-        _8f16_default_light_set(mes);
+            _8f16_default_light_set(mes);
             break;
         case 0x46:
-        _8f46_default_light_query();
+            _8f46_default_light_query();
             break;
         case 0x47:
-        _8f47_light_query();
+            _8f47_light_query();
             break;
         case 0x18:
-        _8f18_light_report_period_set(mes.packet[9]);
+            _8f18_light_report_period_set(mes.packet[9]);
             break;
         case 0x48:
-        _8f48_light_report_period_query();
+            _8f48_light_report_period_query();
             break;
 
         default:
@@ -237,7 +237,7 @@ void protocol_8F_LAS::_8f45_module_query()
         printf("8f45 module report\n");
         smem.junbo_LASC_object.query_module_state();
         vReturnToCenterACK(0x8f,0x45);
-
+_8fc5_module_report();
     }
     catch(...) {}
 }
@@ -257,8 +257,11 @@ void protocol_8F_LAS::_8fc5_module_report()
         pack[1]=0xc5;
         for(int ID=1; ID<9; ID++)
         {
-            pack[2*ID+1]=ID;
-            pack[2*ID+2]=data[ID];
+                  pack[2*(ID-1)+2]=ID;
+
+            if(smem.lane_adj_run_state[ID]==1)
+                pack[2*(ID-1)+3]=data[ID];
+            else pack[2*(ID-1)+3]=0xff;
         }
 
 
@@ -291,14 +294,19 @@ void protocol_8F_LAS::_8f05_module_act_report()
         pack[1]=0x05;
         for(int ID=1; ID<9; ID++)
         {
-            pack[2*ID+1]=ID;
-            pack[2*ID+2]=data[ID];
+
+
+            pack[2*(ID-1)+2]=ID;
+
+            if(smem.lane_adj_run_state[ID]==1)
+                pack[2*(ID-1)+3]=data[ID];
+            else pack[2*(ID-1)+3]=0xff;
         }
 
 
         MESSAGEOK _MsgOK;
 
-        _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(pack, 18,true);
+        _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(pack,18,true);
         _MsgOK.InnerOrOutWard = cOutWard;
 //    writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
         writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
@@ -358,7 +366,7 @@ void protocol_8F_LAS::_8fc6_default_light_report()
         printf("8fc6 default light report\n");
 
         unsigned char pack[10];
-         pack[0]=0x8f;
+        pack[0]=0x8f;
         pack[1]=0xc6;
         for(int ID=1; ID<9; ID++)
         {
@@ -381,68 +389,69 @@ void protocol_8F_LAS::_8fc6_default_light_report()
 void protocol_8F_LAS::read_LSA_segment_data()
 {
     try
-    {/*printf("read_LSA_segment_data\n");
-    printf("read_LSA_segment_data\n");
-    printf("read_LSA_segment_data\n");
-    printf("read_LSA_segment_data\n");
-    printf("read_LSA_segment_data\n");*/
-     LAS_excute_info* p=NULL;
+    {
+        /*printf("read_LSA_segment_data\n");
+            printf("read_LSA_segment_data\n");
+            printf("read_LSA_segment_data\n");
+            printf("read_LSA_segment_data\n");
+            printf("read_LSA_segment_data\n");*/
+        LAS_excute_info* p=NULL;
         FILE *pf=NULL;
         char filename[256]= {0};
-        for(int segmenttype=1;segmenttype<=3;segmenttype++)
+        for(int segmenttype=1; segmenttype<=3; segmenttype++)
         {
             sprintf(filename,"/cct/Data/SETTING/LAS_8f10_setting_%d.bin",segmenttype);
-        pf=fopen(filename,"r");
-        if(pf!=NULL)
-        {
-            fread(&smem.LAS_segmenttype[segmenttype],sizeof(LAS_excute_info),1,pf);
-            fclose(pf);
-            p=&smem.LAS_segmenttype[segmenttype];
-            printf("read LAS_8f10_setting_%d success\n",segmenttype);
-            printf("read segmenttype=%d segmentcount=%d  lightcount=%d  weekcount=%d\n",segmenttype,p->segmentcount,p->lightcount,p->weekcount);
+            pf=fopen(filename,"r");
+            if(pf!=NULL)
+            {
+                fread(&smem.LAS_segmenttype[segmenttype],sizeof(LAS_excute_info),1,pf);
+                fclose(pf);
+                p=&smem.LAS_segmenttype[segmenttype];
+                printf("read LAS_8f10_setting_%d success\n",segmenttype);
+                printf("read segmenttype=%d segmentcount=%d  lightcount=%d  weekcount=%d\n",segmenttype,p->segmentcount,p->lightcount,p->weekcount);
 
 
-        }
-        else
-        {
-            smem.vWriteMsgToDOM("read LAS_8f10_setting_%d error\n");
-            printf("read LAS_8f10_setting_%d object error\n",segmenttype);
-            default_LAS_object(&smem.LAS_segmenttype[segmenttype]);
+            }
+            else
+            {
+                smem.vWriteMsgToDOM("read LAS_8f10_setting_%d error\n");
+                printf("read LAS_8f10_setting_%d object error\n",segmenttype);
+                default_LAS_object(&smem.LAS_segmenttype[segmenttype]);
 
+            }
         }
-        }
-         pf=NULL;
+        pf=NULL;
         char filename2[256]= {0};
-        for(int segmenttype=8;segmenttype<=20;segmenttype++)
+        for(int segmenttype=8; segmenttype<=20; segmenttype++)
         {
             sprintf(filename2,"/cct/Data/SETTING/LAS_8f11_setting_%d.bin",segmenttype);
             printf(filename2,"/cct/Data/SETTING/LAS_8f11_setting_%d.bin \n",segmenttype);
             printf("\n");
-        pf=fopen(filename2,"r");
-        if(pf!=NULL)
-        {
-            fread(&smem.LAS_segmenttype[segmenttype],sizeof(LAS_excute_info),1,pf);
-            fclose(pf);
+            pf=fopen(filename2,"r");
+            if(pf!=NULL)
+            {
+                fread(&smem.LAS_segmenttype[segmenttype],sizeof(LAS_excute_info),1,pf);
+                fclose(pf);
 
-            printf("read LAS_8f11_setting_%d success\n",segmenttype);
+                printf("read LAS_8f11_setting_%d success\n",segmenttype);
 
 
+            }
+            else
+            {
+                smem.vWriteMsgToDOM("read LAS_8f10_setting_%d error\n");
+                printf("read LAS_8f11_setting_%d object error\n",segmenttype);
+                printf("\n");
+                default_LAS_object(&smem.LAS_segmenttype[segmenttype]);
+
+            }
         }
-        else
-        {
-            smem.vWriteMsgToDOM("read LAS_8f10_setting_%d error\n");
-            printf("read LAS_8f11_setting_%d object error\n",segmenttype);
-            printf("\n");
-            default_LAS_object(&smem.LAS_segmenttype[segmenttype]);
-
-        }
-        }
-           pf=NULL;
+        pf=NULL;
         char filename3[256]= {0};
 
-            sprintf(filename3,"/cct/Data/SETTING/segmenttype_setting.bin");
-            printf(filename3,"/cct/Data/SETTING/segmenttype_setting.bin ");
-            printf("\n");
+        sprintf(filename3,"/cct/Data/SETTING/segmenttype_setting.bin");
+        printf(filename3,"/cct/Data/SETTING/segmenttype_setting.bin ");
+        printf("\n");
         pf=fopen(filename3,"r");
         if(pf!=NULL)
         {
@@ -457,14 +466,14 @@ void protocol_8F_LAS::read_LSA_segment_data()
         {
             smem.vWriteMsgToDOM("read LAS_week_type_info error\n");
             printf("read LAS_week_type_info error\n");
-          for(int i=0;i<7;i++)
-            smem.LAS_week_type_info[i]=1;
+            for(int i=0; i<7; i++)
+                smem.LAS_week_type_info[i]=1;
 
         }
 
 
     }
-    catch(...){}
+    catch(...) {}
 }
 
 void protocol_8F_LAS::default_LAS_object(LAS_excute_info *pf)
@@ -475,27 +484,28 @@ void protocol_8F_LAS::default_LAS_object(LAS_excute_info *pf)
 
         /*
           BYTE segmentcount;
-    BYTE lightcount;
-    BYTE light_select[9][24];//ID plan
-    bool check_ID[9];
-    int  hour[24];
-    int  min[24];
-    BYTE weekcount;
+            BYTE lightcount;
+            BYTE light_select[9][24];//ID plan
+            bool check_ID[9];
+            int  hour[24];
+            int  min[24];
+            BYTE weekcount;
         */
         pf->segmentcount=1;
         pf->weekcount=7;
         pf->lightcount=2;
         pf->check_ID[1]=1;
         pf->check_ID[2]=1;
-        for(int ID=3;ID<9;ID++)
-        pf->check_ID[ID]=0;
+        for(int ID=3; ID<9; ID++)
+            pf->check_ID[ID]=0;
         pf->light_select[1][1]=2;
         pf->light_select[2][1]=1;
         pf->hour[1]=0;
         pf->min[1]=0;
 
 
-    }catch(...){}
+    }
+    catch(...) {}
 }
 
 void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
@@ -510,7 +520,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
         printf("8f10 commonday set\n");
 
         int typeID=mes.packet[1+8];
-
+        int error_count=13,error_count_record=0;
         LAS_excute_info* pf;
 
         if(typeID<1||typeID>7)
@@ -518,7 +528,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
             vReturnToCenterNACK(0x8f,0x10,0x4,0x1);
             error_mark=true;
         }
-        else smem.LAS_segmenttype[typeID].segmentcount=mes.packet[1+8];
+        else smem.LAS_segmenttype[typeID].segmentcount=mes.packet[2+8];
 
         pf=&smem.LAS_segmenttype[typeID];
 
@@ -527,18 +537,26 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
         int segmentcount=mes.packet[2+8];
 
         pf->lightcount=lightcount=mes.packet[3+8];
+        pf->hour[0]=0;
+        pf->min[0]=0;
         int light_series=2+2*lightcount;
         for(int i=1; i<segmentcount+1; i++)
         {
 
             pf->hour[i]=mes.packet[3+8+(i-1)*light_series+1];
             pf->min[i]=mes.packet[3+8+(i-1)*light_series+2];
+            error_count=error_count+2;
+            if((pf->hour[i]*3600+pf->min[i]*60)<(pf->hour[i-1]*3600+pf->min[i-1]*60))
+            {
+                error_mark=true;
+                error_count_record=error_count;
+            }
 
             for(int j=0; j<lightcount; j++)
             {
                 ID=mes.packet[3+8+(i-1)*light_series+4+2*j];
                 pf->check_ID[ID]=true;
-                pf->light_select[ID][j]=mes.packet[3+8+(i-1)*light_series+3+2*j];//ID , plan
+                pf->light_select[ID][i]=mes.packet[3+8+(i-1)*light_series+3+2*j];//ID , plan
             }
         }
         int numweek;
@@ -549,7 +567,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
 
             switch (mes.packet[3+8+light_series*segmentcount+2+i])
             {
-        printf("weekday=%d  segment=%d\n",mes.packet[3+8+light_series*segmentcount+2+i],typeID);
+                printf("weekday=%d  segment=%d\n",mes.packet[3+8+light_series*segmentcount+2+i],typeID);
             case 1:
                 smem.LAS_week_type_info[1]=typeID;
 
@@ -624,7 +642,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
             pf1=fopen(filename,"w+");
             if(pf1!=NULL)
             {
-
+              //
                 fwrite(pf,sizeof(LAS_excute_info),1,pf1);
                 fclose(pf1);
                 printf("write LAS_excute_info success!.");
@@ -638,20 +656,36 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
                 printf("write LAS_excute_info no file\n");
 
             };
-         vReturnToCenterACK(0x8f,0x10);
+            vReturnToCenterACK(0x8f,0x10);
 
 
         }
-        smem.junbo_LASC_object.determind_weekday_specialday();
-for(int ID=1;ID<9;ID++)
-printf("checkID %d=%d\n",ID,smem.LAS_segmenttype[typeID].check_ID[ID]);
-printf("lightcount=%d\n",smem.LAS_segmenttype[typeID].lightcount);
-printf("segmentcount=%d\n",smem.LAS_segmenttype[typeID].segmentcount);
-printf("weekcount=%d\n",smem.LAS_segmenttype[typeID].weekcount);
+        else if(error_mark==true)
+        {
 
-printf("SEGMENTTYPE =%d\n",typeID);
-for(int i=0;i<7;i++)
-printf("weekday%d=%d_segmenttype\n",i,smem.LAS_week_type_info[i]);
+            smem.junbo_LASC_object.read_lane_adj_setting(&smem.Lane_adj_memo_object);
+            printf("init read_lane_adj_setting\n");
+            smem.protocol_8f_object.read_LAS_report_object();
+            printf("init read_LAS_report_object\n");
+
+            smem.protocol_8f_object.read_LSA_segment_data();
+            printf("init read_LSA_segment_data\n");
+vReturnToCenterNACK(0x8f,0x10,0x4,error_count_record);
+
+
+
+        }
+        smem.junbo_LASC_object.link_ID_check();
+        smem.junbo_LASC_object.determind_weekday_specialday();
+        for(int ID=1; ID<9; ID++)
+            printf("checkID %d=%d\n",ID,smem.LAS_segmenttype[typeID].check_ID[ID]);
+        printf("lightcount=%d\n",smem.LAS_segmenttype[typeID].lightcount);
+        printf("segmentcount=%d\n",smem.LAS_segmenttype[typeID].segmentcount);
+        printf("weekcount=%d\n",smem.LAS_segmenttype[typeID].weekcount);
+
+        printf("SEGMENTTYPE =%d\n",typeID);
+        for(int i=0; i<7; i++)
+            printf("weekday%d=%d_segmenttype\n",i,smem.LAS_week_type_info[i]);
 
     }
     catch(...) {}
@@ -695,8 +729,8 @@ void protocol_8F_LAS::_8fc0_commonday_report(int segmenttype)
         LAS_excute_info* pf_o=NULL;
 
         pf_o=&smem.LAS_segmenttype[segmenttype];
-printf("segmntcount=%d,\n",pf_o->segmentcount);
-printf("lightcount=%d,\n",pf_o->lightcount);
+        printf("segmntcount=%d,\n",pf_o->segmentcount);
+        printf("lightcount=%d,\n",pf_o->lightcount);
 
 
         FILE *pf=NULL;
@@ -732,7 +766,7 @@ printf("lightcount=%d,\n",pf_o->lightcount);
 
 
         int light_series=2+2*pack[4];// hour+min+(light+ID)*lightcount
-        int k=0;
+
 
         for(int i=1; i<pack[3]+1; i++)
         {
@@ -798,57 +832,64 @@ void protocol_8F_LAS::_8f11_specialday_set(MESSAGEOK mes)
         bool error_mark=false;
         int ID=0;
         printf("8f11 specialday set\n");
-
+        int error_count=13,error_count_record=0;
         int typeID=mes.packet[3+6];
         printf("mark %d,",0);
         LAS_excute_info* pf=NULL;
-         pf=&smem.LAS_segmenttype[typeID];
-
+        pf=&smem.LAS_segmenttype[typeID];
+        pf->hour[0]=0;
+        pf->min[0]=0;
         if(typeID<7||typeID>20)
         {
             vReturnToCenterNACK(0x8f,0x11,0x4,0x1);
             error_mark=true;
         }
 
-printf("mark %d,",1);
+        printf("mark %d,",1);
 
-printf("segmenttype=%d\n",typeID);
+        printf("segmenttype=%d\n",typeID);
 
         int lightcount=0;
         int segmentcount=mes.packet[4+6];
-printf("segmentcount=%d\n",segmentcount);
+        printf("segmentcount=%d\n",segmentcount);
         pf->lightcount=lightcount=mes.packet[5+6];
         int light_series=2+2*lightcount;
-    for(int i=1; i<segmentcount+1; i++)
+        for(int i=1; i<segmentcount+1; i++)
         {
 
             pf->hour[i]=mes.packet[3+8+(i-1)*light_series+1];
             pf->min[i]=mes.packet[3+8+(i-1)*light_series+2];
-
+            error_count=error_count+2;
+            if((pf->hour[i]*3600+pf->min[i]*60)<(pf->hour[i-1]*3600+pf->min[i-1]*60))
+            {
+                error_mark=true;
+                error_count_record=error_count;
+            }
             for(int j=0; j<lightcount; j++)
             {
                 ID=mes.packet[3+8+(i-1)*light_series+4+2*j];
                 pf->check_ID[ID]=true;
-                pf->light_select[ID][j]=mes.packet[3+8+(i-1)*light_series+3+2*j];//ID , plan
+                pf->light_select[ID][i]=mes.packet[3+8+(i-1)*light_series+3+2*j];//ID , plan
             }
         }
-printf("mark %d,",2);
+        printf("mark %d,",2);
         smem.specialtype[typeID].start_year=mes.packet[5+6+light_series*segmentcount+1];
         smem.specialtype[typeID].start_month=mes.packet[5+6+light_series*segmentcount+2];
         smem.specialtype[typeID].start_day=mes.packet[5+6+light_series*segmentcount+3];
         smem.specialtype[typeID].end_year=mes.packet[5+6+light_series*segmentcount+4];
         smem.specialtype[typeID].end_month=mes.packet[5+6+light_series*segmentcount+5];
         smem.specialtype[typeID].end_day=mes.packet[5+6+light_series*segmentcount+6];
-printf("\n\n");
-printf("%d %d %d %d %d %d\n",smem.specialtype[typeID].start_year,smem.specialtype[typeID].start_month,smem.specialtype[typeID].start_day,smem.specialtype[typeID].end_year,smem.specialtype[typeID].end_month,smem.specialtype[typeID].end_day);
-for(int i=1;i<7;i++)
-printf("%d",mes.packet[4+6+light_series*segmentcount+i]);
-printf("\n\n");
-printf("mark %d,",3);
+        printf("\n\n");
+        printf("%d %d %d %d %d %d\n",smem.specialtype[typeID].start_year,smem.specialtype[typeID].start_month,smem.specialtype[typeID].start_day,smem.specialtype[typeID].end_year,
+               smem.specialtype[typeID].end_month,smem.specialtype[typeID].end_day);
+        for(int i=1; i<7; i++)
+            printf("%d",mes.packet[4+6+light_series*segmentcount+i]);
+        printf("\n\n");
+        printf("mark %d,",3);
 
         if(error_mark==false)
         {
-printf("mark %d,",4);
+            printf("mark %d,",4);
 
             FILE *pf1=NULL;
             FILE *pf2=NULL;
@@ -896,9 +937,23 @@ printf("mark %d,",4);
             vReturnToCenterACK(0x8f,0x11);
 
         }
+        else if(error_mark==true)
+        {
 
+            smem.junbo_LASC_object.read_lane_adj_setting(&smem.Lane_adj_memo_object);
+            printf("init read_lane_adj_setting\n");
+            smem.protocol_8f_object.read_LAS_report_object();
+            printf("init read_LAS_report_object\n");
 
-smem.junbo_LASC_object.determind_weekday_specialday();
+            smem.protocol_8f_object.read_LSA_segment_data();
+            printf("init read_LSA_segment_data\n");
+
+vReturnToCenterNACK(0x8f,0x10,0x4,error_count_record);
+
+        }
+        smem.junbo_LASC_object.link_ID_check();
+
+        smem.junbo_LASC_object.determind_weekday_specialday();
 
 
 
@@ -918,12 +973,13 @@ void protocol_8F_LAS::_8f41_specialday_query(BYTE segmenttype)
         printf("8f41 commanday query\n");
 
         if(segmenttype>20||segmenttype<7)vReturnToCenterNACK(0x8f,0x41,0x4,0x1);
-else{
+        else
+        {
 
-        vReturnToCenterACK(0x8f,0x41);
+            vReturnToCenterACK(0x8f,0x41);
 
-        _8fc1_specialday_report(segmenttype);
-}
+            _8fc1_specialday_report(segmenttype);
+        }
 
 
 
@@ -1106,7 +1162,7 @@ void protocol_8F_LAS::_8f07_light_act_report()
 
 
 
-        printf("8fc7 light report\n");
+        printf("8f07 light report\n");
 
         for(int ID=1; ID<9; ID++)
         {
@@ -1167,24 +1223,24 @@ void  protocol_8F_LAS::read_LAS_report_object()
             printf("read LAS_report_object error\n");
             LAS_report_object.light_report_second=60;
             LAS_report_object.module_report_hour=1;
-             sprintf(filename,"/cct/Data/SETTING/LAS_report_object.bin");
-        pf=fopen(filename,"w+");
-        if(pf!=NULL)
-        {
+            sprintf(filename,"/cct/Data/SETTING/LAS_report_object.bin");
+            pf=fopen(filename,"w+");
+            if(pf!=NULL)
+            {
 
-            fwrite(&LAS_report_object,sizeof(report_memory),1,pf);
-            fclose(pf);
-            printf("write LAS_report_object success!.");
-            smem.vWriteMsgToDOM("write LAS_report_object success\n");
+                fwrite(&LAS_report_object,sizeof(report_memory),1,pf);
+                fclose(pf);
+                printf("write LAS_report_object success!.");
+                smem.vWriteMsgToDOM("write LAS_report_object success\n");
 
 
-        }
-        else
-        {
-            smem.vWriteMsgToDOM("write LAS_report_object error\n");
-            printf("write LAS_report_object error\n");
+            }
+            else
+            {
+                smem.vWriteMsgToDOM("write LAS_report_object error\n");
+                printf("write LAS_report_object error\n");
 
-        };
+            };
 
         };
 
