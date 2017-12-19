@@ -77,7 +77,12 @@ private:
     light_timeout,
     module_query[4],
     brightness,
-    light_black;
+    light_black,
+    straight_flash,
+    left_flash,
+    right_flash,
+    straight_left_flash,
+    straight_right_flash;
 
 
     unsigned char junbo_send_packet[8];
