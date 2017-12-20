@@ -995,17 +995,19 @@ try {
 
   while ( true )
   {
+      printf("TEST MODE !!!!\n");
 int command=0,parameter=0,ID=0;
 printf("test mode\n");
-cout<<"input command belong to 0 1 2 3 4 5"<<endl;
+cout<<"input command belong to 0 1 2 3 4 5 6 7 8 9 10"<<endl;
 cin>>command;
 cout<<endl<<"input parameter="<<endl;
 cin>>parameter;
-
+/*
 while(ID<0||ID>9){cout<<"input ID"<<endl;cin>>ID;cout<<endl;};
-cout<<endl;
-if(0<command&&command<<6&&parameter<102&&parameter>0||command==0||parameter==0)
-smem.junbo_LASC_object.test_LAS_function(command,parameter,ID);
+cout<<endl;*/
+/*
+if(0<command&&command<<6&&parameter<102&&parameter>0||command==0||parameter==0)*/
+smem.junbo_LASC_object.test_LAS_function(command,parameter);
 
   }
 } catch (...) {}

@@ -73,8 +73,8 @@ public:
     lane_adj_brightness_record[9],
     lane_adj_light_record[9],
     lane_adj_timeout_record[9],
-    lane_adj_module_state[29];
-
+    lane_adj_module_state[29][4];
+    int LAS_module_query_count,LAS_module_query_count_2;
    int lane_adj_run_state[9];
 
     int segmenttype_8f;

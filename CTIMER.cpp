@@ -592,6 +592,9 @@ void * intervalTimer::PTime(void *arg)
         printf("init determind_weekday_specialday\n");
 
 
+
+   smem.junbo_LASC_object.do_query_module();
+
         ////////
 
         TimersCreating();
@@ -603,6 +606,8 @@ void * intervalTimer::PTime(void *arg)
         _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
 ////////////////////////////////////
  smem.junbo_LASC_object.link_ID_check();//check LSA[ID] was equipment.
+
+ smem.junbo_LASC_object.light_timeout_control(0);
 
         printf("hello light control\n");
         //   timer_reboot_create();//kaochu 2017 08 17
@@ -743,7 +748,9 @@ void * intervalTimer::PTime(void *arg)
                     printf("timer test 13\n");
                     smem.junbo_LASC_object.link_ID_check();
                     smem.junbo_LASC_object.auto_minus_bright();
-                    smem.junbo_LASC_object.query_module_state();
+                    smem.junbo_LASC_object.query_module_state_1();
+                    smem.junbo_LASC_object.query_module_state_2();
+                    smem.junbo_LASC_object.query_module_state_3();
                 case( 14 ):
 
                     printf("timer test 14\n");

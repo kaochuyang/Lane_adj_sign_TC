@@ -235,7 +235,12 @@ void protocol_8F_LAS::_8f45_module_query()
     try
     {
         printf("8f45 module report\n");
-        smem.junbo_LASC_object.query_module_state();
+        smem.junbo_LASC_object.query_module_state_1();
+usleep(50000);
+        smem.junbo_LASC_object.query_module_state_2();
+usleep(50000);
+        smem.junbo_LASC_object.query_module_state_3();
+        usleep(50000);
         vReturnToCenterACK(0x8f,0x45);
 _8fc5_module_report();
     }
@@ -794,14 +799,22 @@ void protocol_8F_LAS::_8fc0_commonday_report(int segmenttype)
 
         int z=0;
         pack[4+light_series*pf_o->segmentcount+1]=pf_o->weekcount;//numweek;
-        for(int i=1; i<8; i++)
+        for(int i=1; i<7; i++)
         {
             if(smem.LAS_week_type_info[i]==segmenttype)
             {
                 z++;// the last z shuld be equal to weekcount=numweek
+
                 pack[4+light_series*pf_o->segmentcount+1+z]=i;
             }
+
         }
+          if(smem.LAS_week_type_info[0]==segmenttype){
+
+
+                 z++;// the last z shuld be equal to weekcount=numweek
+
+                pack[4+light_series*pf_o->segmentcount+1+z]=7;}
 
 
 
