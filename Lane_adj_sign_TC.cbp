@@ -72,6 +72,8 @@
 		<Unit filename="IODEVICE.h" />
 		<Unit filename="JOB.cpp" />
 		<Unit filename="JOB.h" />
+		<Unit filename="LAS_test_button.cpp" />
+		<Unit filename="LAS_test_button.h" />
 		<Unit filename="LCD240x128.cpp" />
 		<Unit filename="LCD240x128.h" />
 		<Unit filename="Lane_adj_sign_TC.cbp" />
