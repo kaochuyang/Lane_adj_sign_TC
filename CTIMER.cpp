@@ -598,12 +598,12 @@ int query_count=0;
         ////////
 
         TimersCreating();
- // smem.junbo_LASC_object.do_query_module();
-     /*   TimersSetting();
+  smem.junbo_LASC_object.do_query_module();
+        TimersSetting();
 
 
         _intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
-        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);*/
+        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
 ////////////////////////////////////
  smem.junbo_LASC_object.link_ID_check();//check LSA[ID] was equipment.
 
