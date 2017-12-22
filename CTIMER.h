@@ -61,6 +61,7 @@ void set_close_light_timer(int second);
 void set_module_report_timer(int second);
 void set_light_report_timer(int hour);
 void set_module_query_timer();
+void LAS_module_query_timer(int sec);
 
    private:
 

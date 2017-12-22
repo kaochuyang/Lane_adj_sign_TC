@@ -1,5 +1,6 @@
 #include "junbo_lane_adj_light.h"
 #include "SMEM.h"
+#include "CTIMER.h"
 pthread_mutex_t junbo_lane_adj_light::_junbo_mutex = PTHREAD_MUTEX_INITIALIZER;
 junbo_lane_adj_light::junbo_lane_adj_light()
 {
@@ -14,6 +15,100 @@ junbo_lane_adj_light::~junbo_lane_adj_light()
 {
     //dtor
 }
+void junbo_lane_adj_light::test_LAS_function(int command,int p,int ID)
+{
+
+    s_junbo_lane_adj *pf=NULL;
+
+    switch(command)
+    {
+    case 0:
+        if(p==0)pf=&light_off;
+        if(p==1)pf=&light_on;
+        break;
+
+    case 1:
+        if (p==0)pf=&light_black;
+        if (p==1)pf=&straight;
+        if (p==2)pf=&left;
+        if (p==3)pf=&right;
+        if (p==4)pf=&straight_left;
+        if (p==5)pf=&straight_right;
+        if (p==6)pf=&straight_flash;
+        if (p==7)pf=&left_flash;
+        if (p==8)pf=&right_flash;
+        if (p==9)pf=&straight_left_flash;
+        if (p==10)pf=&straight_right_flash;
+
+        break;
+
+    case 2:
+        if(0<p&&p<100)
+            light_timeout.parameter[0]=p;
+        else light_timeout.parameter[0]=0;
+        pf=&light_timeout;
+
+        break;
+
+    case 3:
+        pf=&light_black;
+        break;
+
+    case 4:
+    do_query_module();
+/*   junbo_light_send_reference_select(ID,module_query[0]);
+           usleep(50000);
+        junbo_light_send_reference_select(ID+10,module_query[0]);
+           usleep(50000);
+        junbo_light_send_reference_select(ID+20,module_query[0]);
+    usleep(50000);
+
+        printf("module query messsage\n");
+
+        for(int i=1; i<4; i++)
+        {
+            junbo_light_send_reference_select(ID,module_query[i]);
+            usleep(50000);
+            junbo_light_send_reference_select(ID+10,module_query[i]);
+            usleep(50000);
+            junbo_light_send_reference_select(ID+20,module_query[i]);
+            usleep(50000);
+        }*/
+        pf=&light_black;
+        break;
+
+    case 5:
+        if(0<p&&p<5)
+            brightness.parameter[0]=p;
+        else p=0;
+        pf=&brightness;
+
+        break;
+    case 6:
+        pf=&query_state;
+        break;
+
+    case 7:
+
+pf=NULL;
+        break;
+
+    default:
+        pf=&light_black;
+        break;
+
+
+
+
+    }
+
+
+    smem.junbo_LASC_object.junbo_light_send_reference_select(ID,*pf);
+
+
+
+}
+
 void junbo_lane_adj_light::test_LAS_function(int command,int p)
 {
 
@@ -50,54 +145,67 @@ void junbo_lane_adj_light::test_LAS_function(int command,int p)
         break;
 
     case 3:
-        break;
-
-    case 4:
-        for(int ID=1; ID<3; ID++)
-        {
-
-            for(int i=0; i<1; i++)
-                {junbo_light_send_reference_select(ID,module_query[i]);
-                junbo_light_send_reference_select(ID+10,module_query[i]);
-                junbo_light_send_reference_select(ID+20,module_query[i]);
-
-                }
-        }
-        sleep(1);
-        printf("module query messsage\n");
-        for(int ID=1; ID<3; ID++)
-        {
-
-            for(int i=1; i<4; i++)
-            {
-
-                junbo_light_send_reference_select(ID,module_query[i]);
-                   junbo_light_send_reference_select(ID+10,module_query[i]);
-                junbo_light_send_reference_select(ID+20,module_query[i]);}
-        }
         pf=&light_black;
         break;
 
-    case 5:
-        if(0<p&&p<5)
-            brightness.parameter[0]=p;
-        else p=0;
-        pf=&brightness;
+    case 4:
 
-        break;
+do_query_module();
+/*
+for(int ID=1;ID<9;ID++)
+   {junbo_light_send_reference_select(ID,module_query[0]);
+           usleep(50000);
+        junbo_light_send_reference_select(ID+10,module_query[0]);
+           usleep(50000);
+        junbo_light_send_reference_select(ID+20,module_query[0]);
+    usleep(50000);
+   }*/
+     /*   printf("module query messsage\n");
+        for(int ID=1;ID<3;ID++)
+        {for(int i=1; i<4; i++)
+        {
+            junbo_light_send_reference_select(ID,module_query[i]);
+            usleep(50000);
+            junbo_light_send_reference_select(ID+10,module_query[i]);
+            usleep(50000);
+            junbo_light_send_reference_select(ID+20,module_query[i]);
+            usleep(50000);
+        }}*/
+        pf=&light_black;
+    break;
 
+case 5:
+    if(0<p&&p<5)
+        brightness.parameter[0]=p;
+    else p=0;
+    pf=&brightness;
 
+    break;
+case 6:
+    pf=&query_state;
+    break;
 
+case 7:
+  pf=NULL;
+    break;
 
-    }
+default:
+    pf=&light_black;
+    break;
 
-
-    for(int ID=1; ID<9; ID++)
-        smem.junbo_LASC_object.junbo_light_send_reference_select(ID,*pf);
 
 
 
 }
+
+for(int ID=1; ID<9; ID++)
+    smem.junbo_LASC_object.junbo_light_send_reference_select(ID,*pf);
+
+
+
+}
+
+
 
 void junbo_lane_adj_light::test_step()
 {
@@ -414,10 +522,10 @@ void junbo_lane_adj_light::step_control(int segment_type)
 
                             }
                             if(pf_l->check_ID[ID]==1)
-                              {
-                                  if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
-                                 junbo_light_send_reference_select(ID,*p_act);
-                              }
+                            {
+                                if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                                    junbo_light_send_reference_select(ID,*p_act);
+                            }
                         }
                     }
 
@@ -470,11 +578,12 @@ void junbo_lane_adj_light::step_control(int segment_type)
 
                         }
                         if(pf_l->check_ID[ID]==1)
-                            {
-                                 if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                        {
+                            if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
                                 junbo_light_send_reference_select(ID,*p_act);
 
-                    }}
+                        }
+                    }
                 }
 
             }
@@ -482,16 +591,71 @@ void junbo_lane_adj_light::step_control(int segment_type)
             {
                 if((current_sec>=86040)&&(current_sec<86400))
                 {
-                                 printf("now segmentcount == %d \n\n",pf_l->segmentcount);
-                printf("mark end\n");
-                for(int ID=1; ID<9; ID++)
-                {
-                    /*  printf("check[%d]=%d\n",ID,pf_l->check_ID[ID]);
-                      if(pf_l->check_ID[ID]==1)
-                      {
-                          junbo_light_send_reference_select(ID,light_black);
-                      }*/
+                    printf("now segmentcount == %d \n\n",pf_l->segmentcount);
+                    printf("mark end\n");
+                    for(int ID=1; ID<9; ID++)
+                    {
+                        /*  printf("check[%d]=%d\n",ID,pf_l->check_ID[ID]);
+                          if(pf_l->check_ID[ID]==1)
+                          {
+                              junbo_light_send_reference_select(ID,light_black);
+                          }*/
 
+                        for(int ID=1; ID<9; ID++)
+                        {
+                            if(smem.lane_adj_run_state[ID]==1)printf("ID=%d work\n",ID);
+                        }
+                        for(int ID=1; ID<9; ID++)
+                        {
+                            if(smem.lane_adj_run_state[ID]==1)
+                            {
+                                printf("check me case=%d\n",pf_l->light_select[ID][pf_l->segmentcount]);
+                                switch(pf_l->light_select[ID][pf_l->segmentcount])
+                                {
+                                    //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                                case 0:
+                                    p_act=&light_black;
+                                    break;
+
+                                case 1:
+                                    p_act=&straight_flash;
+                                    break;
+
+                                case 2:
+                                    p_act=&left_flash;
+                                    break;
+
+                                case 3:
+                                    p_act=&right_flash;
+                                    break;
+
+                                case 4:
+                                    p_act=&straight_left_flash;
+                                    break;
+
+                                case 5:
+                                    p_act=&straight_right_flash;
+                                    break;
+
+
+
+                                }
+                                if(pf_l->check_ID[ID]==1)
+                                {
+                                    if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                                        junbo_light_send_reference_select(ID,*p_act);
+                                }
+                            }
+                        }
+
+
+                    }
+
+                }
+                else
+                {
+                    printf("now segmentcount == %d up_bound=%d  down_bound=%d\n\n",pf_l->segmentcount,pf_l->hour[pf_l->segmentcount]*3600+pf_l->min[pf_l->segmentcount]*60,86040);
+                    printf("mark end\n");
                     for(int ID=1; ID<9; ID++)
                     {
                         if(smem.lane_adj_run_state[ID]==1)printf("ID=%d work\n",ID);
@@ -509,90 +673,36 @@ void junbo_lane_adj_light::step_control(int segment_type)
                                 break;
 
                             case 1:
-                                p_act=&straight_flash;
+                                p_act=&straight;
                                 break;
 
                             case 2:
-                                p_act=&left_flash;
+                                p_act=&left;
                                 break;
 
                             case 3:
-                                p_act=&right_flash;
+                                p_act=&right;
                                 break;
 
                             case 4:
-                                p_act=&straight_left_flash;
+                                p_act=&straight_left;
                                 break;
 
                             case 5:
-                                p_act=&straight_right_flash;
+                                p_act=&straight_right;
                                 break;
 
 
 
                             }
                             if(pf_l->check_ID[ID]==1)
-                              {
-                                  if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
-                                 junbo_light_send_reference_select(ID,*p_act);
-                              }
+                            {
+                                if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                                    junbo_light_send_reference_select(ID,*p_act);
+
+                            }
                         }
                     }
-
-
-                }
-
-                }
-                else
-                {
-                                    printf("now segmentcount == %d up_bound=%d  down_bound=%d\n\n",pf_l->segmentcount,pf_l->hour[pf_l->segmentcount]*3600+pf_l->min[pf_l->segmentcount]*60,86040);
-                printf("mark end\n");
-                for(int ID=1; ID<9; ID++)
-                {
-                    if(smem.lane_adj_run_state[ID]==1)printf("ID=%d work\n",ID);
-                }
-                for(int ID=1; ID<9; ID++)
-                {
-                    if(smem.lane_adj_run_state[ID]==1)
-                    {
-                        printf("check me case=%d\n",pf_l->light_select[ID][pf_l->segmentcount]);
-                        switch(pf_l->light_select[ID][pf_l->segmentcount])
-                        {
-                            //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
-                        case 0:
-                            p_act=&light_black;
-                            break;
-
-                        case 1:
-                            p_act=&straight;
-                            break;
-
-                        case 2:
-                            p_act=&left;
-                            break;
-
-                        case 3:
-                            p_act=&right;
-                            break;
-
-                        case 4:
-                            p_act=&straight_left;
-                            break;
-
-                        case 5:
-                            p_act=&straight_right;
-                            break;
-
-
-
-                        }
-                        if(pf_l->check_ID[ID]==1)
-                            {
-                                 if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
-                                junbo_light_send_reference_select(ID,*p_act);
-
-                    }}
-                }
 
 
 
@@ -649,11 +759,11 @@ void junbo_lane_adj_light::step_control(int segment_type)
                             }
                             printf("ID=%d  default light=%d\n",ID,smem.Lane_adj_memo_object.defaul_light[ID]);
                             if(pf_l->check_ID[ID]==1)
-                                {
-                                     if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                            {
+                                if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
                                     junbo_light_send_reference_select(ID,*p_act);
 
-                                }
+                            }
                         }
                     }
                     //printf("mark 4\n");do nothing
@@ -957,7 +1067,7 @@ void junbo_lane_adj_light::junbo_light_send(junbo_packet send)
         break;
 
     case 0xc4:
-      //  clear_s_junbo_lane_adj(&smem.lane_adj_module_state[ID][send.packet[5]]);
+        //  clear_s_junbo_lane_adj(&smem.lane_adj_module_state[ID][send.packet[5]]);
 
 
         break;
@@ -1088,13 +1198,12 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
                 ID=junbo_receive_packet[3];
                 printf("ID=%d LAS_module_query_count =%d p1=%x p2=%x \n",ID,smem.LAS_module_query_count,junbo_receive_packet[5],junbo_receive_packet[6]);
 
-                if(smem.LAS_module_query_count_2==3)smem.LAS_module_query_count_2=0;
-                smem.LAS_module_query_count_2++;
 
-                smem.lane_adj_module_state[ID][smem.LAS_module_query_count_2].ID=junbo_receive_packet[3];//ID
-                smem.lane_adj_module_state[ID][smem.LAS_module_query_count_2].command=junbo_receive_packet[4];
-                smem.lane_adj_module_state[ID][smem.LAS_module_query_count_2].parameter[0]=junbo_receive_packet[5];
-                smem.lane_adj_module_state[ID][smem.LAS_module_query_count_2].parameter[1]=junbo_receive_packet[6];
+
+                smem.lane_adj_module_state[ID][smem.LAS_module_query_count].ID=junbo_receive_packet[3];//ID
+                smem.lane_adj_module_state[ID][smem.LAS_module_query_count].command=junbo_receive_packet[4];
+                smem.lane_adj_module_state[ID][smem.LAS_module_query_count].parameter[0]=junbo_receive_packet[5];
+                smem.lane_adj_module_state[ID][smem.LAS_module_query_count].parameter[1]=junbo_receive_packet[6];
 
 
             }
@@ -1207,14 +1316,18 @@ void junbo_lane_adj_light::do_query_module()
         {
 
             if(smem.lane_adj_run_state[ID]==1)
-                {junbo_light_send_reference_select(ID,module_query[0]);
-                 junbo_light_send_reference_select(ID+10,module_query[0]);
+            {
+                junbo_light_send_reference_select(ID,module_query[0]);
+                       usleep(50000);
+                junbo_light_send_reference_select(ID+10,module_query[0]);
+                   usleep(50000);
                 junbo_light_send_reference_select(ID+20,module_query[0]);
-                }
+                   usleep(50000);
+            }
         }
         //   sleep(60);
 
-
+query_module_state_1();
     }
     catch(...) {}
 }
@@ -1232,17 +1345,18 @@ void junbo_lane_adj_light::query_module_state_1()
         {
             if(smem.lane_adj_run_state[ID]==1)
             {
- smem.LAS_module_query_count=1;
-                    junbo_light_send_reference_select(ID,module_query[1]);
-              //     usleep(50000);
-                    junbo_light_send_reference_select(ID+10,module_query[1]);
-               //    usleep(50000);
-                    junbo_light_send_reference_select(ID+20,module_query[1]);
-               //     usleep(50000);
+                smem.LAS_module_query_count=1;
+                junbo_light_send_reference_select(ID,module_query[1]);
+                     usleep(50000);
+                junbo_light_send_reference_select(ID+10,module_query[1]);
+                    usleep(50000);
+                junbo_light_send_reference_select(ID+20,module_query[1]);
+                     usleep(50000);
 
             }
 
         }
+        _intervalTimer.LAS_module_query_timer(2);
 
     }
     catch(...) {}
@@ -1257,18 +1371,18 @@ void junbo_lane_adj_light::query_module_state_2()
         {
             if(smem.lane_adj_run_state[ID]==1)
             {
-                    smem.LAS_module_query_count=2;
-                    junbo_light_send_reference_select(ID,module_query[2]);
-              //     usleep(50000);
-                    junbo_light_send_reference_select(ID+10,module_query[2]);
-               //    usleep(50000);
-                    junbo_light_send_reference_select(ID+20,module_query[2]);
-               //     usleep(50000);
+                smem.LAS_module_query_count=2;
+                junbo_light_send_reference_select(ID,module_query[2]);
+                     usleep(50000);
+                junbo_light_send_reference_select(ID+10,module_query[2]);
+                    usleep(50000);
+                junbo_light_send_reference_select(ID+20,module_query[2]);
+                     usleep(50000);
 
             }
 
         }
-
+ _intervalTimer.LAS_module_query_timer(2);
     }
     catch(...) {}
 }
@@ -1284,16 +1398,16 @@ void junbo_lane_adj_light::query_module_state_3()
         {
             if(smem.lane_adj_run_state[ID]==1)
             {
-                    smem.LAS_module_query_count=3;
-                    junbo_light_send_reference_select(ID,module_query[3]);
-              //     usleep(50000);
-                    junbo_light_send_reference_select(ID+10,module_query[3]);
-               //    usleep(50000);
-                    junbo_light_send_reference_select(ID+20,module_query[3]);
-               //     usleep(50000);
+                smem.LAS_module_query_count=3;
+                junbo_light_send_reference_select(ID,module_query[3]);
+                     usleep(50000);
+                junbo_light_send_reference_select(ID+10,module_query[3]);
+                    usleep(50000);
+                junbo_light_send_reference_select(ID+20,module_query[3]);
+                     usleep(50000);
 
             }
-
+_intervalTimer.LAS_module_query_timer(2);
         }
 
     }
@@ -1310,44 +1424,46 @@ BYTE *junbo_lane_adj_light::report_module_state()
         for(int ID=1; ID<9; ID++)
         {
             module_err[ID]=0;
-         if(smem.lane_adj_run_state[ID]==1)
-          {
-             for(int i=1;i<4;i++)
+            if(smem.lane_adj_run_state[ID]==1)
+            {
+                for(int i=1; i<4; i++)
 
-            {if((smem.lane_adj_module_state[ID][i].parameter[0]&0x8)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID][i].parameter[0]&0x4)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID][i].parameter[0]&0x2)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID][i].parameter[0]&0x1)!=0)module_err[ID]++;
+                {
+                    if((smem.lane_adj_module_state[ID][i].parameter[0]&0x8)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID][i].parameter[0]&0x4)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID][i].parameter[0]&0x2)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID][i].parameter[0]&0x1)!=0)module_err[ID]++;
 
-            if((smem.lane_adj_module_state[ID][i].parameter[1]&0x8)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID][i].parameter[1]&0x4)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID][i].parameter[1]&0x2)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID][i].parameter[1]&0x1)!=0)module_err[ID]++;
-printf("module sdate ID=%d series=%d parameter_1=%d parameter_2=%d\n",ID,i,smem.lane_adj_module_state[ID][i].parameter[0],smem.lane_adj_module_state[ID][i].parameter[1]);
-            if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x8)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x4)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x2)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x1)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID][i].parameter[1]&0x8)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID][i].parameter[1]&0x4)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID][i].parameter[1]&0x2)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID][i].parameter[1]&0x1)!=0)module_err[ID]++;
+                    printf("module sdate ID=%d series=%d parameter_1=%d parameter_2=%d\n",ID,i,smem.lane_adj_module_state[ID][i].parameter[0],smem.lane_adj_module_state[ID][i].parameter[1]);
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x8)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x4)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x2)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[0]&0x1)!=0)module_err[ID]++;
 
-            if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x8)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x4)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x2)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x1)!=0)module_err[ID]++;
-printf("module sdate ID=%d series=%d parameter_1=%d parameter_2=%d\n",ID+10,i,smem.lane_adj_module_state[ID+10][i].parameter[0],smem.lane_adj_module_state[ID+10][i].parameter[1]);
-            if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x8)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x4)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x2)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x1)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x8)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x4)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x2)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+10][i].parameter[1]&0x1)!=0)module_err[ID]++;
+                    printf("module sdate ID=%d series=%d parameter_1=%d parameter_2=%d\n",ID+10,i,smem.lane_adj_module_state[ID+10][i].parameter[0],smem.lane_adj_module_state[ID+10][i].parameter[1]);
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x8)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x4)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x2)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[0]&0x1)!=0)module_err[ID]++;
 
-            if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x8)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x4)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x2)!=0)module_err[ID]++;
-            if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x1)!=0)module_err[ID]++;
-            printf("module sdate ID=%d series=%d parameter_1=%d parameter_2=%d\n",ID+20,i,smem.lane_adj_module_state[ID+20][i].parameter[0],smem.lane_adj_module_state[ID+20][i].parameter[1]);
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x8)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x4)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x2)!=0)module_err[ID]++;
+                    if((smem.lane_adj_module_state[ID+20][i].parameter[1]&0x1)!=0)module_err[ID]++;
+                    printf("module sdate ID=%d series=%d parameter_1=%d parameter_2=%d\n",ID+20,i,smem.lane_adj_module_state[ID+20][i].parameter[0],smem.lane_adj_module_state[ID+20][i].parameter[1]);
 
-         printf("ID %d module_err=%d\n",ID,module_err[ID]);
-          }}
-          else module_err[ID]=0xff;
+                    printf("ID %d module_err=%d\n",ID,module_err[ID]);
+                }
+            }
+            else module_err[ID]=0xff;
 
         }
 

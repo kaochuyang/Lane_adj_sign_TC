@@ -17,6 +17,7 @@ class junbo_lane_adj_light
 {
 public:
  void test_LAS_function(int commnd,int parameter_1);
+  void test_LAS_function(int commnd,int parameter_1,int ID);
     void test_step();
 
     static pthread_mutex_t _junbo_mutex;

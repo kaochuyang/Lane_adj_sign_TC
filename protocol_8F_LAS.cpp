@@ -234,15 +234,10 @@ void protocol_8F_LAS::_8f45_module_query()
 {
     try
     {
-        printf("8f45 module report\n");
-        smem.junbo_LASC_object.query_module_state_1();
-usleep(50000);
-        smem.junbo_LASC_object.query_module_state_2();
-usleep(50000);
-        smem.junbo_LASC_object.query_module_state_3();
-        usleep(50000);
+        printf("8f45 module query\n");
+smem.junbo_LASC_object.do_query_module();
         vReturnToCenterACK(0x8f,0x45);
-_8fc5_module_report();
+
     }
     catch(...) {}
 }
@@ -278,7 +273,7 @@ void protocol_8F_LAS::_8fc5_module_report()
         writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
 
 
-
+_intervalTimer.LAS_module_query_timer(0);
 
     }
     catch(...) {}

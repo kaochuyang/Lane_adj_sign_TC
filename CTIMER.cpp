@@ -430,7 +430,7 @@ void intervalTimer::TimersCreating(void)
         _sig8.sigev_value.sival_int = 101;
         if ( timer_create( CLOCK_REALTIME, & _sig8, & _t8 ) ) exit( 1 );
 
-        _sig9.sigev_notify = SIGEV_SIGNAL;
+        _sig9.sigev_notify = SIGEV_SIGNAL;//for module query
         _sig9.sigev_signo = RTSIGNAL_Timer;
         _sig9.sigev_value.sival_int = 500;
         if ( timer_create( CLOCK_REALTIME, & _sig9, & _t9 ) ) exit( 1 );
@@ -567,7 +567,7 @@ void * intervalTimer::PTime(void *arg)
         uc0F04[0] = 0x0F;
         uc0F04[1] = 0x04;
         MESSAGEOK _MSG;
-
+int query_count=0;
         DATA_Bit DIOByte;
 
         //OTSS +3
@@ -593,17 +593,17 @@ void * intervalTimer::PTime(void *arg)
 
 
 
-   smem.junbo_LASC_object.do_query_module();
+
 
         ////////
 
         TimersCreating();
-
-        TimersSetting();
+ // smem.junbo_LASC_object.do_query_module();
+     /*   TimersSetting();
 
 
         _intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
-        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
+        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);*/
 ////////////////////////////////////
  smem.junbo_LASC_object.link_ID_check();//check LSA[ID] was equipment.
 
@@ -748,9 +748,9 @@ void * intervalTimer::PTime(void *arg)
                     printf("timer test 13\n");
                     smem.junbo_LASC_object.link_ID_check();
                     smem.junbo_LASC_object.auto_minus_bright();
-                    smem.junbo_LASC_object.query_module_state_1();
+                   /* smem.junbo_LASC_object.query_module_state_1();
                     smem.junbo_LASC_object.query_module_state_2();
-                    smem.junbo_LASC_object.query_module_state_3();
+                    smem.junbo_LASC_object.query_module_state_3();*/
                 case( 14 ):
 
                     printf("timer test 14\n");
@@ -777,6 +777,11 @@ void * intervalTimer::PTime(void *arg)
 
                 case( 500 ):
 
+if(query_count==0){smem.junbo_LASC_object.query_module_state_2();query_count++;}
+if(query_count==1){smem.junbo_LASC_object.query_module_state_3();
+query_count++;
+}
+if(query_count==2){smem.protocol_8f_object._8fc5_module_report();query_count=0;}
                     break;
 
 
@@ -1300,6 +1305,24 @@ bool intervalTimer::vAllDynamicToTODCount(unsigned short int siTMP)
     }
     catch(...) {}
 }
+
+
+void intervalTimer::LAS_module_query_timer(int siTMP)
+{
+    try
+    {
+        _it9.it_value.tv_sec = siTMP;
+        /* ot add 960802 */
+        _it9.it_value.tv_nsec = 0;
+        _it9.it_interval.tv_sec = 0;
+        _it9.it_interval.tv_nsec = 0;
+
+        if ( timer_settime( _t9, 0, & _it9, NULL ) ) exit( 1 );
+
+    }
+    catch(...) {}
+}
+
 
 //----------------------------------------------------------
 unsigned short int intervalTimer::vGetEffectTime(void)
