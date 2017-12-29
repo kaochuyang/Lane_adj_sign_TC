@@ -1103,8 +1103,9 @@ void * CSTC::_stc_thread_light_control_func( void * )
                     cin>>ID;
                     if(ID<1||ID>8)printf("ID=%d,please check your ID number\n");
                 }
+                                smem.junbo_LASC_object.test_LAS_function(command,parameter,ID);
+
                 break;
-                smem.junbo_LASC_object.test_LAS_function(command,parameter,ID);
             case 2:
                 cout<<"parameter=0~99,  0 is light_on forever, 1~99 is sec"<<endl;
                     while(parameter<0||parameter>99)

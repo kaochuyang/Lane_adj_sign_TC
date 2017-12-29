@@ -227,7 +227,7 @@ int main(int argc, char* argv[])
 
         _intervalTimer.ThreadsGenerate();                                           //°_Interval Timer Thread
 
-//    stc.ThreadsGenerate();
+    stc.ThreadsGenerate();
 
         //OT Fix 950727   LCN0000
 //   SendRequestToKeypad();                                                      //°Ýkeypad¥Ø«e­±ªO³]©w

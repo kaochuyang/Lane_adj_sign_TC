@@ -601,7 +601,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
 
 
             default:
-                vReturnToCenterNACK(0x8f,0x10,0x4,4+light_series*segmentcount+i);
+                vReturnToCenterNACK(0x8f,0x10,0x4,3+light_series*segmentcount+i);
                 error_mark=true;
                 printf("error happen 8f 10 \n");
                 break;
