@@ -1326,8 +1326,8 @@ void junbo_lane_adj_light::do_query_module()
             }
         }
         //   sleep(60);
+   _intervalTimer.LAS_module_query_timer(2);
 
-query_module_state_1();
     }
     catch(...) {}
 }

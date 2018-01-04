@@ -525,7 +525,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
 
         if(typeID<1||typeID>7)
         {
-            vReturnToCenterNACK(0x8f,0x10,0x4,0x1);
+             (0x8f,0x10,0x4,0x1);
             error_mark=true;
         }
         else smem.LAS_segmenttype[typeID].segmentcount=mes.packet[2+8];

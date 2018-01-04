@@ -598,12 +598,12 @@ int query_count=0;
         ////////
 
         TimersCreating();
- /* smem.junbo_LASC_object.do_query_module();
+  smem.junbo_LASC_object.do_query_module();
         TimersSetting();
 
 
         _intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
-        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);*/
+        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
 ////////////////////////////////////
  smem.junbo_LASC_object.link_ID_check();//check LSA[ID] was equipment.
 
@@ -778,10 +778,9 @@ int query_count=0;
                 case( 500 ):
 
 if(query_count==0){smem.junbo_LASC_object.query_module_state_2();query_count++;}
-if(query_count==1){smem.junbo_LASC_object.query_module_state_3();
-query_count++;
-}
-if(query_count==2){smem.protocol_8f_object._8fc5_module_report();query_count=0;}
+if(query_count==1){smem.junbo_LASC_object.query_module_state_2();query_count++;}
+if(query_count==2){smem.junbo_LASC_object.query_module_state_3();query_count++;}
+if(query_count==3){smem.protocol_8f_object._8fc5_module_report();query_count=0;}
                     break;
 
 
