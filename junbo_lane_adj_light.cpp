@@ -183,6 +183,9 @@ case 5:
     break;
 case 6:
     pf=&query_state;
+
+    for(int ID=1; ID<30; ID++)
+    smem.junbo_LASC_object.junbo_light_send_reference_select(ID,*pf);
     break;
 
 case 7:
@@ -198,9 +201,14 @@ default:
 
 }
 
+
+if((pf->command)=!query_state.command)
+{
+
+
 for(int ID=1; ID<9; ID++)
     smem.junbo_LASC_object.junbo_light_send_reference_select(ID,*pf);
-
+}
 
 
 }
@@ -523,7 +531,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                             }
                             if(pf_l->check_ID[ID]==1)
                             {
-                                if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                              //  if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
                                     junbo_light_send_reference_select(ID,*p_act);
                             }
                         }
@@ -579,7 +587,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                         }
                         if(pf_l->check_ID[ID]==1)
                         {
-                            if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                           // if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
                                 junbo_light_send_reference_select(ID,*p_act);
 
                         }
@@ -642,7 +650,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                                 }
                                 if(pf_l->check_ID[ID]==1)
                                 {
-                                    if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                                 //   if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
                                         junbo_light_send_reference_select(ID,*p_act);
                                 }
                             }
@@ -697,7 +705,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                             }
                             if(pf_l->check_ID[ID]==1)
                             {
-                                if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                              //  if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
                                     junbo_light_send_reference_select(ID,*p_act);
 
                             }
@@ -760,7 +768,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                             printf("ID=%d  default light=%d\n",ID,smem.Lane_adj_memo_object.defaul_light[ID]);
                             if(pf_l->check_ID[ID]==1)
                             {
-                                if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
+                               // if(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0])
                                     junbo_light_send_reference_select(ID,*p_act);
 
                             }
