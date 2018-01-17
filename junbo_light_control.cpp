@@ -619,7 +619,7 @@ void junbo_light_control::junbo_light_send(unsigned char junbo_send_packet[6])
     strcat(cFileTmp,dateTemp);
     strcat(cFileTmp,"_send_junborecord.txt");
     char cTimeHeader[64]= {0};
-    sprintf(cTimeHeader, " %#04d/%#02d/%#02d %#02d:%#02d:%#02d  \0", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday, currenttime->tm_hour, currenttime->tm_min, currenttime->tm_sec);
+    sprintf(cTimeHeader, "%#04d/%#02d/%#02d %#02d:%#02d:%#02d\0", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday, currenttime->tm_hour, currenttime->tm_min, currenttime->tm_sec);
 
     for (int i=0; i<300; i++)
         if (cTimeHeader[i]=='\0')
@@ -653,7 +653,7 @@ void junbo_light_control::junbo_light_send(unsigned char junbo_send_packet[6])
     if(pf!=NULL)
     {
 
-        sprintf(input_string,"\n    Send junbo_protocol=");
+        sprintf(input_string,"\nSend junbo_protocol=");
         fwrite(input_string,sizeof(char),sizeof(input_string),pf);
         for(int i=0; i<6; i++)
         {

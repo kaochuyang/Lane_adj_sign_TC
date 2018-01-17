@@ -273,7 +273,7 @@ void protocol_8F_LAS::_8fc5_module_report()
         writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
 
 
-_intervalTimer.LAS_module_query_timer(0);
+//_intervalTimer.LAS_module_query_timer(0);
 
     }
     catch(...) {}

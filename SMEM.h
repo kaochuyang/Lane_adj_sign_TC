@@ -76,7 +76,7 @@ public:
     lane_adj_module_state[29][4];
     int LAS_module_query_count,LAS_module_query_count_2;
    int lane_adj_run_state[9];
-
+    int step_send_count[9];//for step_cotrol to eliminate send frequency to avoid data collision.
     int segmenttype_8f;
     LAS_excute_info LAS_segmenttype[21];//1~7 common day, 8-20 special day, 0 no info.
 

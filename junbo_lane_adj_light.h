@@ -33,7 +33,7 @@ public:
     void junbo_light_send_reference_select(BYTE ID,s_junbo_lane_adj Action);
 
 
-    void step_control(int segment_type);
+    void step_control(int segment_type);//************ important
     void determind_weekday_specialday();
 
 

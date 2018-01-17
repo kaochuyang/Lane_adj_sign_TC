@@ -514,9 +514,9 @@ void intervalTimer::TimersSetting(void)
              iTmp = 300;
              break;
          }*/
-        _it6.it_value.tv_sec = 5;
+        _it6.it_value.tv_sec = 86400;
         _it6.it_value.tv_nsec = 0;
-        _it6.it_interval.tv_sec = 0;
+        _it6.it_interval.tv_sec = 86400;
         _it6.it_interval.tv_nsec = 0;
         if ( timer_settime( _t6, 0, & _it6, NULL ) ) exit( 1 );
 
@@ -748,9 +748,7 @@ int query_count=0;
                     printf("timer test 13\n");
                     smem.junbo_LASC_object.link_ID_check();
                     smem.junbo_LASC_object.auto_minus_bright();
-                   /* smem.junbo_LASC_object.query_module_state_1();
-                    smem.junbo_LASC_object.query_module_state_2();
-                    smem.junbo_LASC_object.query_module_state_3();*/
+
                 case( 14 ):
 
                     printf("timer test 14\n");
@@ -760,6 +758,7 @@ int query_count=0;
 
 
                 case( 15 ):  //HwStatus AutoReport
+                printf("timer test 15 \n");
                     smem.junbo_LASC_object.do_query_module();
 
                     break;
@@ -776,11 +775,16 @@ int query_count=0;
 
 
                 case( 500 ):
+printf("timer test 500 \n");
 
-if(query_count==0){smem.junbo_LASC_object.query_module_state_2();query_count++;}
-if(query_count==1){smem.junbo_LASC_object.query_module_state_2();query_count++;}
-if(query_count==2){smem.junbo_LASC_object.query_module_state_3();query_count++;}
-if(query_count==3){smem.protocol_8f_object._8fc5_module_report();query_count=0;}
+if(query_count==0){smem.junbo_LASC_object.query_module_state_1();query_count++;
+printf("timer test 500 count=%d\n",query_count);
+}
+
+
+if(query_count==1){smem.junbo_LASC_object.query_module_state_2();query_count++;printf("timer test 500 count=%d\n",query_count);}
+if(query_count==2){smem.junbo_LASC_object.query_module_state_3();query_count++;printf("timer test 500 count=%d\n",query_count);}
+if(query_count==3){smem.protocol_8f_object._8fc5_module_report();query_count=0;printf("timer test 500 count=%d\n",query_count);}
                     break;
 
 
