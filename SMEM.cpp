@@ -281,6 +281,7 @@ try {
 
     pthread_mutex_init(&mutexSmem,NULL);
 LAS_module_query_count_2=0;
+memset(LAS_link_err_count,'0',9);
 memset(step_send_count,'0',9);
     InitialSMem();
 

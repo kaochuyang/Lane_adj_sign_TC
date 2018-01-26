@@ -68,7 +68,7 @@ public:
     LAS_YMD specialtype[21];
 
    junbo_lane_adj_memory_object Lane_adj_memo_object;
-
+   int LAS_link_err_count[9];
     s_junbo_lane_adj
     lane_adj_brightness_record[9],
     lane_adj_light_record[9],

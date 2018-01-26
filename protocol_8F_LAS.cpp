@@ -285,9 +285,9 @@ void protocol_8F_LAS::_8f05_module_act_report()
 {
     try
     {
+        bool send_flag=true;
         printf("8f05 module act report\n");
-
-        unsigned char pack[18];
+                unsigned char pack[18];
         unsigned char *data;
         data=smem.junbo_LASC_object.report_module_state();
         pack[0]=0x8f;
@@ -299,17 +299,30 @@ void protocol_8F_LAS::_8f05_module_act_report()
             pack[2*(ID-1)+2]=ID;
 
             if(smem.lane_adj_run_state[ID]==1)
-                pack[2*(ID-1)+3]=data[ID];
-            else pack[2*(ID-1)+3]=0xff;
-        }
+             {
 
+                pack[2*(ID-1)+3]=data[ID];
+            smem.LAS_link_err_count[ID]=0;
+
+             }
+            else
+            {
+                pack[2*(ID-1)+3]=0xff;smem.LAS_link_err_count[ID]++;
+            if(smem.LAS_link_err_count[ID]==128)smem.LAS_link_err_count[ID]=2;
+            }
+        }
+        for(int i=1;i<9;i++)
+        {
+            if(smem.LAS_link_err_count[i]==1)send_flag=false;//because send() will clear the link_check's memory,that cause 8f05 let the pack[]=0xff,but the pack maybe just not yet receive the light report.
+            // In the sentence,I let it check twice whitch pack receive 0xff 2 times,it will be disconnetion.
+        }
 
         MESSAGEOK _MsgOK;
 
         _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(pack,18,true);
         _MsgOK.InnerOrOutWard = cOutWard;
 //    writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
-        writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
+     if(send_flag)writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
 
 
     }

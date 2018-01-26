@@ -31,6 +31,8 @@ public:
     void junbo_light_send(junbo_packet send);
     void junbo_light_receive(MESSAGEOK messageIn);
     void junbo_light_send_reference_select(BYTE ID,s_junbo_lane_adj Action);
+    void light_exec_check(int ID,int segment_type);
+    void light_mistake_warning();
 
 
     void step_control(int segment_type);//************ important

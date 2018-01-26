@@ -603,11 +603,13 @@ int query_count=0;
 
 
         _intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
-        _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
+   //     _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
 ////////////////////////////////////
  smem.junbo_LASC_object.link_ID_check();//check LSA[ID] was equipment.
 
  smem.junbo_LASC_object.light_timeout_control(0);
+
+ smem.junbo_LASC_object.auto_minus_bright();
 
         printf("hello light control\n");
         //   timer_reboot_create();//kaochu 2017 08 17
