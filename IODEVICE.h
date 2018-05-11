@@ -7,12 +7,12 @@
 //---------------------------------------------------------------------------
 class IODEVICE
 {
-    public:
+public:
 
-        IODEVICE(void);
-        ~IODEVICE(void);
+    IODEVICE(void);
+    ~IODEVICE(void);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

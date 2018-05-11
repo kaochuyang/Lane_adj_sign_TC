@@ -21,49 +21,57 @@ void SCREENHWReset::DoKeyWork(BYTE key)
 //---------------------------------------------------------------------------
 void SCREENHWReset::LoadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//0_hwreset.bit","rb");
-    if (bitmap) {
-        fread(hwResetBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//0_hwreset.bit","rb");
+        if (bitmap)
+        {
+            fread(hwResetBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENHWReset::DisplayHWReset(void)
 {
-try {
-    smem.SetcFace(cHWRESET);
-    smem.vWriteMsgToDOM("Hardware Reset!!");
-    lcd240x128.DISPLAY_GRAPHIC(0,hwResetBitmap,128,30);
-    DisplayDateTime();
-  } catch (...) {}
+    try
+    {
+        smem.SetcFace(cHWRESET);
+        smem.vWriteMsgToDOM("Hardware Reset!!");
+        lcd240x128.DISPLAY_GRAPHIC(0,hwResetBitmap,128,30);
+        DisplayDateTime();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENHWReset::InitDispWord(void)                                         //初始化此畫面的座標等參數
 {
-    for (int i=0;i<8;i++) {
-         if (i>=0 && i<=3) dateWord[i].X=64+i*8;
-         else if (i>=4 && i<=5) dateWord[i].X=112+(i-4)*8;
-         else if (i>=6 && i<=7) dateWord[i].X=144+(i-6)*8;
-         dateWord[i].Y=25;
-         dateWord[i].width=8;
-         dateWord[i].height=16;
+    for (int i=0; i<8; i++)
+    {
+        if (i>=0 && i<=3) dateWord[i].X=64+i*8;
+        else if (i>=4 && i<=5) dateWord[i].X=112+(i-4)*8;
+        else if (i>=6 && i<=7) dateWord[i].X=144+(i-6)*8;
+        dateWord[i].Y=25;
+        dateWord[i].width=8;
+        dateWord[i].height=16;
     }
-    for (int i=0;i<6;i++) {
-         if (i>=0 && i<=1)  timeWord[i].X=80+i*8;
-         else if (i>=2 && i<=3)  timeWord[i].X=112+(i-2)*8;
-         else if (i>=4 && i<=5)  timeWord[i].X=144+(i-4)*8;
-         timeWord[i].Y=45;
-         timeWord[i].width=8;
-         timeWord[i].height=16;
+    for (int i=0; i<6; i++)
+    {
+        if (i>=0 && i<=1)  timeWord[i].X=80+i*8;
+        else if (i>=2 && i<=3)  timeWord[i].X=112+(i-2)*8;
+        else if (i>=4 && i<=5)  timeWord[i].X=144+(i-4)*8;
+        timeWord[i].Y=45;
+        timeWord[i].width=8;
+        timeWord[i].height=16;
     }
 }
 //---------------------------------------------------------------------------
 void SCREENHWReset::DisplayDateTime(void)
 {
-try {
+    try
+    {
         unsigned short cYear=0,cMonth=0,cDay=0,cHour=0,cMin=0,cSec=0;
         time_t currentTime=time(NULL);
         struct tm *now=localtime(&currentTime);
@@ -91,6 +99,7 @@ try {
         lcd240x128.DISPLAY_GRAPHIC_XY(timeWord[4].X,timeWord[4].Y,word8x16[cSec/10],timeWord[4].height,timeWord[4].width/8);
         lcd240x128.DISPLAY_GRAPHIC_XY(timeWord[5].X,timeWord[5].Y,word8x16[cSec%10],timeWord[5].height,timeWord[5].width/8);
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------

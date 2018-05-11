@@ -7,12 +7,12 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC87CMS
 {
-    public:
+public:
 
-        PTRAFFIC87CMS(void);
-        ~PTRAFFIC87CMS(void);
+    PTRAFFIC87CMS(void);
+    ~PTRAFFIC87CMS(void);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

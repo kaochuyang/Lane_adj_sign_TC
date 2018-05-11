@@ -12,7 +12,7 @@ private:
     int fd;
     struct termios oldtio,newtio;
 
- public:
+public:
     bool opened;
     CIOCom();
     ~CIOCom();

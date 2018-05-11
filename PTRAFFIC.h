@@ -17,24 +17,24 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC
 {
-    public:
+public:
 
-        PTRAFFIC(void);
-        ~PTRAFFIC(void);
-        bool DoWorkViaProtocol(MESSAGEOK);                                      //根據protocol傳來的Structure作事情
+    PTRAFFIC(void);
+    ~PTRAFFIC(void);
+    bool DoWorkViaProtocol(MESSAGEOK);                                      //根據protocol傳來的Structure作事情
 
 
-    private:
+private:
 
-        PTRAFFIC77 pTraffic77;
-        PTRAFFIC87 pTraffic87;
-        PTRAFFIC92 pTraffic92;
-        PTRAFFICNTCIP pTrafficNtcip;
+    PTRAFFIC77 pTraffic77;
+    PTRAFFIC87 pTraffic87;
+    PTRAFFIC92 pTraffic92;
+    PTRAFFICNTCIP pTrafficNtcip;
 
-        PTRAFFICCCJ pTrafficCCJ;
+    PTRAFFICCCJ pTrafficCCJ;
 
-        PTRAFFICREVSYNC pTrafficRevSync;
-        PTRAFFICAMEGIDS pTrafficAmegids;
+    PTRAFFICREVSYNC pTrafficRevSync;
+    PTRAFFICAMEGIDS pTrafficAmegids;
 
 };
 //---------------------------------------------------------------------------

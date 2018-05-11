@@ -26,27 +26,33 @@ SCREENABOErr::~SCREENABOErr(void)
 //---------------------------------------------------------------------------
 void SCREENABOErr::DoKeyWork(BYTE key)              //已過濾,進來的是0x80~0x98之間,5X5按鍵
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x98:
-          DoKeyEnterWork();
-        break;
+            DoKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENABOErr::LoadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//0_cmderr.bit","rb");
-    if (bitmap) {
-        fread(aboErrBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//0_cmderr.bit","rb");
+        if (bitmap)
+        {
+            fread(aboErrBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENABOErr::DisplayABOErr(void)
@@ -58,35 +64,38 @@ void SCREENABOErr::DisplayABOErr(void)
 //---------------------------------------------------------------------------
 void SCREENABOErr::DoKeyEnterWork(void)
 {
-try {
-    switch (smem.GetLastFace()) {
+    try
+    {
+        switch (smem.GetLastFace())
+        {
 
-            case cCTLSETUP:
-                 screenCtlSetup.DisplayCtlSetup();
-            break;
-
-            case cMODIFYDT:
-                 screenModifyDT.DisplayModifyDT();
-            break;
-            case cHWCYCLE:
-                 screenHWCycle.DisplayHWCycle();
-            break;
-            case cMODIFYPWD:
-                 screenModifyPWD.DisplayModifyPWD();
-            break;
-            case cDBSETUP:
-                 screenDBSetup.DisplayDBSetup();
+        case cCTLSETUP:
+            screenCtlSetup.DisplayCtlSetup();
             break;
 
-            case cSENDCYCLE:
-                 screenSendCycle.DisplaySendCycle();
+        case cMODIFYDT:
+            screenModifyDT.DisplayModifyDT();
+            break;
+        case cHWCYCLE:
+            screenHWCycle.DisplayHWCycle();
+            break;
+        case cMODIFYPWD:
+            screenModifyPWD.DisplayModifyPWD();
+            break;
+        case cDBSETUP:
+            screenDBSetup.DisplayDBSetup();
             break;
 
-            default:
-                 screenMain.DisplayMain();
+        case cSENDCYCLE:
+            screenSendCycle.DisplaySendCycle();
             break;
 
+        default:
+            screenMain.DisplayMain();
+            break;
+
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------

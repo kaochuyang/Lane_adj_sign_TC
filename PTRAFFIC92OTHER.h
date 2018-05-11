@@ -9,18 +9,18 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC92OTHER
 {
-    public:
+public:
 
-        PTRAFFIC92OTHER(void);
-        ~PTRAFFIC92OTHER(void);
+    PTRAFFIC92OTHER(void);
+    ~PTRAFFIC92OTHER(void);
 
-        bool DoWorkViaPTraffic92(MESSAGEOK);                                    //根據PTraffic92來的訊息作事情
+    bool DoWorkViaPTraffic92(MESSAGEOK);                                    //根據PTraffic92來的訊息作事情
 
-    private:
+private:
 
 
-        int vReturnToCenterACK(unsigned char , unsigned char);
-        int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
+    int vReturnToCenterACK(unsigned char , unsigned char);
+    int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
 
 
 

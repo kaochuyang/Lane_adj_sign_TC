@@ -9,19 +9,19 @@
 //---------------------------------------------------------------------------
 class PARSESS
 {
-    public:
+public:
 
-        PARSESS(void);
-        ~PARSESS(void);
+    PARSESS(void);
+    ~PARSESS(void);
 
-        bool ParseBlock(int,BYTE *,MESSAGEOK *,int *,int *);
-        bool vMultiDropProcess(int *,MESSAGEOK *);
-        bool CheckSum(int *,MESSAGEOK *);
-        bool EchoToGUI(int *,MESSAGEOK *,char *);
-        bool MoveLastData(int *,int *,MESSAGEOK *);
+    bool ParseBlock(int,BYTE *,MESSAGEOK *,int *,int *);
+    bool vMultiDropProcess(int *,MESSAGEOK *);
+    bool CheckSum(int *,MESSAGEOK *);
+    bool EchoToGUI(int *,MESSAGEOK *,char *);
+    bool MoveLastData(int *,int *,MESSAGEOK *);
 
-    private:
-        bool doCheckSumXD(int, MESSAGEOK *);
+private:
+    bool doCheckSumXD(int, MESSAGEOK *);
 
 };
 //---------------------------------------------------------------------------

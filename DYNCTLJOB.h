@@ -7,9 +7,9 @@
 //---------------------------------------------------------------------------
 class DYNCTLJOB:public JOB
 {
-    public:
-         DYNCTLJOB(void);
-        ~DYNCTLJOB(void);
+public:
+    DYNCTLJOB(void);
+    ~DYNCTLJOB(void);
 };
 //---------------------------------------------------------------------------
 extern DYNCTLJOB dynCtlJob;

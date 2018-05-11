@@ -12,6 +12,8 @@
 #include "protocol_8F_LAS.h"
 #include "protocol_9F_m_curve.h"
 #include "junbo_lane_adj_light.h"
+#include "protocol_CF_cms_travel_time.h"
+#include "CMS_hw_protocol.h"
 #include <pthread.h>
 //---------------------------------------------------------------------------
 typedef struct MESSAGEWAITREPONSE
@@ -67,29 +69,29 @@ public:
     int LAS_week_type_info[7];
     LAS_YMD specialtype[21];
 
-   junbo_lane_adj_memory_object Lane_adj_memo_object;
-   int LAS_link_err_count[9];
+    junbo_lane_adj_memory_object Lane_adj_memo_object;
+    int LAS_link_err_count[9];
     s_junbo_lane_adj
     lane_adj_brightness_record[9],
-    lane_adj_light_record[9],
-    lane_adj_timeout_record[9],
-    lane_adj_module_state[29][4];
+                               lane_adj_light_record[9],
+                               lane_adj_timeout_record[9],
+                               lane_adj_module_state[29][4];
     int LAS_module_query_count,LAS_module_query_count_2;
-   int lane_adj_run_state[9];
+    int lane_adj_run_state[9];
     int step_send_count[9];//for step_cotrol to eliminate send frequency to avoid data collision.
     int segmenttype_8f;
     LAS_excute_info LAS_segmenttype[21];//1~7 common day, 8-20 special day, 0 no info.
-
-
+    protocol_CF_cms_travel_time _CF_object;
+CMS_hw_protocol CMS_obj;
     // LSC=  Lane adjusted sign controler
- protocol_8F_LAS protocol_8f_object;
- protocol_9F_m_curve protocol_9F_object;
+    protocol_8F_LAS protocol_8f_object;
+    protocol_9F_m_curve protocol_9F_object;
     junli_vd junli_object;
     junbo_cms junbo_object;
     power_reboot_group power_object;
     RS232 power_port;
     UDP revAPP_socket;
-junbo_lane_adj_light junbo_LASC_object;
+    junbo_lane_adj_light junbo_LASC_object;
     int count_vd_alive;
     STORAGE disk;                                                           //¼gÀÉ®×¥Î
     /*OTCombo0713*/
@@ -114,10 +116,10 @@ junbo_lane_adj_light junbo_LASC_object;
 
     //OT Pass
     UDP SSVD05Socket, SSVD06Socket, SSVD07Socket, SSVD08Socket, SSVD09Socket, SSVD10Socket,
-    SSVD11Socket, SSVD12Socket, SSVD13Socket, SSVD14Socket, SSVD15Socket,
-    SSVD16Socket, SSVD17Socket, SSVD18Socket, SSVD19Socket, SSVD20Socket,
-    SSVD21Socket, SSVD22Socket, SSVD23Socket, SSVD24Socket, SSVD25Socket,
-    SSVD26Socket, SSVD27Socket, SSVD28Socket, SSVD29Socket, SSVD30Socket;
+        SSVD11Socket, SSVD12Socket, SSVD13Socket, SSVD14Socket, SSVD15Socket,
+        SSVD16Socket, SSVD17Socket, SSVD18Socket, SSVD19Socket, SSVD20Socket,
+        SSVD21Socket, SSVD22Socket, SSVD23Socket, SSVD24Socket, SSVD25Socket,
+        SSVD26Socket, SSVD27Socket, SSVD28Socket, SSVD29Socket, SSVD30Socket;
 //            SSVD31Socket, SSVD32Socket, SSVD33Socket, SSVD34Socket, SSVD35Socket,
 //            SSVD36Socket, SSVD37Socket, SSVD38Socket, SSVD39Socket, SSVD40Socket;
 

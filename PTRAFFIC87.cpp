@@ -12,20 +12,23 @@ PTRAFFIC87::~PTRAFFIC87(void)
 //---------------------------------------------------------------------------
 bool PTRAFFIC87::DoWorkViaPTraffic(MESSAGEOK message)
 {
-try {
-    switch (message.packet[4]) {
+    try
+    {
+        switch (message.packet[4])
+        {
 //            case 0x:
 //            case 0x:
 //            case 0x:
 //            break;
 //以後再處理,這裡根據協定碼,來判斷為哪一種路測設備,有Comm,Tc,Cms,Vd
 
-            default:
+        default:
             break;
+        }
+
+        return true;
+
     }
-
-    return true;
-
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------

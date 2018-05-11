@@ -7,12 +7,12 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC87TC
 {
-    public:
+public:
 
-        PTRAFFIC87TC(void);
-        ~PTRAFFIC87TC(void);
+    PTRAFFIC87TC(void);
+    ~PTRAFFIC87TC(void);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

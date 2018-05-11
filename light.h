@@ -15,26 +15,26 @@
 //----------------------------------------------------------------------
 class Light
 {
-    public:
-      Light (void);
-      ~Light (void);
+public:
+    Light (void);
+    ~Light (void);
 
-      //Base
-      bool GetAuthority(unsigned long);      //得到控制權
-      bool ReleaseAuthority(void);           //釋放控制權
-      bool SetTimeOfCard(BYTE);              //設定燈號驅動卡時間參數
-      bool SetLight(BYTE,BYTE,BYTE);         //設定燈號輸出埠
+    //Base
+    bool GetAuthority(unsigned long);      //得到控制權
+    bool ReleaseAuthority(void);           //釋放控制權
+    bool SetTimeOfCard(BYTE);              //設定燈號驅動卡時間參數
+    bool SetLight(BYTE,BYTE,BYTE);         //設定燈號輸出埠
 
-      //Advance
-      bool SetLight(BYTE *);                 //點燈
-      bool SetAllLight(void);                //點燈全亮
-      bool SetAllDark(void);                 //點燈全暗
-      bool SetCardDefault(void);             //將燈號驅動卡設default:使用設定時間(254秒)方式
-      bool SayHelloToCard(void);             //將燈號驅動卡時間參數歸0,不會跳default
+    //Advance
+    bool SetLight(BYTE *);                 //點燈
+    bool SetAllLight(void);                //點燈全亮
+    bool SetAllDark(void);                 //點燈全暗
+    bool SetCardDefault(void);             //將燈號驅動卡設default:使用設定時間(254秒)方式
+    bool SayHelloToCard(void);             //將燈號驅動卡時間參數歸0,不會跳default
 
-    private:
-      unsigned long LPTBASEPORT;             //IO位置
-      bool haveGetPower;                     //是否獲得控制LPT的權限
+private:
+    unsigned long LPTBASEPORT;             //IO位置
+    bool haveGetPower;                     //是否獲得控制LPT的權限
 
 };
 //----------------------------------------------------------------------

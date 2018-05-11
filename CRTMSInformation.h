@@ -48,7 +48,7 @@
 //---------------------------------------------------------------------------
 struct CRTMSInformation
 {
-  public:
+public:
     bool dirin;
     bool health;
 
@@ -64,15 +64,16 @@ struct CRTMSInformation
     CTarget target;
 
     CRTMSInformation(void):dirin(false),health(false),info(0x00),id(0)
-                   ,avgspeed(0),voltage(0),uptime(0)
-                   {
-                     for(int i=0;i<8;i++){
-                       vollong[i]=0;
-                       vol[i]=0;
-                       oc[i]=0;
-                       sp[i]=0;
-                     }
-                   }
+        ,avgspeed(0),voltage(0),uptime(0)
+    {
+        for(int i=0; i<8; i++)
+        {
+            vollong[i]=0;
+            vol[i]=0;
+            oc[i]=0;
+            sp[i]=0;
+        }
+    }
 
     CRTMSInformation &operator=(const CRTMSInformation &rtms_info);
     void display_status(void);

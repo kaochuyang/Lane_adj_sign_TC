@@ -9,9 +9,10 @@ struct SBuffer
 {
     unsigned long length;
     unsigned char block[buffer_block_size];
-    SBuffer(void):length(0){
-                   for(int i=0;i<buffer_block_size;i++) block[i]=0;
-                 }
+    SBuffer(void):length(0)
+    {
+        for(int i=0; i<buffer_block_size; i++) block[i]=0;
+    }
 };
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -20,18 +21,19 @@ struct SPacket
     bool status;
     unsigned long length;
     unsigned char block[packet_block_size];
-    SPacket(void):status(false),length(0){ //BugFix
-                   for(int i=0;i<packet_block_size;i++) block[i]=0;
-                 }
+    SPacket(void):status(false),length(0)  //BugFix
+    {
+        for(int i=0; i<packet_block_size; i++) block[i]=0;
+    }
 };
 //---------------------------------------------------------------------
 //----------------------------------------------------------------------
 class CPacketCluster
 {
-  public:
+public:
     SPacket packet[packet_amount];
     int last_packet;
-    CPacketCluster(void):last_packet(0){}
+    CPacketCluster(void):last_packet(0) {}
     //~CPacketCluster(void);
 
     void FlushPacket(void);

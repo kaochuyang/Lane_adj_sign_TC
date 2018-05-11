@@ -8,12 +8,12 @@
 //---------------------------------------------------------------------------
 class PARSERTMS:public PARSE
 {
-    public:
+public:
 
-        PARSERTMS(void);
-        ~PARSERTMS(void);
+    PARSERTMS(void);
+    ~PARSERTMS(void);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

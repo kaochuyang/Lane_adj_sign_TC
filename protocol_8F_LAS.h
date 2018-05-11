@@ -60,11 +60,11 @@ public:
     void read_LSA_segment_data();
     void default_LAS_object(LAS_excute_info *pf);
 
+    int vReturnToCenterACK(unsigned char , unsigned char);
+    int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
 protected:
 private:
 
-    int vReturnToCenterACK(unsigned char , unsigned char);
-    int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
 };
 
 #endif // PROTOCOL_8F_LAS_H

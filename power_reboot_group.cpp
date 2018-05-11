@@ -34,13 +34,13 @@ bool power_reboot_group::power_reset(BYTE device,int second)//select device=F C 
 
 
         Send_packet[0]='$';//STX
- /*       if((device!='C')&&(device!='F')&&(device!='V'))
-        {
-            printf("The device name is not correct!\n");
-            Send_packet[1]=0x0;
-        }
-        else*/
-         Send_packet[1]=device;
+        /*       if((device!='C')&&(device!='F')&&(device!='V'))
+               {
+                   printf("The device name is not correct!\n");
+                   Send_packet[1]=0x0;
+               }
+               else*/
+        Send_packet[1]=device;
         Send_packet[2]=',';//interval
         Send_packet[3]=0x30+(second/10);//Reset time 0~9
         Send_packet[4]=0x30+(second%10);//0~9
@@ -50,12 +50,12 @@ bool power_reboot_group::power_reset(BYTE device,int second)//select device=F C 
         sprintf(device_name,"%C",device);
         sprintf(cTMP, "Device %C, second=%d", device, second);
         smem.vWriteMsgToDOM(cTMP);
-      //  power_control_port.Rs232Write(Send_packet,7,device_name);
-       //  writeJob.WritePhysicalOut(Send_packet,7,DEVICETRAFFICLIGHT);
+        //  power_control_port.Rs232Write(Send_packet,7,device_name);
+        //  writeJob.WritePhysicalOut(Send_packet,7,DEVICETRAFFICLIGHT);
 
         printf("power_reset %C %d\n",device,second);
-         smem.lightPort.Rs232Write(Send_packet,7,"/dev/ttyS3");
-      //   writeJob.WritePhysicalOut(Send_packet, 7, revAPP);
+        smem.lightPort.Rs232Write(Send_packet,7,"/dev/ttyS3");
+        //   writeJob.WritePhysicalOut(Send_packet, 7, revAPP);
 
 
         return true;
@@ -72,14 +72,14 @@ int power_reboot_group::open_port_process(char* tty_name)
 {
     try
     {
-   /*     int tempmax=0;
-        if (tempmax=power_control_port.OpenRs232Port(tty_name, 9600, false)>0)
-        {
-            printf("open power_control_port-%s  Success!!\n",tty_name);
-        }
-        else printf("open power_control_port Fail!!\n");
+        /*     int tempmax=0;
+             if (tempmax=power_control_port.OpenRs232Port(tty_name, 9600, false)>0)
+             {
+                 printf("open power_control_port-%s  Success!!\n",tty_name);
+             }
+             else printf("open power_control_port Fail!!\n");
 
-        return tempmax;*/
+             return tempmax;*/
     }
     catch(...) {}
 }
@@ -206,7 +206,11 @@ bool power_reboot_group::report_power_reboot()
         {
             fread(&clock_info,sizeof(clock_info),1,pf);
             fclose(pf);
-        }else{memset(clock_info,'0',sizeof(clock_info));}
+        }
+        else
+        {
+            memset(clock_info,'0',sizeof(clock_info));
+        }
 
 
 
@@ -217,8 +221,8 @@ bool power_reboot_group::report_power_reboot()
         data[3]=clock_info[1];
 
         writeJob.WritePhysicalOut(data,4,revAPP);
-        for(int i=0;i<2;i++)
-        printf("clock_info=%d",clock_info[i]);
+        for(int i=0; i<2; i++)
+            printf("clock_info=%d",clock_info[i]);
         printf("\n");
 
 

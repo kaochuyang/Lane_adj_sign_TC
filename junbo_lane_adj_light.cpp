@@ -503,7 +503,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                             printf("check me case=%d\n",pf_l->light_select[ID][i]);
                             switch(pf_l->light_select[ID][i])
                             {
-                                //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                            //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
                             case 0:
                                 p_act=&light_black;
                                 break;
@@ -567,7 +567,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                         printf("check me case=%d\n",pf_l->light_select[ID][i]);
                         switch(pf_l->light_select[ID][i])
                         {
-                            //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                        //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
                         case 0:
                             p_act=&light_black;
                             break;
@@ -637,7 +637,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                                 printf("check me case=%d\n",pf_l->light_select[ID][pf_l->segmentcount]);
                                 switch(pf_l->light_select[ID][pf_l->segmentcount])
                                 {
-                                    //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                                //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
                                 case 0:
                                     p_act=&light_black;
                                     break;
@@ -700,7 +700,7 @@ void junbo_lane_adj_light::step_control(int segment_type)
                             printf("check me case=%d\n",pf_l->light_select[ID][pf_l->segmentcount]);
                             switch(pf_l->light_select[ID][pf_l->segmentcount])
                             {
-                                //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                            //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
                             case 0:
                                 p_act=&light_black;
                                 break;
@@ -1121,10 +1121,10 @@ void junbo_lane_adj_light::junbo_light_send(junbo_packet send)
     pf=fopen(cFileTmp,"a+");
     if(pf!=NULL)
     {
-sprintf(input_string,"\n    Send junbo_protocol=");
-fwrite(input_string,sizeof(char),sizeof(input_string),pf);
-      char protocol_string[21]={0};
-           sprintf(protocol_string,"%x %x %x %x %x %x %x %x ",send.packet[0],send.packet[1],send.packet[2],
+        sprintf(input_string,"\n    Send junbo_protocol=");
+        fwrite(input_string,sizeof(char),sizeof(input_string),pf);
+        char protocol_string[21]= {0};
+        sprintf(protocol_string,"%x %x %x %x %x %x %x %x ",send.packet[0],send.packet[1],send.packet[2],
                 send.packet[3],send.packet[4],send.packet[5],send.packet[6],send.packet[7]);
         fwrite(protocol_string,sizeof(char),sizeof(protocol_string),pf);
         char cTimeHeader[64]= {0};
@@ -1195,52 +1195,52 @@ void junbo_lane_adj_light::light_exec_check(int ID,int segment_type)
                 printf("mark 2\n");
 
 
-                        if(smem.lane_adj_run_state[ID]==1)
-                        {
+                if(smem.lane_adj_run_state[ID]==1)
+                {
 
-                            if(pf_l->light_select[ID][i]==pf_l->light_select[ID][i+1])check_same_light_or_not=true;
-                            else check_same_light_or_not=false;
-                            printf("check me case=%d\n",pf_l->light_select[ID][i]);
-                            switch(pf_l->light_select[ID][i])
-                            {
-                                //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
-                            case 0:
-                                p_act=&light_black;
-                                break;
+                    if(pf_l->light_select[ID][i]==pf_l->light_select[ID][i+1])check_same_light_or_not=true;
+                    else check_same_light_or_not=false;
+                    printf("check me case=%d\n",pf_l->light_select[ID][i]);
+                    switch(pf_l->light_select[ID][i])
+                    {
+                    //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                    case 0:
+                        p_act=&light_black;
+                        break;
 
-                            case 1:
-                                if(check_same_light_or_not==true)p_act=&straight;
-                                else p_act=&straight_flash;
-                                break;
+                    case 1:
+                        if(check_same_light_or_not==true)p_act=&straight;
+                        else p_act=&straight_flash;
+                        break;
 
-                            case 2:
-                                if(check_same_light_or_not==true)p_act=&left;
-                                else   p_act=&left_flash;
-                                break;
+                    case 2:
+                        if(check_same_light_or_not==true)p_act=&left;
+                        else   p_act=&left_flash;
+                        break;
 
-                            case 3:
-                                if(check_same_light_or_not==true)p_act=&right;
-                                else   p_act=&right_flash;
-                                break;
+                    case 3:
+                        if(check_same_light_or_not==true)p_act=&right;
+                        else   p_act=&right_flash;
+                        break;
 
-                            case 4:
-                                if(check_same_light_or_not==true)p_act=&straight_left;
-                                else    p_act=&straight_left_flash;
-                                break;
+                    case 4:
+                        if(check_same_light_or_not==true)p_act=&straight_left;
+                        else    p_act=&straight_left_flash;
+                        break;
 
-                            case 5:
-                                if(check_same_light_or_not==true)p_act=&straight_right;
-                                else    p_act=&straight_right_flash;
-                                break;
+                    case 5:
+                        if(check_same_light_or_not==true)p_act=&straight_right;
+                        else    p_act=&straight_right_flash;
+                        break;
 
 
 
-                            }
-                            if(pf_l->check_ID[ID]==1)
-                            {
-                                if((p_act->command!=smem.lane_adj_light_record[ID].command)&&(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0]))light_error_flag=true;
-                            }
-                        }
+                    }
+                    if(pf_l->check_ID[ID]==1)
+                    {
+                        if((p_act->command!=smem.lane_adj_light_record[ID].command)&&(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0]))light_error_flag=true;
+                    }
+                }
 
 
 
@@ -1254,47 +1254,47 @@ void junbo_lane_adj_light::light_exec_check(int ID,int segment_type)
                 printf("mark 3\n");
 
 
-                    if(smem.lane_adj_run_state[ID]==1)
+                if(smem.lane_adj_run_state[ID]==1)
+                {
+                    printf("check me case=%d\n",pf_l->light_select[ID][i]);
+                    switch(pf_l->light_select[ID][i])
                     {
-                        printf("check me case=%d\n",pf_l->light_select[ID][i]);
-                        switch(pf_l->light_select[ID][i])
-                        {
-                            //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
-                        case 0:
-                            p_act=&light_black;
-                            break;
+                    //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                    case 0:
+                        p_act=&light_black;
+                        break;
 
-                        case 1:
-                            p_act=&straight;
-                            break;
+                    case 1:
+                        p_act=&straight;
+                        break;
 
-                        case 2:
-                            p_act=&left;
-                            break;
+                    case 2:
+                        p_act=&left;
+                        break;
 
-                        case 3:
-                            p_act=&right;
-                            break;
+                    case 3:
+                        p_act=&right;
+                        break;
 
-                        case 4:
-                            p_act=&straight_left;
-                            break;
+                    case 4:
+                        p_act=&straight_left;
+                        break;
 
-                        case 5:
-                            p_act=&straight_right;
-                            break;
+                    case 5:
+                        p_act=&straight_right;
+                        break;
 
 
 
-                        }
+                    }
+                    if(pf_l->check_ID[ID]==1)
+                    {
                         if(pf_l->check_ID[ID]==1)
                         {
-                            if(pf_l->check_ID[ID]==1)
-                            {
-                                if((p_act->command!=smem.lane_adj_light_record[ID].command)&&(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0]))light_error_flag=true;
-                            }
+                            if((p_act->command!=smem.lane_adj_light_record[ID].command)&&(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0]))light_error_flag=true;
                         }
                     }
+                }
 
 
             }
@@ -1308,57 +1308,57 @@ void junbo_lane_adj_light::light_exec_check(int ID,int segment_type)
 
 
 
-                            if(pf_l->light_select[ID][i]==pf_l->light_select[ID][i+1])check_same_light_or_not=true;
-                            else check_same_light_or_not=false;
+                    if(pf_l->light_select[ID][i]==pf_l->light_select[ID][i+1])check_same_light_or_not=true;
+                    else check_same_light_or_not=false;
 
-                            if(smem.lane_adj_run_state[ID]==1)
-                            {
-                                printf("check me case=%d\n",pf_l->light_select[ID][pf_l->segmentcount]);
-                                switch(pf_l->light_select[ID][pf_l->segmentcount])
-                                {
-                                    //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
-                                case 0:
-                                    p_act=&light_black;
-                                    break;
+                    if(smem.lane_adj_run_state[ID]==1)
+                    {
+                        printf("check me case=%d\n",pf_l->light_select[ID][pf_l->segmentcount]);
+                        switch(pf_l->light_select[ID][pf_l->segmentcount])
+                        {
+                        //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                        case 0:
+                            p_act=&light_black;
+                            break;
 
-                                case 1:
-                                    if(check_same_light_or_not==true)p_act=&straight;
-                                    else p_act=&straight_flash;
-                                    break;
+                        case 1:
+                            if(check_same_light_or_not==true)p_act=&straight;
+                            else p_act=&straight_flash;
+                            break;
 
-                                case 2:
-                                    if(check_same_light_or_not==true)p_act=&left;
-                                    else   p_act=&left_flash;
-                                    break;
+                        case 2:
+                            if(check_same_light_or_not==true)p_act=&left;
+                            else   p_act=&left_flash;
+                            break;
 
-                                case 3:
-                                    if(check_same_light_or_not==true)p_act=&right;
-                                    else   p_act=&right_flash;
-                                    break;
+                        case 3:
+                            if(check_same_light_or_not==true)p_act=&right;
+                            else   p_act=&right_flash;
+                            break;
 
-                                case 4:
-                                    if(check_same_light_or_not==true)p_act=&straight_left;
-                                    else    p_act=&straight_left_flash;
-                                    break;
+                        case 4:
+                            if(check_same_light_or_not==true)p_act=&straight_left;
+                            else    p_act=&straight_left_flash;
+                            break;
 
-                                case 5:
-                                    if(check_same_light_or_not==true)p_act=&straight_right;
-                                    else    p_act=&straight_right_flash;
-                                    break;
-
-
+                        case 5:
+                            if(check_same_light_or_not==true)p_act=&straight_right;
+                            else    p_act=&straight_right_flash;
+                            break;
 
 
-                                }
-                                if(pf_l->check_ID[ID]==1)
-                                {
-                                                  if(pf_l->check_ID[ID]==1)
+
+
+                        }
+                        if(pf_l->check_ID[ID]==1)
+                        {
+                            if(pf_l->check_ID[ID]==1)
                             {
                                 if((p_act->command!=smem.lane_adj_light_record[ID].command)&&(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0]))light_error_flag=true;
                             }
 
-                                }
-                            }
+                        }
+                    }
 
 
 
@@ -1380,7 +1380,7 @@ void junbo_lane_adj_light::light_exec_check(int ID,int segment_type)
                             printf("check me case=%d\n",pf_l->light_select[ID][pf_l->segmentcount]);
                             switch(pf_l->light_select[ID][pf_l->segmentcount])
                             {
-                                //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
+                            //if(pf_l->check_ID[ID]==1)printf("case %d ID=%d\n",pf_l->light_select[ID][pf_l->segmentcount],ID);
                             case 0:
                                 p_act=&light_black;
                                 break;
@@ -1433,50 +1433,50 @@ void junbo_lane_adj_light::light_exec_check(int ID,int segment_type)
 
                     printf("before segmentcount == %d \n\n",i);
 
-                        if(smem.lane_adj_run_state[ID]==1)
+                    if(smem.lane_adj_run_state[ID]==1)
+                    {
+                        switch(smem.Lane_adj_memo_object.defaul_light[ID])
                         {
-                            switch(smem.Lane_adj_memo_object.defaul_light[ID])
-                            {
 
-                            case 0:
-                                p_act=&light_black;
-                                break;
+                        case 0:
+                            p_act=&light_black;
+                            break;
 
-                            case 1:
-                                p_act=&straight;
-                                break;
+                        case 1:
+                            p_act=&straight;
+                            break;
 
-                            case 2:
-                                p_act=&left;
-                                break;
+                        case 2:
+                            p_act=&left;
+                            break;
 
-                            case 3:
-                                p_act=&right;
-                                break;
+                        case 3:
+                            p_act=&right;
+                            break;
 
-                            case 4:
-                                p_act=&straight_left;
-                                break;
+                        case 4:
+                            p_act=&straight_left;
+                            break;
 
-                            case 5:
-                                p_act=&straight_right;
-                                break;
+                        case 5:
+                            p_act=&straight_right;
+                            break;
 
 
-                            default:
-                                printf("error light case %d\n",smem.Lane_adj_memo_object.defaul_light[ID]);
-                                break;
-                            }
-                            printf("ID=%d  default light=%d\n",ID,smem.Lane_adj_memo_object.defaul_light[ID]);
+                        default:
+                            printf("error light case %d\n",smem.Lane_adj_memo_object.defaul_light[ID]);
+                            break;
+                        }
+                        printf("ID=%d  default light=%d\n",ID,smem.Lane_adj_memo_object.defaul_light[ID]);
+                        if(pf_l->check_ID[ID]==1)
+                        {
                             if(pf_l->check_ID[ID]==1)
-                            {
-                                                   if(pf_l->check_ID[ID]==1)
                             {
                                 if((p_act->command!=smem.lane_adj_light_record[ID].command)&&(p_act->parameter[0]!=smem.lane_adj_light_record[ID].parameter[0]))light_error_flag=true;
                             }
 
 
-                            }
+                        }
 
                     }
                     //printf("mark 4\n");do nothing
@@ -1590,7 +1590,7 @@ void junbo_lane_adj_light::junbo_light_receive(MESSAGEOK messageIn)//just for re
                 sprintf(receive_string,"\n Receive junbo_protocol=");
                 fwrite(receive_string,sizeof(char),sizeof(receive_string),pf);
                 fwrite(cReadString,3*sizeof(char),7,pf);
-                                char cTimeHeader[64]= {0};
+                char cTimeHeader[64]= {0};
                 memset(cTimeHeader,'0',64);
                 sprintf(cTimeHeader, "%#04d/%#02d/%#02d %#02d:%#02d:%#02d  \0", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday, currenttime->tm_hour, currenttime->tm_min, currenttime->tm_sec);
                 int length=0;
@@ -1980,7 +1980,7 @@ void junbo_lane_adj_light::auto_minus_bright()
         case 21:
         case 20:
         case 19:
-case 18:
+        case 18:
         case 17:
 
         case 0:
@@ -2019,13 +2019,13 @@ case 18:
 
         }
 
-brightness.parameter[0]=i;
-printf("time=%x i=%x brightness_parameter=%x\n",currenttime->tm_hour,i,smem.junbo_LASC_object.brightness.parameter[0]);
+        brightness.parameter[0]=i;
+        printf("time=%x i=%x brightness_parameter=%x\n",currenttime->tm_hour,i,smem.junbo_LASC_object.brightness.parameter[0]);
 
         for(int ID=1; ID<9; ID++)
         {
-             if(smem.lane_adj_run_state[ID]==1)
-         junbo_light_send_reference_select(ID,brightness);
+            if(smem.lane_adj_run_state[ID]==1)
+                junbo_light_send_reference_select(ID,brightness);
         }
         smem.Lane_adj_memo_object.brightness=i;
 

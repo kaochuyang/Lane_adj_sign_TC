@@ -27,27 +27,33 @@ SCREENLockdb::~SCREENLockdb(void)
 //---------------------------------------------------------------------------
 void SCREENLockdb::DoKeyWork(BYTE key)              //已過濾,進來的是0x80~0x98之間,5X5按鍵
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x98:
-          DoKeyEnterWork();
-        break;
+            DoKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENLockdb::LoadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//0_lockdb.bit","rb");
-    if (bitmap) {
-        fread(lockdbBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//0_lockdb.bit","rb");
+        if (bitmap)
+        {
+            fread(lockdbBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENLockdb::DisplayLockdb(void)
@@ -59,38 +65,41 @@ void SCREENLockdb::DisplayLockdb(void)
 //---------------------------------------------------------------------------
 void SCREENLockdb::DoKeyEnterWork(void)
 {
-try {
-    switch (smem.GetLastFace()) {
+    try
+    {
+        switch (smem.GetLastFace())
+        {
 
-            case cMODIFYDT:
-                 screenModifyDT.DisplayModifyDT();
+        case cMODIFYDT:
+            screenModifyDT.DisplayModifyDT();
             break;
-            case cHWCYCLE:
-                 screenHWCycle.DisplayHWCycle();
+        case cHWCYCLE:
+            screenHWCycle.DisplayHWCycle();
             break;
-            case cMODIFYPWD:
-                 screenModifyPWD.DisplayModifyPWD();
+        case cMODIFYPWD:
+            screenModifyPWD.DisplayModifyPWD();
             break;
-            case cDBSETUP:
-                 screenDBSetup.DisplayDBSetup();
+        case cDBSETUP:
+            screenDBSetup.DisplayDBSetup();
             break;
-            case cLCNENCODE:
-                 screenLcnEncode.DisplayLcnEncode();
-            break;
-
-            case cCMDSET:
-                 screenCmdSet.DisplayCmdSet();
+        case cLCNENCODE:
+            screenLcnEncode.DisplayLcnEncode();
             break;
 
-            case cSENDCYCLE:
-                 screenSendCycle.DisplaySendCycle();
+        case cCMDSET:
+            screenCmdSet.DisplayCmdSet();
             break;
 
-            default:
-                 screenMain.DisplayMain();
+        case cSENDCYCLE:
+            screenSendCycle.DisplaySendCycle();
             break;
 
+        default:
+            screenMain.DisplayMain();
+            break;
+
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------

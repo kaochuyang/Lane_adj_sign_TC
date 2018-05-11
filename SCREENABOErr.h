@@ -6,18 +6,18 @@
 //---------------------------------------------------------------------------
 class SCREENABOErr:public SCREEN
 {
-    public:
-        SCREENABOErr(void);
-        ~SCREENABOErr(void);
+public:
+    SCREENABOErr(void);
+    ~SCREENABOErr(void);
 
-        void DisplayABOErr(void);
-        void DoKeyWork(BYTE);
+    void DisplayABOErr(void);
+    void DoKeyWork(BYTE);
 
-    private:
-        BYTE aboErrBitmap[3840];
+private:
+    BYTE aboErrBitmap[3840];
 
-        void LoadBitmapFromFile(void);
-        void DoKeyEnterWork();
+    void LoadBitmapFromFile(void);
+    void DoKeyEnterWork();
 };
 //---------------------------------------------------------------------------
 extern SCREENABOErr screenABOErr;

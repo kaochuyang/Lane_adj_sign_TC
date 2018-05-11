@@ -1412,7 +1412,7 @@ bool STORAGE::WriteNetworkSetConfirm_RevAPP(MESSAGEOK messgein)
         LCN=messgein.packet[28]*256+messgein.packet[29];
         WriteLCNby_RevAPP(LCN);
 
-          printf("****receive network setting is =***\n");
+        printf("****receive network setting is =***\n");
         for(int i=1; i<6; i++)
             printf("%d ",localIp1_[i]);
         printf("\n");

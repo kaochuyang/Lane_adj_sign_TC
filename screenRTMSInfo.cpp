@@ -18,73 +18,83 @@ ScreenRTMSInfo::~ScreenRTMSInfo(void)
 //---------------------------------------------------------------------------
 void ScreenRTMSInfo::loadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//TC5F//RTMSInfo.bit","rb");
-    if (bitmap) {
-        fread(rtmsInfoBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//TC5F//RTMSInfo.bit","rb");
+        if (bitmap)
+        {
+            fread(rtmsInfoBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRTMSInfo::DisplayRTMSInfo(void)
 {
-try {
-    smem.SetcFace(cRTMSInfo);
-    BYTE clearTemp[72]={0};
-    lcd240x128.DISPLAY_GRAPHIC(0,rtmsInfoBitmap,128,30);                        //畫上底圖
-    lcd240x128.DISPLAY_GRAPHIC_XY(120,3,clearTemp,24,3);                        //畫上空白
-  } catch (...) {}
+    try
+    {
+        smem.SetcFace(cRTMSInfo);
+        BYTE clearTemp[72]= {0};
+        lcd240x128.DISPLAY_GRAPHIC(0,rtmsInfoBitmap,128,30);                        //畫上底圖
+        lcd240x128.DISPLAY_GRAPHIC_XY(120,3,clearTemp,24,3);                        //畫上空白
+    }
+    catch (...) {}
 }
 //--------------------------------------------------------------------------
 void ScreenRTMSInfo::DisplayCRTMSInfo(int state)
 {
-try {
-    if (state==1)  lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[10],24,3);     //A
-    else if (state==2) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[11],24,3); //B
-    else if (state==3) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[12],24,3); //C
-    else if (state==4) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[13],24,3); //D
-    else if (state==5) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[14],24,3); //E
-    else if (state==6) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[15],24,3); //F
-  } catch (...) {}
+    try
+    {
+        if (state==1)  lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[10],24,3);     //A
+        else if (state==2) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[11],24,3); //B
+        else if (state==3) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[12],24,3); //C
+        else if (state==4) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[13],24,3); //D
+        else if (state==5) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[14],24,3); //E
+        else if (state==6) lcd240x128.DISPLAY_GRAPHIC_XY(120,3,word24x24[15],24,3); //F
+    }
+    catch (...) {}
 }
 //--------------------------------------------------------------------------
 void ScreenRTMSInfo::doKeyWork(BYTE key)
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x90:
-          doKeyF1Work();
-        break;
+            doKeyF1Work();
+            break;
         case 0x91:
-          doKeyF2Work();
-        break;
+            doKeyF2Work();
+            break;
         case 0x92:
-          doKeyF3Work();
-        break;
+            doKeyF3Work();
+            break;
         case 0x93:
-          doKeyF4Work();
-        break;
+            doKeyF4Work();
+            break;
         case 0x94:
-          doKeyUPWork();
-        break;
+            doKeyUPWork();
+            break;
         case 0x95:
-          doKeyDOWNWork();
-        break;
+            doKeyDOWNWork();
+            break;
         case 0x96:
-          doKeyLEFTWork();
-        break;
+            doKeyLEFTWork();
+            break;
         case 0x97:
-          doKeyRIGHTWork();
-        break;
+            doKeyRIGHTWork();
+            break;
         case 0x98:
-          doKeyEnterWork();
-        break;
+            doKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRTMSInfo::doKeyF1Work(void)

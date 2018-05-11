@@ -7,13 +7,13 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC77
 {
-    public:
+public:
 
-        PTRAFFIC77(void);
-        ~PTRAFFIC77(void);
-        bool DoWorkViaPTraffic(MESSAGEOK);
+    PTRAFFIC77(void);
+    ~PTRAFFIC77(void);
+    bool DoWorkViaPTraffic(MESSAGEOK);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

@@ -7,16 +7,16 @@
 //---------------------------------------------------------------------------
 class PTRAFFICREVSYNC
 {
-    public:
+public:
 
-        PTRAFFICREVSYNC(void);
-        ~PTRAFFICREVSYNC(void);
-        bool DoWorkViaPTraffic(MESSAGEOK);                                       //根據PDevice來的封包作事情
+    PTRAFFICREVSYNC(void);
+    ~PTRAFFICREVSYNC(void);
+    bool DoWorkViaPTraffic(MESSAGEOK);                                       //根據PDevice來的封包作事情
 
-        bool vSyncStatus(MESSAGEOK);
-        bool vAckTCConn(MESSAGEOK, bool);
+    bool vSyncStatus(MESSAGEOK);
+    bool vAckTCConn(MESSAGEOK, bool);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

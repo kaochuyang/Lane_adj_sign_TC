@@ -12,11 +12,13 @@ PDEVICERTMS::~PDEVICERTMS(void)
 //---------------------------------------------------------------------------
 bool PDEVICERTMS::DoWorkViaPDevice(MESSAGEOK message)
 {
-try {
+    try
+    {
 
-    return true;
+        return true;
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 

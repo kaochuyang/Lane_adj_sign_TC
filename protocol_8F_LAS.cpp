@@ -235,7 +235,7 @@ void protocol_8F_LAS::_8f45_module_query()
     try
     {
         printf("8f45 module query\n");
-smem.junbo_LASC_object.do_query_module();
+        smem.junbo_LASC_object.do_query_module();
         vReturnToCenterACK(0x8f,0x45);
 
     }
@@ -257,7 +257,7 @@ void protocol_8F_LAS::_8fc5_module_report()
         pack[1]=0xc5;
         for(int ID=1; ID<9; ID++)
         {
-                  pack[2*(ID-1)+2]=ID;
+            pack[2*(ID-1)+2]=ID;
 
             if(smem.lane_adj_run_state[ID]==1)
                 pack[2*(ID-1)+3]=data[ID];
@@ -287,7 +287,7 @@ void protocol_8F_LAS::_8f05_module_act_report()
     {
         bool send_flag=true;
         printf("8f05 module act report\n");
-                unsigned char pack[18];
+        unsigned char pack[18];
         unsigned char *data;
         data=smem.junbo_LASC_object.report_module_state();
         pack[0]=0x8f;
@@ -299,19 +299,20 @@ void protocol_8F_LAS::_8f05_module_act_report()
             pack[2*(ID-1)+2]=ID;
 
             if(smem.lane_adj_run_state[ID]==1)
-             {
+            {
 
                 pack[2*(ID-1)+3]=data[ID];
-            smem.LAS_link_err_count[ID]=0;
+                smem.LAS_link_err_count[ID]=0;
 
-             }
+            }
             else
             {
-                pack[2*(ID-1)+3]=0xff;smem.LAS_link_err_count[ID]++;
-            if(smem.LAS_link_err_count[ID]==128)smem.LAS_link_err_count[ID]=2;
+                pack[2*(ID-1)+3]=0xff;
+                smem.LAS_link_err_count[ID]++;
+                if(smem.LAS_link_err_count[ID]==128)smem.LAS_link_err_count[ID]=2;
             }
         }
-        for(int i=1;i<9;i++)
+        for(int i=1; i<9; i++)
         {
             if(smem.LAS_link_err_count[i]==1)send_flag=false;//because send() will clear the link_check's memory,that cause 8f05 let the pack[]=0xff,but the pack maybe just not yet receive the light report.
             // In the sentence,I let it check twice whitch pack receive 0xff 2 times,it will be disconnetion.
@@ -322,7 +323,7 @@ void protocol_8F_LAS::_8f05_module_act_report()
         _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(pack,18,true);
         _MsgOK.InnerOrOutWard = cOutWard;
 //    writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
-     if(send_flag)writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
+        if(send_flag)writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
 
 
     }
@@ -538,7 +539,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
 
         if(typeID<1||typeID>7)
         {
-             (0x8f,0x10,0x4,0x1);
+            (0x8f,0x10,0x4,0x1);
             error_mark=true;
         }
         else smem.LAS_segmenttype[typeID].segmentcount=mes.packet[2+8];
@@ -655,7 +656,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
             pf1=fopen(filename,"w+");
             if(pf1!=NULL)
             {
-              //
+                //
                 fwrite(pf,sizeof(LAS_excute_info),1,pf1);
                 fclose(pf1);
                 printf("write LAS_excute_info success!.");
@@ -683,7 +684,7 @@ void protocol_8F_LAS::_8f10_commonday_set(MESSAGEOK mes)
 
             smem.protocol_8f_object.read_LSA_segment_data();
             printf("init read_LSA_segment_data\n");
-vReturnToCenterNACK(0x8f,0x10,0x4,error_count_record);
+            vReturnToCenterNACK(0x8f,0x10,0x4,error_count_record);
 
 
 
@@ -817,12 +818,14 @@ void protocol_8F_LAS::_8fc0_commonday_report(int segmenttype)
             }
 
         }
-          if(smem.LAS_week_type_info[0]==segmenttype){
+        if(smem.LAS_week_type_info[0]==segmenttype)
+        {
 
 
-                 z++;// the last z shuld be equal to weekcount=numweek
+            z++;// the last z shuld be equal to weekcount=numweek
 
-                pack[4+light_series*pf_o->segmentcount+1+z]=7;}
+            pack[4+light_series*pf_o->segmentcount+1+z]=7;
+        }
 
 
 
@@ -969,7 +972,7 @@ void protocol_8F_LAS::_8f11_specialday_set(MESSAGEOK mes)
             smem.protocol_8f_object.read_LSA_segment_data();
             printf("init read_LSA_segment_data\n");
 
-vReturnToCenterNACK(0x8f,0x10,0x4,error_count_record);
+            vReturnToCenterNACK(0x8f,0x10,0x4,error_count_record);
 
         }
         smem.junbo_LASC_object.link_ID_check();

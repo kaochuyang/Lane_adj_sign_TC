@@ -7,13 +7,13 @@
 //---------------------------------------------------------------------------
 class PDEVICERTMS
 {
-    public:
+public:
 
-        PDEVICERTMS(void);
-        ~PDEVICERTMS(void);
-        bool DoWorkViaPDevice(MESSAGEOK);                                       //根據PDevice來的封包作事情
+    PDEVICERTMS(void);
+    ~PDEVICERTMS(void);
+    bool DoWorkViaPDevice(MESSAGEOK);                                       //根據PDevice來的封包作事情
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

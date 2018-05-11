@@ -12,11 +12,13 @@ PTRAFFIC77::~PTRAFFIC77(void)
 //---------------------------------------------------------------------------
 bool PTRAFFIC77::DoWorkViaPTraffic(MESSAGEOK message)
 {
-try {
+    try
+    {
 
-    return true;
+        return true;
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 

@@ -14,19 +14,19 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC92
 {
-    public:
+public:
 
-        PTRAFFIC92(void);
-        ~PTRAFFIC92(void);
-        bool DoWorkViaPTraffic(MESSAGEOK);                                      //根據pTraffic傳來的Structure作事情
+    PTRAFFIC92(void);
+    ~PTRAFFIC92(void);
+    bool DoWorkViaPTraffic(MESSAGEOK);                                      //根據pTraffic傳來的Structure作事情
 
-    private:
+private:
 
-        PTRAFFIC92COMM pTraffic92Comm;
-        PTRAFFIC92TC pTraffic92Tc;
-        PTRAFFIC92CMS pTraffic92Cms;
-        PTRAFFIC92VD pTraffic92Vd;
-        PTRAFFIC92OTHER pTraffic92Other;
+    PTRAFFIC92COMM pTraffic92Comm;
+    PTRAFFIC92TC pTraffic92Tc;
+    PTRAFFIC92CMS pTraffic92Cms;
+    PTRAFFIC92VD pTraffic92Vd;
+    PTRAFFIC92OTHER pTraffic92Other;
 
 };
 //---------------------------------------------------------------------------

@@ -8,57 +8,57 @@
 //---------------------------------------------------------------------------
 class PTRAFFICCCJ
 {
-    public:
+public:
 
-        PTRAFFICCCJ(void);
-        ~PTRAFFICCCJ(void);
-        bool DoWorkViaPTraffic(MESSAGEOK);                                      //根據pTraffic傳來的Structure作事情
+    PTRAFFICCCJ(void);
+    ~PTRAFFICCCJ(void);
+    bool DoWorkViaPTraffic(MESSAGEOK);                                      //根據pTraffic傳來的Structure作事情
 
-        bool v5F90(MESSAGEOK);
-        bool vQurryControlStrategy5F40(MESSAGEOK);  //with 5FC0
+    bool v5F90(MESSAGEOK);
+    bool vQurryControlStrategy5F40(MESSAGEOK);  //with 5FC0
 
-        bool vGoToNextPhaseStepControl_5F1C(MESSAGEOK);
-        bool vQueryPhaseStepControl_5F4C(MESSAGEOK);
-        bool vQueryCCJSec_5F70(MESSAGEOK);
-        bool vCCJSetIPCTime_5F12(MESSAGEOK);
+    bool vGoToNextPhaseStepControl_5F1C(MESSAGEOK);
+    bool vQueryPhaseStepControl_5F4C(MESSAGEOK);
+    bool vQueryCCJSec_5F70(MESSAGEOK);
+    bool vCCJSetIPCTime_5F12(MESSAGEOK);
 
-        bool vCCJQueryIPCTime_5F42(MESSAGEOK);
+    bool vCCJQueryIPCTime_5F42(MESSAGEOK);
 
-        bool vCCJTFDActuateExtend5F9F(MESSAGEOK);
-        bool vCCJTFDActuateStatusScreen5F9A(MESSAGEOK);
+    bool vCCJTFDActuateExtend5F9F(MESSAGEOK);
+    bool vCCJTFDActuateStatusScreen5F9A(MESSAGEOK);
 
-        bool vWriteRunPlan5F18(MESSAGEOK);
+    bool vWriteRunPlan5F18(MESSAGEOK);
 
-        bool vWritePlan5F14(MESSAGEOK);
-        bool vQueryPlan5F44(MESSAGEOK);  //with 5FC4
-        bool vWritePlanDBMS5F15(MESSAGEOK);
-        bool vQueryPlanDBMS5F45(MESSAGEOK);  //with 5FC5
+    bool vWritePlan5F14(MESSAGEOK);
+    bool vQueryPlan5F44(MESSAGEOK);  //with 5FC4
+    bool vWritePlanDBMS5F15(MESSAGEOK);
+    bool vQueryPlanDBMS5F45(MESSAGEOK);  //with 5FC5
 
-        bool vSetSendStep5F91(MESSAGEOK);
+    bool vSetSendStep5F91(MESSAGEOK);
 
-        bool vCCJTOMActuateExtendShort5FA2(MESSAGEOK);
+    bool vCCJTOMActuateExtendShort5FA2(MESSAGEOK);
 
-        bool vQueryCCTPlan5F48(MESSAGEOK);
+    bool vQueryCCTPlan5F48(MESSAGEOK);
 
-        bool vCloseRedCount5FA3(MESSAGEOK);
-        bool vUsingNormalTODPlan5FA4(MESSAGEOK);
+    bool vCloseRedCount5FA3(MESSAGEOK);
+    bool vUsingNormalTODPlan5FA4(MESSAGEOK);
 
-        bool vActTOD5FA5(MESSAGEOK);
+    bool vActTOD5FA5(MESSAGEOK);
 
-        bool vWriteControlStrategy5F10(MESSAGEOK);
+    bool vWriteControlStrategy5F10(MESSAGEOK);
 
 
-    private:
+private:
 
-        int vReturnToCenterACK(unsigned char, unsigned char);
-        int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
+    int vReturnToCenterACK(unsigned char, unsigned char);
+    int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
 
-        bool vReturnWriteACK92(BYTE sequence);
-        bool vReturnWriteNACK92(BYTE sequence,BYTE error);
+    bool vReturnWriteACK92(BYTE sequence);
+    bool vReturnWriteNACK92(BYTE sequence,BYTE error);
 
-        unsigned char uc5F90LastContralCode;
+    unsigned char uc5F90LastContralCode;
 
-        bool vCCJPhaseStep_5F7C(void);
+    bool vCCJPhaseStep_5F7C(void);
 
 
 };

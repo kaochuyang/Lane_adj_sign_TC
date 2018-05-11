@@ -23,285 +23,336 @@ ScreenPassModeSet::~ScreenPassModeSet(void)
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::loadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//passModeSet.bit","rb");
-    if (bitmap) {
-        fread(passModeSetBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//passModeSet.bit","rb");
+        if (bitmap)
+        {
+            fread(passModeSetBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::DisplayPassModeSet(void)
 {
-try {
-    smem.SetcFace(cPassModeSet);
-    lcd240x128.DISPLAY_GRAPHIC(0,passModeSetBitmap,128,30);
+    try
+    {
+        smem.SetcFace(cPassModeSet);
+        lcd240x128.DISPLAY_GRAPHIC(0,passModeSetBitmap,128,30);
 
-    cPosition=0;
-    cSelect = 0;
+        cPosition=0;
+        cSelect = 0;
 
-    vInitUCTMPData();
+        vInitUCTMPData();
 
-    vDataToTmpArray();
+        vDataToTmpArray();
 
-    vDisplayPassModeSwitch();
-    vDisplayPassModeServer();
+        vDisplayPassModeSwitch();
+        vDisplayPassModeServer();
 
-    setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
-  } catch (...) {}
+        setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::initDispWord(void)
 {
-try {
-    cPassModeSwitch.X = 88;
-    cPassModeSwitch.Y = 32;
-    cPassModeSwitch.width = 8;
-    cPassModeSwitch.height = 16;
+    try
+    {
+        cPassModeSwitch.X = 88;
+        cPassModeSwitch.Y = 32;
+        cPassModeSwitch.width = 8;
+        cPassModeSwitch.height = 16;
 
-  for (int i = 0; i < 4; i++) {
-    cPassServerLCN[i].X = 136 + i*8;
-    cPassServerLCN[i].Y = 56;
-    cPassServerLCN[i].width = 8;
-    cPassServerLCN[i].height = 16;
-  }
+        for (int i = 0; i < 4; i++)
+        {
+            cPassServerLCN[i].X = 136 + i*8;
+            cPassServerLCN[i].Y = 56;
+            cPassServerLCN[i].width = 8;
+            cPassServerLCN[i].height = 16;
+        }
 
-} catch (...) {}
+    }
+    catch (...) {}
 }
 
 
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKeyWork(BYTE key)
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x80:
-          doKey0Work();
-        break;
+            doKey0Work();
+            break;
         case 0x81:
-          doKey1Work();
-        break;
+            doKey1Work();
+            break;
         case 0x82:
-          doKey2Work();
-        break;
+            doKey2Work();
+            break;
         case 0x83:
-          doKey3Work();
-        break;
+            doKey3Work();
+            break;
         case 0x84:
-          doKey4Work();
-        break;
+            doKey4Work();
+            break;
         case 0x85:
-          doKey5Work();
-        break;
+            doKey5Work();
+            break;
         case 0x86:
-          doKey6Work();
-        break;
+            doKey6Work();
+            break;
         case 0x87:
-          doKey7Work();
-        break;
+            doKey7Work();
+            break;
         case 0x88:
-          doKey8Work();
-        break;
+            doKey8Work();
+            break;
         case 0x89:
-          doKey9Work();
-        break;
+            doKey9Work();
+            break;
         case 0x8A:
-          doKeyAWork();
-        break;
+            doKeyAWork();
+            break;
         case 0x8B:
-          doKeyBWork();
-        break;
+            doKeyBWork();
+            break;
         case 0x8C:
-          doKeyCWork();
-        break;
+            doKeyCWork();
+            break;
         case 0x8D:
-          doKeyDWork();
-        break;
+            doKeyDWork();
+            break;
         case 0x8E:
-          doKeyEWork();
-        break;
+            doKeyEWork();
+            break;
         case 0x8F:
-          doKeyFWork();
-        break;
+            doKeyFWork();
+            break;
         case 0x90:
-          doKeyF1Work();
-        break;
+            doKeyF1Work();
+            break;
         case 0x91:
-          doKeyF2Work();
-        break;
+            doKeyF2Work();
+            break;
         case 0x92:
-          doKeyF3Work();
-        break;
+            doKeyF3Work();
+            break;
         case 0x93:
-          doKeyF4Work();
-        break;
+            doKeyF4Work();
+            break;
         case 0x94:
-          doKeyUPWork();
-        break;
+            doKeyUPWork();
+            break;
         case 0x95:
-          doKeyDOWNWork();
-        break;
+            doKeyDOWNWork();
+            break;
         case 0x96:
-          doKeyLEFTWork();
-        break;
+            doKeyLEFTWork();
+            break;
         case 0x97:
-          doKeyRIGHTWork();
-        break;
+            doKeyRIGHTWork();
+            break;
         case 0x98:
-          doKeyEnterWork();
-        break;
+            doKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey0Work(void)
 {
-try {
+    try
+    {
 
-    if (cSelect == 0) {
-      lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[0],cPassModeSwitch.height,cPassModeSwitch.width/8);
-      ucTMP_PassModeSwitch = 0x0;
+        if (cSelect == 0)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[0],cPassModeSwitch.height,cPassModeSwitch.width/8);
+            ucTMP_PassModeSwitch = 0x0;
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[0],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x0;
+        }
+
+        doKeyRIGHTWork();
+
     }
-    else if (cSelect == 1) {
-      lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[0],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-      ucTMP_PassServerLCN[cPosition] = 0x0;
-    }
-
-    doKeyRIGHTWork();
-
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey1Work(void)
 {
-try {
+    try
+    {
 
-  if (cSelect == 0) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[1],cPassModeSwitch.height,cPassModeSwitch.width/8);
-    ucTMP_PassModeSwitch = 0x1;
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[1],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x1;
-  }
+        if (cSelect == 0)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[1],cPassModeSwitch.height,cPassModeSwitch.width/8);
+            ucTMP_PassModeSwitch = 0x1;
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[1],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x1;
+        }
 
-  doKeyRIGHTWork();
+        doKeyRIGHTWork();
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey2Work(void)
 {
-try {
-  if (cSelect == 0) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[2],cPassModeSwitch.height,cPassModeSwitch.width/8);
-    ucTMP_PassModeSwitch = 0x2;
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[2],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x2;
-    doKeyRIGHTWork();
-  }
+    try
+    {
+        if (cSelect == 0)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[2],cPassModeSwitch.height,cPassModeSwitch.width/8);
+            ucTMP_PassModeSwitch = 0x2;
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[2],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x2;
+            doKeyRIGHTWork();
+        }
 
-} catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey3Work(void)
 {
-try {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[3],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x3;
-    doKeyRIGHTWork();
-  }
+    try
+    {
+        if (cSelect == 0)
+        {
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[3],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x3;
+            doKeyRIGHTWork();
+        }
 
-} catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey4Work(void)
 {
-try {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[4],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x4;
-    doKeyRIGHTWork();
-  }
-} catch (...) {}
+    try
+    {
+        if (cSelect == 0)
+        {
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[4],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x4;
+            doKeyRIGHTWork();
+        }
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey5Work(void)
 {
-try {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[5],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x5;
-    doKeyRIGHTWork();
-  }
-} catch (...) {}
+    try
+    {
+        if (cSelect == 0)
+        {
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[5],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x5;
+            doKeyRIGHTWork();
+        }
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey6Work(void)
 {
-try {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[6],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x6;
-    doKeyRIGHTWork();
-  }
+    try
+    {
+        if (cSelect == 0)
+        {
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[6],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x6;
+            doKeyRIGHTWork();
+        }
 
-} catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey7Work(void)
 {
-try {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[7],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x7;
-    doKeyRIGHTWork();
-  }
-} catch (...) {}
+    try
+    {
+        if (cSelect == 0)
+        {
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[7],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x7;
+            doKeyRIGHTWork();
+        }
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey8Work(void)
 {
-try {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[8],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x8;
-    doKeyRIGHTWork();
-  }
+    try
+    {
+        if (cSelect == 0)
+        {
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[8],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x8;
+            doKeyRIGHTWork();
+        }
 
-} catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKey9Work(void)
 {
-try {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[9],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
-    ucTMP_PassServerLCN[cPosition] = 0x9;
-    doKeyRIGHTWork();
-  }
-} catch (...) {}
+    try
+    {
+        if (cSelect == 0)
+        {
+        }
+        else if (cSelect == 1)
+        {
+            lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y,word8x16[9],cPassServerLCN[cPosition].height,cPassServerLCN[cPosition].width/8);
+            ucTMP_PassServerLCN[cPosition] = 0x9;
+            doKeyRIGHTWork();
+        }
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKeyAWork(void)
@@ -348,88 +399,104 @@ void ScreenPassModeSet::doKeyF4Work(void)
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKeyUPWork(void)
 {
-  if (cSelect == 0) {
-  }
-  else if (cSelect == 1) {
-    clearCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
-    cSelect = 0;
-    cPosition = 0;
-    setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
-  }
+    if (cSelect == 0)
+    {
+    }
+    else if (cSelect == 1)
+    {
+        clearCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+        cSelect = 0;
+        cPosition = 0;
+        setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
+    }
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKeyDOWNWork(void)
 {
 
-  if (cSelect == 0) {
-    clearCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
-    cSelect = 1;  // = cSelect++;
-    cPosition = 0;
-    setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
-  }
+    if (cSelect == 0)
+    {
+        clearCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
+        cSelect = 1;  // = cSelect++;
+        cPosition = 0;
+        setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+    }
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKeyLEFTWork(void)
 {
-try {
-  if (cSelect == 0) {
-    clearCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
-    setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
-  }
+    try
+    {
+        if (cSelect == 0)
+        {
+            clearCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
+            setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
+        }
 
-  else if (cSelect == 1) {
-    clearCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
-    if(cPosition > 0 ) {
-      cPosition--;
-      setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
-    }
-    else {
-      cSelect = 0;
-      cPosition = 0;
-      setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
-    }
-  }
+        else if (cSelect == 1)
+        {
+            clearCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+            if(cPosition > 0 )
+            {
+                cPosition--;
+                setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+            }
+            else
+            {
+                cSelect = 0;
+                cPosition = 0;
+                setCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
+            }
+        }
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKeyRIGHTWork(void)
 {
-try {
+    try
+    {
 
-  if (cSelect == 0) {
-    clearCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
-    cPosition = 0;
-    cSelect = 1;
-    setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
-  }
+        if (cSelect == 0)
+        {
+            clearCursor8x16(cPassModeSwitch.X,cPassModeSwitch.Y+16);
+            cPosition = 0;
+            cSelect = 1;
+            setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+        }
 
-  else if (cSelect == 1) {
-    clearCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
-    if(cPosition < 3 ) {
-      cPosition++;
-      setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+        else if (cSelect == 1)
+        {
+            clearCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+            if(cPosition < 3 )
+            {
+                cPosition++;
+                setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+            }
+            else
+            {
+                setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
+            }
+        }
+
     }
-    else {
-      setCursor8x16(cPassServerLCN[cPosition].X,cPassServerLCN[cPosition].Y+16);
-    }
-  }
-
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::doKeyEnterWork(void)
 {
 
-  vTmpArrayToData();
+    vTmpArrayToData();
 
-  if( vCheckRationality() ) { //Check
-    smem.vSetPassMode(ucTMP_PassModeSwitch);
-    smem.vSetPassServerLCN(usiPassServerLCN);
+    if( vCheckRationality() )   //Check
+    {
+        smem.vSetPassMode(ucTMP_PassModeSwitch);
+        smem.vSetPassServerLCN(usiPassServerLCN);
 
-    screenMain.DisplayMain();
+        screenMain.DisplayMain();
 //
-  }
+    }
 
 }
 //---------------------------------------------------------------------------
@@ -437,86 +504,98 @@ void ScreenPassModeSet::doKeyEnterWork(void)
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::vDisplayPassModeSwitch(void)
 {
-try{
-  int iTMP;
-  if(ucTMP_PassModeSwitch == 0x0)
-    iTMP = 0;
-  else if(ucTMP_PassModeSwitch == 0x1)
-    iTMP = 1;
-  else if(ucTMP_PassModeSwitch == 0x2)
-    iTMP = 2;
+    try
+    {
+        int iTMP;
+        if(ucTMP_PassModeSwitch == 0x0)
+            iTMP = 0;
+        else if(ucTMP_PassModeSwitch == 0x1)
+            iTMP = 1;
+        else if(ucTMP_PassModeSwitch == 0x2)
+            iTMP = 2;
 
-  lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[iTMP],cPassModeSwitch.height,cPassModeSwitch.width/8);
-}catch(...){}
+        lcd240x128.DISPLAY_GRAPHIC_XY(cPassModeSwitch.X,cPassModeSwitch.Y,word8x16[iTMP],cPassModeSwitch.height,cPassModeSwitch.width/8);
+    }
+    catch(...) {}
 }
 
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::vDisplayPassModeServer(void)
 {
-try{
-  //HEX
-  lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[0].X,cPassServerLCN[0].Y,word8x16[ucTMP_PassServerLCN[0]],cPassServerLCN[0].height,cPassServerLCN[0].width/8);
-  lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[1].X,cPassServerLCN[1].Y,word8x16[ucTMP_PassServerLCN[1]],cPassServerLCN[1].height,cPassServerLCN[1].width/8);
-  lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[2].X,cPassServerLCN[2].Y,word8x16[ucTMP_PassServerLCN[2]],cPassServerLCN[2].height,cPassServerLCN[2].width/8);
-  lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[3].X,cPassServerLCN[3].Y,word8x16[ucTMP_PassServerLCN[3]],cPassServerLCN[3].height,cPassServerLCN[3].width/8);
+    try
+    {
+        //HEX
+        lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[0].X,cPassServerLCN[0].Y,word8x16[ucTMP_PassServerLCN[0]],cPassServerLCN[0].height,cPassServerLCN[0].width/8);
+        lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[1].X,cPassServerLCN[1].Y,word8x16[ucTMP_PassServerLCN[1]],cPassServerLCN[1].height,cPassServerLCN[1].width/8);
+        lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[2].X,cPassServerLCN[2].Y,word8x16[ucTMP_PassServerLCN[2]],cPassServerLCN[2].height,cPassServerLCN[2].width/8);
+        lcd240x128.DISPLAY_GRAPHIC_XY(cPassServerLCN[3].X,cPassServerLCN[3].Y,word8x16[ucTMP_PassServerLCN[3]],cPassServerLCN[3].height,cPassServerLCN[3].width/8);
 
-}catch(...){}
+    }
+    catch(...) {}
 }
 
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::vDataToTmpArray(void)
 {
-try{
-  usiPassServerLCN = smem.vGetPassServerLCN();
+    try
+    {
+        usiPassServerLCN = smem.vGetPassServerLCN();
 
-  ucTMP_PassServerLCN[0] = (usiPassServerLCN / 1000) & 0xFF;
-  ucTMP_PassServerLCN[1] = (usiPassServerLCN - (ucTMP_PassServerLCN[0]*1000)) / 100 & 0xFF;
-  ucTMP_PassServerLCN[2] = (usiPassServerLCN - (ucTMP_PassServerLCN[0]*1000) - (ucTMP_PassServerLCN[1]*100)) / 10 & 0xFF;
-  ucTMP_PassServerLCN[3] = (usiPassServerLCN % 10) & 0xFF;
+        ucTMP_PassServerLCN[0] = (usiPassServerLCN / 1000) & 0xFF;
+        ucTMP_PassServerLCN[1] = (usiPassServerLCN - (ucTMP_PassServerLCN[0]*1000)) / 100 & 0xFF;
+        ucTMP_PassServerLCN[2] = (usiPassServerLCN - (ucTMP_PassServerLCN[0]*1000) - (ucTMP_PassServerLCN[1]*100)) / 10 & 0xFF;
+        ucTMP_PassServerLCN[3] = (usiPassServerLCN % 10) & 0xFF;
 
-  ucTMP_PassModeSwitch = smem.vGetPassMode();
+        ucTMP_PassModeSwitch = smem.vGetPassMode();
 
-}catch(...){}
+    }
+    catch(...) {}
 }
 
 //---------------------------------------------------------------------------
 void ScreenPassModeSet::vTmpArrayToData(void)
 {
-try{
+    try
+    {
 
-  usiPassServerLCN = 0;
-  usiPassServerLCN += ucTMP_PassServerLCN[0]*1000;
-  usiPassServerLCN += ucTMP_PassServerLCN[1]*100;
-  usiPassServerLCN += ucTMP_PassServerLCN[2]*10;
-  usiPassServerLCN += ucTMP_PassServerLCN[3];
+        usiPassServerLCN = 0;
+        usiPassServerLCN += ucTMP_PassServerLCN[0]*1000;
+        usiPassServerLCN += ucTMP_PassServerLCN[1]*100;
+        usiPassServerLCN += ucTMP_PassServerLCN[2]*10;
+        usiPassServerLCN += ucTMP_PassServerLCN[3];
 
-}catch(...){}
+    }
+    catch(...) {}
 }
 
 //---------------------------------------------------------------------------
 bool ScreenPassModeSet::vCheckRationality(void)
 {
-try{
-  bool bRET;
-  bRET = true;
+    try
+    {
+        bool bRET;
+        bRET = true;
 
-  if(usiPassServerLCN > 9999)
-    bRET = false;
+        if(usiPassServerLCN > 9999)
+            bRET = false;
 
-  if(ucTMP_PassModeSwitch > 0x2)
-    bRET = false;
+        if(ucTMP_PassModeSwitch > 0x2)
+            bRET = false;
 
-  return bRET;
+        return bRET;
 
-}catch(...){}
+    }
+    catch(...) {}
 }
 
 //---------------------------------------------------------------------------
 bool ScreenPassModeSet::vInitUCTMPData(void)
 {
-try{
-  bzero(ucTMP_PassServerLCN, 4);
+    try
+    {
+        bzero(ucTMP_PassServerLCN, 4);
 
-}catch(...){}
+    }
+    catch(...) {}
 }
 

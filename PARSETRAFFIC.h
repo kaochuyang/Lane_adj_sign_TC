@@ -19,25 +19,25 @@ typedef union BCDSW{
 //---------------------------------------------------------------------------
 class PARSETRAFFIC:public PARSE
 {
-    public:
+public:
 
-        PARSETRAFFIC(void);
-        ~PARSETRAFFIC(void);
+    PARSETRAFFIC(void);
+    ~PARSETRAFFIC(void);
 
-        bool ParseBlock(int,BYTE *,MESSAGEOK *,int *,int *);                    //解析block
-        bool vClearMsg(MESSAGEOK *, unsigned short int);
-        bool CheckSum(int *,MESSAGEOK *);                                       //檢查checksum
-        bool DecideProtocol(int *,MESSAGEOK *,int);                             //給予此封包協定代碼
-        bool vJudgeProtocolAndCheckLength(int *,MESSAGEOK *);
-        bool CheckReasonable(int *,MESSAGEOK *);                                //檢查封包合理性
-        bool AssignLcn(int *,MESSAGEOK *);                                      //根據封包計算LCN
-        bool EchoToGUI(int *,MESSAGEOK *,char *);                               //顯示至畫面
-        bool MoveLastData(int *,int *,MESSAGEOK *);                             //搬移剩餘的資料
-        BCDSW bcdSwitchHi,bcdSwitchLo;
+    bool ParseBlock(int,BYTE *,MESSAGEOK *,int *,int *);                    //解析block
+    bool vClearMsg(MESSAGEOK *, unsigned short int);
+    bool CheckSum(int *,MESSAGEOK *);                                       //檢查checksum
+    bool DecideProtocol(int *,MESSAGEOK *,int);                             //給予此封包協定代碼
+    bool vJudgeProtocolAndCheckLength(int *,MESSAGEOK *);
+    bool CheckReasonable(int *,MESSAGEOK *);                                //檢查封包合理性
+    bool AssignLcn(int *,MESSAGEOK *);                                      //根據封包計算LCN
+    bool EchoToGUI(int *,MESSAGEOK *,char *);                               //顯示至畫面
+    bool MoveLastData(int *,int *,MESSAGEOK *);                             //搬移剩餘的資料
+    BCDSW bcdSwitchHi,bcdSwitchLo;
 
-        bool ParseBlockEasyVersion(int,BYTE *,MESSAGEOK *,int *,int *);
+    bool ParseBlockEasyVersion(int,BYTE *,MESSAGEOK *,int *,int *);
 
-    private:/*
+private:/*
         bool decide77Or87(MESSAGEOK *);                                          //決定此封包是77年或87年
         bool decideProtocol92Normal(MESSAGEOK *);                                //決定此封包是92年共用訊息
         bool decideProtocol92Tc(MESSAGEOK *);                                    //決定此封包是92年號誌控制器訊息

@@ -14,21 +14,21 @@
 //---------------------------------------------------------------------------
 class PDEVICE
 {
-    public:
+public:
 
-        PDEVICE(void);
-        ~PDEVICE(void);
-        bool DoWorkViaProtocol(MESSAGEOK);                                      //根據protocol傳來的Structure作事情
+    PDEVICE(void);
+    ~PDEVICE(void);
+    bool DoWorkViaProtocol(MESSAGEOK);                                      //根據protocol傳來的Structure作事情
 
 
-    private:
+private:
 
-        PDEVICESS pDeviceSS;
-        PDEVICERTMS pDeviceRTMS;
-        PDEVICEKEYPAD pDeviceKeypad;
-/*OTCombo0713*/
-        PDEVICETRAFFICLIGHT pDeviceTrafficLight;
-        PDEVICEREVMANUALPAD pDeviceRevManualPad;
+    PDEVICESS pDeviceSS;
+    PDEVICERTMS pDeviceRTMS;
+    PDEVICEKEYPAD pDeviceKeypad;
+    /*OTCombo0713*/
+    PDEVICETRAFFICLIGHT pDeviceTrafficLight;
+    PDEVICEREVMANUALPAD pDeviceRevManualPad;
 
 };
 //---------------------------------------------------------------------------

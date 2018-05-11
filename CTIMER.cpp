@@ -217,13 +217,13 @@ void intervalTimer::set_module_query_timer()
             tomorrow_sec_3=(27-currenttime->tm_hour)*3600
                            -currenttime->tm_min*60
                            -currenttime->tm_sec;
-                       };
+        };
         if(currenttime->tm_hour<3)
         {
             tomorrow_sec_3=(3-currenttime->tm_hour)*3600
                            -currenttime->tm_min*60
                            -currenttime->tm_sec;
-                       };
+        };
 
 
         _it6.it_value.tv_sec =tomorrow_sec_3;
@@ -471,16 +471,16 @@ void intervalTimer::TimersSetting(void)
         _it2.it_interval.tv_nsec = 0;
         if ( timer_settime( _t2, 0, & _it2, NULL ) ) exit( 1 );
 
-        _it3.it_value.tv_sec = 5;  //light act  report cycle
+        _it3.it_value.tv_sec = 5;  //redcount control cycle
 
         _it3.it_value.tv_nsec = 0;
-        _it3.it_interval.tv_sec = 8;
+        _it3.it_interval.tv_sec = 60;
         _it3.it_interval.tv_nsec = 0;
         if ( timer_settime( _t3, 0, & _it3, NULL ) ) exit( 1 );
 
         _it4.it_value.tv_sec = 5;//auto minus bright check
         _it4.it_value.tv_nsec = 0;
-        _it4.it_interval.tv_sec = 3600;
+        _it4.it_interval.tv_sec = 50;
         _it4.it_interval.tv_nsec = 0;
         if ( timer_settime( _t4, 0, & _it4, NULL ) ) exit( 1 );
 
@@ -558,7 +558,7 @@ void * intervalTimer::PTime(void *arg)
         // smem.power_object.power_regular_reboot_resetting();
         int text_ID=1;
         int tempFace=0;
-
+bool off_flag=0;
         unsigned char uc6F00[2];
         uc6F00[0] = 0x6F;
         uc6F00[1] = 0x00;
@@ -567,7 +567,7 @@ void * intervalTimer::PTime(void *arg)
         uc0F04[0] = 0x0F;
         uc0F04[1] = 0x04;
         MESSAGEOK _MSG;
-int query_count=0;
+        int query_count=0;
         DATA_Bit DIOByte;
 
         //OTSS +3
@@ -577,39 +577,30 @@ int query_count=0;
         ucXG[2] = 0x0D;       // CR
 
         //OTMARKPRINTF  printf( "THREAD_VDINFO: pid=%d\n", getpid() );
+        smem._CF_object.clear_value_record(&smem._CF_object.value_record);
 
-        ////initial proccess for LAS data///
-        smem.junbo_LASC_object.read_lane_adj_setting(&smem.Lane_adj_memo_object);
+        ////initial proccess for  data///
+        smem._CF_object.read_value(&smem._CF_object.value_record);
 
 
-        printf("init read_lane_adj_setting\n");
-        smem.protocol_8f_object.read_LAS_report_object();
+        printf("init setting\n");
+
         printf("init read_LAS_report_object\n");
-
-        smem.protocol_8f_object.read_LSA_segment_data();
-        printf("init read_LSA_segment_data\n");
-        smem.junbo_LASC_object.determind_weekday_specialday();
-        printf("init determind_weekday_specialday\n");
-
-
-
-
 
         ////////
 
         TimersCreating();
-  smem.junbo_LASC_object.do_query_module();
         TimersSetting();
 
 
-        _intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
-   //     _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
+        //_intervalTimer.set_light_report_timer(smem.protocol_8f_object.LAS_report_object.light_report_second);
+        //     _intervalTimer.set_module_report_timer(smem.protocol_8f_object.LAS_report_object.module_report_hour);
 ////////////////////////////////////
- smem.junbo_LASC_object.link_ID_check();//check LSA[ID] was equipment.
 
- smem.junbo_LASC_object.light_timeout_control(0);
 
- smem.junbo_LASC_object.auto_minus_bright();
+
+
+
 
         printf("hello light control\n");
         //   timer_reboot_create();//kaochu 2017 08 17
@@ -738,36 +729,57 @@ int query_count=0;
                 case( 11 )://light act report
                     printf("timer test 11\n");
 
-                    smem.protocol_8f_object._8f07_light_act_report();
+                    //smem.protocol_8f_object._8f07_light_act_report();
 
                     break;
                 case( 12 )://,module act report
-                    smem.protocol_8f_object._8f05_module_act_report();
+                    //smem.protocol_8f_object._8f05_module_act_report();
+                    smem.count_vd_alive++;
                     printf("timer test 12\n");
 
                     break;
                 case( 13 ):       //auto minus bright
                     printf("timer test 13\n");
-                    smem.junbo_LASC_object.link_ID_check();
-                    smem.junbo_LASC_object.auto_minus_bright();
+                    smem._CF_object._CF00_time_display_auto_report();
+//                    smem.junbo_LASC_object.link_ID_check();
+//                    smem.junbo_LASC_object.auto_minus_bright();
 
                 case( 14 ):
 
                     printf("timer test 14\n");
-                      // smem.junbo_LASC_object.test_step();
-                    smem.junbo_LASC_object.step_control(smem.segmenttype_8f);
+
+
+                    if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time-1)
+                    {
+                    smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
+                    smem._CF_object.value_record.ID2_value,
+                    smem._CF_object.value_record.ID3_value);
+
+
+                    }
+                   else
+                   {
+
+                   if(smem._CF_object.value_record.switch_button)
+                   smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
+                    smem._CF_object.value_record.ID2_value,
+                    smem._CF_object.value_record.ID3_value);
+
+                   }
+
+
                     break;
 
 
                 case( 15 ):  //HwStatus AutoReport
-                printf("timer test 15 \n");
-                    smem.junbo_LASC_object.do_query_module();
+                    printf("timer test 15 \n");
+                    //smem.junbo_LASC_object.do_query_module();
 
                     break;
 
                 case( 100 ):
 
-                    smem.junbo_LASC_object.determind_weekday_specialday();
+                    //smem.junbo_LASC_object.determind_weekday_specialday();
 
                     break;
 
@@ -777,16 +789,34 @@ int query_count=0;
 
 
                 case( 500 ):
-printf("timer test 500 \n");
-
-if(query_count==0){smem.junbo_LASC_object.query_module_state_1();query_count++;
-printf("timer test 500 count=%d\n",query_count);
-}
-
-
-if(query_count==1){smem.junbo_LASC_object.query_module_state_2();query_count++;printf("timer test 500 count=%d\n",query_count);}
-if(query_count==2){smem.junbo_LASC_object.query_module_state_3();query_count++;printf("timer test 500 count=%d\n",query_count);}
-if(query_count==3){smem.protocol_8f_object._8fc5_module_report();query_count=0;printf("timer test 500 count=%d\n",query_count);}
+                    printf("timer test 500 \n");
+//
+//                    if(query_count==0)
+//                    {
+//                        smem.junbo_LASC_object.query_module_state_1();
+//                        query_count++;
+//                        printf("timer test 500 count=%d\n",query_count);
+//                    }
+//
+//
+//                    if(query_count==1)
+//                    {
+//                        smem.junbo_LASC_object.query_module_state_2();
+//                        query_count++;
+//                        printf("timer test 500 count=%d\n",query_count);
+//                    }
+//                    if(query_count==2)
+//                    {
+//                        smem.junbo_LASC_object.query_module_state_3();
+//                        query_count++;
+//                        printf("timer test 500 count=%d\n",query_count);
+//                    }
+//                    if(query_count==3)
+//                    {
+//                        smem.protocol_8f_object._8fc5_module_report();
+//                        query_count=0;
+//                        printf("timer test 500 count=%d\n",query_count);
+//                    }
                     break;
 
 
@@ -794,7 +824,7 @@ if(query_count==3){smem.protocol_8f_object._8fc5_module_report();query_count=0;p
                     break;
 
                 case( 600 ):
-                    smem.junbo_LASC_object.delete_record_before_15day();
+                    //        smem.junbo_LASC_object.delete_record_before_15day();
                     break;
 
                 default:

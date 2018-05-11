@@ -210,135 +210,135 @@ void junbo_cms::close_light()
 
 void junbo_cms::junbo_cms_receive(MESSAGEOK messageIn)//just for receive the junbo_cms return message
 {
-  /*  struct tm* currenttime;
-    time_t now = time(NULL);
-    currenttime = localtime(&now);
-    FILE *pf=NULL;
-    int readSelectLength=0;
-    char receive_string[25]= {};
-    char cReadString[255];
-    unsigned char wrongstring[300];
-    char cFileTmp[64]= {0};
-    sprintf(cFileTmp, "/cct/Data/junborecord/");
-    char dateTemp[32]= {0};
-    sprintf(dateTemp, "%#04d%#02d%#02d", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday);
-    strcat(cFileTmp,dateTemp);
-    strcat(cFileTmp,"_receive_junborecord.txt");
-    char cTimeHeader[64]= {0};
-    sprintf(cTimeHeader, "%#04d/%#02d/%#02d %#02d:%#02d:%#02d  \0", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday, currenttime->tm_hour, currenttime->tm_min, currenttime->tm_sec);
-    int length=0;
-    for (int i=0; i<300; i++)
-        if (cTimeHeader[i]=='\0')
-        {
-            length=i;
-            break;
-        }
-    int ID=0;
-    try
-    {
-        pf=fopen(cFileTmp,"a+");
-        for(int i=0; i<6; i++)junbo_receive_packet[i]=messageIn.packet[i];
-        if(messageIn.cksStatus==true)
-        {
+    /*  struct tm* currenttime;
+      time_t now = time(NULL);
+      currenttime = localtime(&now);
+      FILE *pf=NULL;
+      int readSelectLength=0;
+      char receive_string[25]= {};
+      char cReadString[255];
+      unsigned char wrongstring[300];
+      char cFileTmp[64]= {0};
+      sprintf(cFileTmp, "/cct/Data/junborecord/");
+      char dateTemp[32]= {0};
+      sprintf(dateTemp, "%#04d%#02d%#02d", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday);
+      strcat(cFileTmp,dateTemp);
+      strcat(cFileTmp,"_receive_junborecord.txt");
+      char cTimeHeader[64]= {0};
+      sprintf(cTimeHeader, "%#04d/%#02d/%#02d %#02d:%#02d:%#02d  \0", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday, currenttime->tm_hour, currenttime->tm_min, currenttime->tm_sec);
+      int length=0;
+      for (int i=0; i<300; i++)
+          if (cTimeHeader[i]=='\0')
+          {
+              length=i;
+              break;
+          }
+      int ID=0;
+      try
+      {
+          pf=fopen(cFileTmp,"a+");
+          for(int i=0; i<6; i++)junbo_receive_packet[i]=messageIn.packet[i];
+          if(messageIn.cksStatus==true)
+          {
 
 
-            if((junbo_receive_packet[3]==0xb1)
-                    ||(junbo_receive_packet[3]==0xb0)
-                    ||(junbo_receive_packet[3]==0xb3))
-            {
-                ID=junbo_receive_packet[2];
-                smem.record_light[ID].ID=junbo_receive_packet[2];
-                smem.record_light[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                smem.record_light[ID].parameter=junbo_receive_packet[4];
+              if((junbo_receive_packet[3]==0xb1)
+                      ||(junbo_receive_packet[3]==0xb0)
+                      ||(junbo_receive_packet[3]==0xb3))
+              {
+                  ID=junbo_receive_packet[2];
+                  smem.record_light[ID].ID=junbo_receive_packet[2];
+                  smem.record_light[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                  smem.record_light[ID].parameter=junbo_receive_packet[4];
 
-                if(smem.record_light[1].parameter==light_off.parameter&&smem.record_light[2].parameter==light_off.parameter)smem.protocol_9F_object.o_CMS_mannager._9f08_cms_off_report();
-            }
-            else if(junbo_receive_packet[3]==0xb2)
-            {
-                ID=junbo_receive_packet[2];
-                smem.record_timeout[ID].ID=junbo_receive_packet[2];
-                smem.record_timeout[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                smem.record_timeout[ID].parameter=junbo_receive_packet[4];
-            }
-            else if(junbo_receive_packet[3]==0xb5)
-            {
-                ID=junbo_receive_packet[2];
-                smem.record_brightness[ID].ID=junbo_receive_packet[2];
-                smem.record_brightness[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                smem.record_brightness[ID].parameter=junbo_receive_packet[4];
-            }
-            else if(junbo_receive_packet[3]==0xb4)
-            {
-                module_state_object.bit_block_ID=((junbo_receive_packet[4]>>4)&0xff);
-                smem.record_state[ID][module_state_object.bit_block_ID].ID=junbo_receive_packet[2];
-                smem.record_state[ID][module_state_object.bit_block_ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                smem.record_state[ID][module_state_object.bit_block_ID].parameter=junbo_receive_packet[4];
-            }
-
-
-
+                  if(smem.record_light[1].parameter==light_off.parameter&&smem.record_light[2].parameter==light_off.parameter)smem.protocol_9F_object.o_CMS_mannager._9f08_cms_off_report();
+              }
+              else if(junbo_receive_packet[3]==0xb2)
+              {
+                  ID=junbo_receive_packet[2];
+                  smem.record_timeout[ID].ID=junbo_receive_packet[2];
+                  smem.record_timeout[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                  smem.record_timeout[ID].parameter=junbo_receive_packet[4];
+              }
+              else if(junbo_receive_packet[3]==0xb5)
+              {
+                  ID=junbo_receive_packet[2];
+                  smem.record_brightness[ID].ID=junbo_receive_packet[2];
+                  smem.record_brightness[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                  smem.record_brightness[ID].parameter=junbo_receive_packet[4];
+              }
+              else if(junbo_receive_packet[3]==0xb4)
+              {
+                  module_state_object.bit_block_ID=((junbo_receive_packet[4]>>4)&0xff);
+                  smem.record_state[ID][module_state_object.bit_block_ID].ID=junbo_receive_packet[2];
+                  smem.record_state[ID][module_state_object.bit_block_ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                  smem.record_state[ID][module_state_object.bit_block_ID].parameter=junbo_receive_packet[4];
+              }
 
 
 
 
 
-            printf("Receive junbo_protocol=");
-            for(int i=0; i<6; i++)printf("%x ",junbo_receive_packet[i]);
-            if(pf!=NULL)
-            {
-                sprintf(cReadString,"%x %x %x %x %x %x\n",junbo_receive_packet[0],junbo_receive_packet[1],junbo_receive_packet[2],
-                        junbo_receive_packet[3],junbo_receive_packet[4],junbo_receive_packet[5]);
-                sprintf(receive_string,"\n Receive junbo_protocol=");
-                fwrite(receive_string,sizeof(char),sizeof(receive_string),pf);
-                fwrite(cReadString,3*sizeof(char),6,pf);
-            }
-            printf("\n");
-        }
-        else if(messageIn.cksStatus==false)//check the packet always right
-        {
-            if(pf!=NULL)
-            {
 
-                sprintf(receive_string,"wrong junbo_protocol=\n");
-                fwrite(receive_string,sizeof(char),sizeof(receive_string),pf);
-                sprintf(cReadString,"%x %x %x %x %x %x\n",junbo_receive_packet[0],junbo_receive_packet[1],junbo_receive_packet[2],
-                        junbo_receive_packet[3],junbo_receive_packet[4],junbo_receive_packet[5]);
-                fwrite(cReadString,3*sizeof(char),6,pf);
-            }
-        }
 
-        fwrite( cTimeHeader, length, 1, pf );
-        fclose(pf);
-        memset(junbo_receive_packet,0,6);
-        memset(cReadString,'\0',sizeof(cReadString));
-        memset(wrongstring,'\0',sizeof(wrongstring));
-    }
-    catch(...) {}*/
+
+              printf("Receive junbo_protocol=");
+              for(int i=0; i<6; i++)printf("%x ",junbo_receive_packet[i]);
+              if(pf!=NULL)
+              {
+                  sprintf(cReadString,"%x %x %x %x %x %x\n",junbo_receive_packet[0],junbo_receive_packet[1],junbo_receive_packet[2],
+                          junbo_receive_packet[3],junbo_receive_packet[4],junbo_receive_packet[5]);
+                  sprintf(receive_string,"\n Receive junbo_protocol=");
+                  fwrite(receive_string,sizeof(char),sizeof(receive_string),pf);
+                  fwrite(cReadString,3*sizeof(char),6,pf);
+              }
+              printf("\n");
+          }
+          else if(messageIn.cksStatus==false)//check the packet always right
+          {
+              if(pf!=NULL)
+              {
+
+                  sprintf(receive_string,"wrong junbo_protocol=\n");
+                  fwrite(receive_string,sizeof(char),sizeof(receive_string),pf);
+                  sprintf(cReadString,"%x %x %x %x %x %x\n",junbo_receive_packet[0],junbo_receive_packet[1],junbo_receive_packet[2],
+                          junbo_receive_packet[3],junbo_receive_packet[4],junbo_receive_packet[5]);
+                  fwrite(cReadString,3*sizeof(char),6,pf);
+              }
+          }
+
+          fwrite( cTimeHeader, length, 1, pf );
+          fclose(pf);
+          memset(junbo_receive_packet,0,6);
+          memset(cReadString,'\0',sizeof(cReadString));
+          memset(wrongstring,'\0',sizeof(wrongstring));
+      }
+      catch(...) {}*/
 }
 void junbo_cms::delete_record_before_15day()
 {
- /*   try
-    {
+    /*   try
+       {
 
 
-        struct tm* currenttime;
-        time_t now = time(NULL);
-        localtime(&now);
-        now=now-1296000;
-        currenttime = localtime(&now);
-        char buf[256];
-        buf[255] = '\0';
-        char dateTemp[32]= {0};
-        sprintf(dateTemp, "%#04d%#02d%#02d*", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday);
-        if (snprintf(buf, 255, "rm /cct/Data/junborecord/%s",dateTemp ) != -1)
-        {
+           struct tm* currenttime;
+           time_t now = time(NULL);
+           localtime(&now);
+           now=now-1296000;
+           currenttime = localtime(&now);
+           char buf[256];
+           buf[255] = '\0';
+           char dateTemp[32]= {0};
+           sprintf(dateTemp, "%#04d%#02d%#02d*", currenttime->tm_year+1900, currenttime->tm_mon+1, currenttime->tm_mday);
+           if (snprintf(buf, 255, "rm /cct/Data/junborecord/%s",dateTemp ) != -1)
+           {
 
-            printf("%s",buf);
-            system(buf);
-        }
-    }
-    catch(...) {}
-*/
+               printf("%s",buf);
+               system(buf);
+           }
+       }
+       catch(...) {}
+    */
 
 
 }

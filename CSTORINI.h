@@ -6,21 +6,21 @@
 //--------------------------------------------------------------------------
 class CStorINI
 {
-    public:
-      CStorINI(void);
-      ~CStorINI(void);
+public:
+    CStorINI(void);
+    ~CStorINI(void);
 
-      int vLoadIntFromINI(char *, char *, int);
-      bool vSaveIntToINI(char *, char *, int);
+    int vLoadIntFromINI(char *, char *, int);
+    bool vSaveIntToINI(char *, char *, int);
 
-      float vLoadFloatFromINI(char *, char *, float);
-      bool vSaveFloatToINI(char *, char *, float);
+    float vLoadFloatFromINI(char *, char *, float);
+    bool vSaveFloatToINI(char *, char *, float);
 
-      bool vSaveStringToINI(char *, char *, char *);
-      char *vLoadStringFromINI(char *, char *, char *);
+    bool vSaveStringToINI(char *, char *, char *);
+    char *vLoadStringFromINI(char *, char *, char *);
 
-    private:
-      CIniFile ini;
+private:
+    CIniFile ini;
 };
 //--------------------------------------------------------------------------
 extern CStorINI oStorINI;

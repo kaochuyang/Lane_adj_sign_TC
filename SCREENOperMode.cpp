@@ -18,45 +18,54 @@ SCREENOperMode::~SCREENOperMode(void)
 //---------------------------------------------------------------------------
 void SCREENOperMode::DoKeyWork(BYTE key)              //已過濾,進來的是0x80~0x98之間,5X5按鍵
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x90:
-          DoKeyF1Work();
-        break;
+            DoKeyF1Work();
+            break;
         case 0x93:
-          DoKeyF4Work();
-        break;
+            DoKeyF4Work();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENOperMode::LoadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//4_1_9.bit","rb");
-    if (bitmap) {
-        fread(operModeBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//4_1_9.bit","rb");
+        if (bitmap)
+        {
+            fread(operModeBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENOperMode::DisplayOperMode(void)
 {
-try {
-    smem.SetcFace(cOPERMODE);
-    smem.vWriteMsgToDOM("Enter Operate Mode Screen");
-    lcd240x128.DISPLAY_GRAPHIC(0,operModeBitmap,128,30);
-    UpdateOperMode();
-  } catch (...) {}
+    try
+    {
+        smem.SetcFace(cOPERMODE);
+        smem.vWriteMsgToDOM("Enter Operate Mode Screen");
+        lcd240x128.DISPLAY_GRAPHIC(0,operModeBitmap,128,30);
+        UpdateOperMode();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENOperMode::UpdateOperMode(void)
 {
-    if (smem.GetcFace()==cOPERMODE) {
+    if (smem.GetcFace()==cOPERMODE)
+    {
         if (smem.GetOperMode()==1)              //遠端操作
             lcd240x128.DISPLAY_GRAPHIC_XY(112,7,word24x24[1],24,24/8);
         else if (smem.GetOperMode()==0)        //現場操作

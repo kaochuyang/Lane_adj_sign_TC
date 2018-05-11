@@ -12,11 +12,13 @@ PTRAFFICNTCIP::~PTRAFFICNTCIP(void)
 //---------------------------------------------------------------------------
 bool PTRAFFICNTCIP::DoWorkViaPTraffic(MESSAGEOK message)
 {
-try {
+    try
+    {
 
-    return true;
+        return true;
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 

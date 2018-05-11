@@ -6,18 +6,18 @@
 //---------------------------------------------------------------------------
 class SCREENLockdb:public SCREEN
 {
-    public:
-        SCREENLockdb(void);
-        ~SCREENLockdb(void);
+public:
+    SCREENLockdb(void);
+    ~SCREENLockdb(void);
 
-        void DisplayLockdb(void);
-        void DoKeyWork(BYTE);
+    void DisplayLockdb(void);
+    void DoKeyWork(BYTE);
 
-    private:
-        BYTE lockdbBitmap[3840];
+private:
+    BYTE lockdbBitmap[3840];
 
-        void LoadBitmapFromFile(void);
-        void DoKeyEnterWork();
+    void LoadBitmapFromFile(void);
+    void DoKeyEnterWork();
 };
 //---------------------------------------------------------------------------
 extern SCREENLockdb screenLockdb;

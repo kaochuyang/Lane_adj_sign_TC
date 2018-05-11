@@ -1103,12 +1103,12 @@ void * CSTC::_stc_thread_light_control_func( void * )
                     cin>>ID;
                     if(ID<1||ID>8)printf("ID=%d,please check your ID number\n");
                 }
-                                smem.junbo_LASC_object.test_LAS_function(command,parameter,ID);
+                smem.junbo_LASC_object.test_LAS_function(command,parameter,ID);
 
                 break;
             case 2:
                 cout<<"parameter=0~99,  0 is light_on forever, 1~99 is sec"<<endl;
-                    while(parameter<0||parameter>99)
+                while(parameter<0||parameter>99)
                 {
                     cin>>parameter;
 
@@ -3891,8 +3891,8 @@ unsigned short int CSTC::CalculateCompensationBase(void)
 //OT Debug compensation 950814
 //OT Debug compensation 951109
         long remainder
-        = (  (currenttime->tm_hour*3600   + currenttime->tm_min*60      + currenttime->tm_sec)
-             - (compensation_base_hour*3600 + compensation_base_minute*60 + compensation_base_second) );
+            = (  (currenttime->tm_hour*3600   + currenttime->tm_min*60      + currenttime->tm_sec)
+                 - (compensation_base_hour*3600 + compensation_base_minute*60 + compensation_base_second) );
         if(remainder < 0) return 0;                                                 // no compensation
         printf("    compensation_base_hour remainder=%d\n", remainder);
         remainder = remainder % _exec_plan.calculated_cycle_time();
@@ -3984,8 +3984,8 @@ unsigned short int CSTC::CalculateCompensationBaseInChain(void)
                compensation_base_hour, compensation_base_minute, compensation_base_second);
 
         long remainder
-        = (  (now_hour*3600   + now_minute*60      + now_second)
-             - (compensation_base_hour*3600 + compensation_base_minute*60 + compensation_base_second) );
+            = (  (now_hour*3600   + now_minute*60      + now_second)
+                 - (compensation_base_hour*3600 + compensation_base_minute*60 + compensation_base_second) );
         if(remainder < 0) return 0;                                                 // no compensation
         printf("    compensation_base_hour remainder=%d\n", remainder);
         remainder = remainder % sCCTMP.iChainCycle;
@@ -4444,16 +4444,16 @@ void CSTC::AdjustOffset_of_CurrentCycle_in_CADC(const short int &adjust_offset)
                     {
                         for(int j=(_exec_phase_current_subphase+1); j<_exec_plan._subphase_count; j++)
                             _exec_plan._ptr_subplaninfo[j]._green_compensation
-                            = (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor))<=0?0:
-                              (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor));
+                                = (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor))<=0?0:
+                                  (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor));
                     }//endif(extend time smaller than rest_compensation, adjust via decreasing compensation)
                     else
                     {
                         _exec_plan._shorten_cycle=false;
                         for(int j=(_exec_phase_current_subphase+1); j<_exec_plan._subphase_count; j++)
                             _exec_plan._ptr_subplaninfo[j]._green_compensation
-                            = (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation)<=0?0:
-                              (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation);
+                                = (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation)<=0?0:
+                                  (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation);
                     }//endelse(extend time greater than rest_compensation, adjust via revising compensation to extend cycle)
                 }//endelse(revise the rest_compensation)
             }//endelse(originally shortening cycle time)
@@ -4470,8 +4470,8 @@ void CSTC::AdjustOffset_of_CurrentCycle_in_CADC(const short int &adjust_offset)
                 {
                     for(int j=_exec_phase_current_subphase; j<_exec_plan._subphase_count; j++) divisor += _exec_plan._ptr_subplaninfo[j]._green;
                     _itimer_plan.it_value.tv_sec
-                    = (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor))<=1?1:
-                      (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor));
+                        = (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor))<=1?1:
+                          (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor));
 
                     for(int ii = 0; ii < 4; ii++)
                     {
@@ -4508,16 +4508,16 @@ void CSTC::AdjustOffset_of_CurrentCycle_in_CADC(const short int &adjust_offset)
                     {
                         for(int j=(_exec_phase_current_subphase+1); j<_exec_plan._subphase_count; j++)
                             _exec_plan._ptr_subplaninfo[j]._green_compensation
-                            = (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor))<=0?0:
-                              (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor));
+                                = (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor))<=0?0:
+                                  (_exec_plan._ptr_subplaninfo[j]._green_compensation-abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor));
                     }//endif(shorten time smaller than rest_compensation, adjust via decreasing compensation)
                     else
                     {
                         _exec_plan._shorten_cycle=true;
                         for(int j=(_exec_phase_current_subphase+1); j<_exec_plan._subphase_count; j++)
                             _exec_plan._ptr_subplaninfo[j]._green_compensation
-                            = (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation)<=0?0:
-                              (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation);
+                                = (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation)<=0?0:
+                                  (abs(adjust_offset*_exec_plan._ptr_subplaninfo[j]._green/divisor)-_exec_plan._ptr_subplaninfo[j]._green_compensation);
                     }//endelse(shorten time greater than rest_compensation, adjust via revising compensation to extend cycle)
                 }//endelse(revise the rest_compensation)
             }//endif(originally extending cycle time)
@@ -4528,8 +4528,8 @@ void CSTC::AdjustOffset_of_CurrentCycle_in_CADC(const short int &adjust_offset)
                 {
                     for(int j=_exec_phase_current_subphase; j<_exec_plan._subphase_count; j++) divisor += _exec_plan._ptr_subplaninfo[j]._green;
                     _itimer_plan.it_value.tv_sec
-                    = (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor))<=1?1:
-                      (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor));
+                        = (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor))<=1?1:
+                          (_itimer_plan.it_value.tv_sec-abs(adjust_offset*_exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._green/divisor));
 
                     for(int ii = 0; ii < 4; ii++)
                     {
@@ -7756,7 +7756,7 @@ unsigned short int CSTC::vGetUSIData(int iSelect)
             usiRet = _exec_plan._ptr_subplaninfo[_exec_phase_current_subphase]._allred;
             pthread_mutex_unlock(&CPlanInfo::_plan_mutex);
             break;
-            //OT20140415
+        //OT20140415
         case(CSTC_exec_plan_cycle):
             pthread_mutex_lock(&CPlanInfo::_plan_mutex);
             usiRet = _exec_plan.calculated_cycle_time();

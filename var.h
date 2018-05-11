@@ -248,6 +248,15 @@ typedef  struct s_junbo_lane_adj
     unsigned char command;
     unsigned char parameter[2];
 };
+typedef struct Value_Record
+ {
+ int ID1_value;
+ int ID2_value;
+ int ID3_value;
+ int interrrupt_time;
+ bool switch_button;
+ };
+
 
 
 typedef struct LAS_excute_info  // Lane adjusted sign excute information

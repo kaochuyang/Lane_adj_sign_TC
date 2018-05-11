@@ -6,16 +6,16 @@
 //----------------------------------------------------------
 class CWeekDayRevType
 {
-  public:
+public:
     unsigned short int _reverse_time_type;  //ReverseTimeType is 0~7 for weekday
     unsigned short int _weekday;  //weekday is defined as {1-7,11-17} in P_92
-                                  //and is re-defined as {0-6,7-13} accordingly
+    //and is re-defined as {0-6,7-13} accordingly
     CWeekDayRevType(void);
 };
 //----------------------------------------------------------
 class CHoliDayRevType
 {
-  public:
+public:
     unsigned short int _reverse_time_type;  //SegmentType is 8~20 for holiday
     unsigned short int _start_year;
     unsigned short int _start_month;
@@ -29,7 +29,7 @@ class CHoliDayRevType
 //----------------------------------------------------------
 class CReverseTimeInfo
 {
-  public:
+public:
     unsigned short int _reverse_time_type;
 
     unsigned short int usiDirectIn;

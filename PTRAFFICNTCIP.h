@@ -7,13 +7,13 @@
 //---------------------------------------------------------------------------
 class PTRAFFICNTCIP
 {
-    public:
+public:
 
-        PTRAFFICNTCIP(void);
-        ~PTRAFFICNTCIP(void);
-        bool DoWorkViaPTraffic(MESSAGEOK);
+    PTRAFFICNTCIP(void);
+    ~PTRAFFICNTCIP(void);
+    bool DoWorkViaPTraffic(MESSAGEOK);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

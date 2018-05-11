@@ -254,7 +254,7 @@ bool PTRAFFIC92COMM::DoWorkViaPTraffic92(MESSAGEOK message)
             vPass_0F8E(message);
             break;
 
-            //PhysicalOut
+        //PhysicalOut
         case 0x80:
             writeJob.WritePhysicalOut(message.packet, message.packetLength, DEVICECENTER92);
             break;
@@ -562,7 +562,8 @@ bool PTRAFFIC92COMM::vReportPowerOff_0F00()                                     
 bool PTRAFFIC92COMM::vSetIPCTime_0F12(MESSAGEOK DataMessageIn)
 {
     try
-    {printf("vSetIPCTime_0F12");
+    {
+        printf("vSetIPCTime_0F12");
         //之前的拿掉
         bool bEnableUpdate;
         char cWriteMsgTmp[128]= {0};
@@ -613,7 +614,7 @@ bool PTRAFFIC92COMM::vSetIPCTime_0F12(MESSAGEOK DataMessageIn)
 //  else
 //  {
         unsigned int YY = DataMessageIn.packet[9],MM=DataMessageIn.packet[10],DD=DataMessageIn.packet[11],
-                          hh = DataMessageIn.packet[13],mm=DataMessageIn.packet[14],ss=DataMessageIn.packet[15];
+                     hh = DataMessageIn.packet[13],mm=DataMessageIn.packet[14],ss=DataMessageIn.packet[15];
         unsigned int YYYY = YY + 1911;
 
         struct tm _CenterTime;                                                        //換算SecDif用的
@@ -629,7 +630,7 @@ bool PTRAFFIC92COMM::vSetIPCTime_0F12(MESSAGEOK DataMessageIn)
         _CenterTime.tm_sec = ss;
         _CenterTime.tm_isdst = -1;
         _CenterTimeSec = mktime(&_CenterTime);
-printf("%d %d %d %d %d %d \n",tmpYY,tmpMM,DD,hh,mm,ss);
+        printf("%d %d %d %d %d %d \n",tmpYY,tmpMM,DD,hh,mm,ss);
         //得到現在時間,為了設date -s MMDDhhmmYYYY
         time_t currenttime=time(NULL);
 
@@ -651,7 +652,7 @@ printf("%d %d %d %d %d %d \n",tmpYY,tmpMM,DD,hh,mm,ss);
         {
             vReturnToCenterACK(0x0F, 0x12);
         }
-printf(" 123456789--------\n");
+        printf(" 123456789--------\n");
         bEnableUpdate = smem.vGetBOOLData(EnableUpdateRTC);
         if(1)
         {
@@ -662,13 +663,13 @@ printf(" 123456789--------\n");
             unsigned int temphh=(now->tm_hour),tempmm=(now->tm_min);
 
             smem.vSetTimerMutexRESET(1);
-        /*    while(smem.vGetTimerMutexCTIMER() == 0 || smem.vGetTimerMutexCSTC() == 0)
-            {*/
-                usleep(100);
+            /*    while(smem.vGetTimerMutexCTIMER() == 0 || smem.vGetTimerMutexCSTC() == 0)
+                {*/
+            usleep(100);
 //              printf("screen data while\n");
-/*            }*/
+            /*            }*/
 
-         //   stc.TimersRead_BeforeResetCMOSTime();  //OTBUG =1
+            //   stc.TimersRead_BeforeResetCMOSTime();  //OTBUG =1
 //            _intervalTimer.TimersRead_BeforeResetCMOSTime();
 
 //      smem.vSetTimerMutexRESET(1);
@@ -679,7 +680,7 @@ printf(" 123456789--------\n");
 
 //      stc.TimersRead_BeforeResetCMOSTime();  //OTBUG =1
 //      _intervalTimer.TimersRead_BeforeResetCMOSTime();
-printf("vSetSystemClockTime vSetSystemClockTime\n");
+            printf("vSetSystemClockTime vSetSystemClockTime\n");
             smem.vSetSystemClockTime(YYYY, MM, DD, hh, mm, ss);
             /*move to smem
                   sprintf(date,"date -s %#02d%#02d%#02d%#02d%#04d",MM,DD,temphh,tempmm,YYYY);
@@ -695,8 +696,8 @@ printf("vSetSystemClockTime vSetSystemClockTime\n");
                   system(ctime);
             */
 
-          //  _intervalTimer.power_regular_reboot_resetting_for_outer();
-         //   stc.TimersReset_AfterResetCMOSTime();  //OTBUG =1
+            //  _intervalTimer.power_regular_reboot_resetting_for_outer();
+            //   stc.TimersReset_AfterResetCMOSTime();  //OTBUG =1
             _intervalTimer.TimersReset_AfterResetCMOSTime();
 
 //move to smem      system("hwclock -w");
@@ -1017,7 +1018,7 @@ bool PTRAFFIC92COMM::vSetDBPassword_0F15(MESSAGEOK DataMessageIn)
 
                 (( DataMessageIn.packet[9+i] >= 48 && DataMessageIn.packet[9+i] <= 57) ||
                  (DataMessageIn.packet[9+i] >= 65 && DataMessageIn.packet[9+i] <= 70) ))
-                {  }  //do nothing
+            {  }  //do nothing
             else
             {
                 vReturnToCenterNACK( 0x0F, 0x15, 0x04, i+1);

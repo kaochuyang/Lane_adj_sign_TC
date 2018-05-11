@@ -35,7 +35,7 @@ bool junli_vd::parse_junli(int receiveBlockLength,BYTE *block,MESSAGEOK *message
     BYTE ckstmp=0x0;
     for (i=0; i<receiveBlockLength; i++)
     {
-//      printf("_%C", messageIn[j].packet[k]=block[i]);
+    //      printf("_%C", messageIn[j].packet[k]=block[i]);
 
         if ( block[i] == 0xff)
         {

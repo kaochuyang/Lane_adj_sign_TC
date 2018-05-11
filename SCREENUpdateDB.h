@@ -5,20 +5,20 @@
 //---------------------------------------------------------------------------
 class SCREENUpdateDB:public SCREEN
 {
-    public:
-        SCREENUpdateDB(void);
-        ~SCREENUpdateDB(void);
+public:
+    SCREENUpdateDB(void);
+    ~SCREENUpdateDB(void);
 
-        void DisplayUpdateDB(void);                                             //顯示
-        void DoKeyWork(BYTE);                                                   //根據KEY的值作事
+    void DisplayUpdateDB(void);                                             //顯示
+    void DoKeyWork(BYTE);                                                   //根據KEY的值作事
 
-    private:
-        BYTE updateDBBitmap[3840];                                              //底圖
+private:
+    BYTE updateDBBitmap[3840];                                              //底圖
 
-        void LoadBitmapFromFile(void);                                          //將底圖Load進記憶體
-        void DoKeyF1Work();
-        void DoKeyF4Work();
-        void DoKeyEnterWork();
+    void LoadBitmapFromFile(void);                                          //將底圖Load進記憶體
+    void DoKeyF1Work();
+    void DoKeyF4Work();
+    void DoKeyEnterWork();
 };
 //---------------------------------------------------------------------------
 extern SCREENUpdateDB screenUpdateDB;

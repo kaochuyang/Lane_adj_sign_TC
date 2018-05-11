@@ -22,139 +22,153 @@ ScreenSegtypeSel::~ScreenSegtypeSel(void)
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::loadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//TC5F//segtypeSelect.bit","rb");
-    if (bitmap) {
-        fread(segtypeSelBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//TC5F//segtypeSelect.bit","rb");
+        if (bitmap)
+        {
+            fread(segtypeSelBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::DisplaySegtypeSel(void)
 {
-try {
-    smem.SetcFace(cSEGTYPESEL);
-    lcd240x128.DISPLAY_GRAPHIC(0,segtypeSelBitmap,128,30);
-    DisplaySetSegtype(0,0);  DisplaySetSegtype(0,0);
-    cPosition=0;
-    setCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
-  } catch (...) {}
+    try
+    {
+        smem.SetcFace(cSEGTYPESEL);
+        lcd240x128.DISPLAY_GRAPHIC(0,segtypeSelBitmap,128,30);
+        DisplaySetSegtype(0,0);
+        DisplaySetSegtype(0,0);
+        cPosition=0;
+        setCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::initDispWord(void)
 {
-    for (int i=0;i<2;i++) {
-         segSel[i].X=96+i*24;
-         segSel[i].Y=68;
-         segSel[i].width=24;
-         segSel[i].height=24;
+    for (int i=0; i<2; i++)
+    {
+        segSel[i].X=96+i*24;
+        segSel[i].Y=68;
+        segSel[i].width=24;
+        segSel[i].height=24;
     }
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::DisplaySetSegtype(int a,int b)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(segSel[0].X,segSel[0].Y,word24x24[a],segSel[0].height,segSel[0].width/8);
-    segTemp[0]=a;
-    lcd240x128.DISPLAY_GRAPHIC_XY(segSel[1].X,segSel[1].Y,word24x24[b],segSel[1].height,segSel[1].width/8);
-    segTemp[1]=b;
-  } catch (...){}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(segSel[0].X,segSel[0].Y,word24x24[a],segSel[0].height,segSel[0].width/8);
+        segTemp[0]=a;
+        lcd240x128.DISPLAY_GRAPHIC_XY(segSel[1].X,segSel[1].Y,word24x24[b],segSel[1].height,segSel[1].width/8);
+        segTemp[1]=b;
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::doKeyWork(BYTE key)
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x80:
-          doKey0Work();
-        break;
+            doKey0Work();
+            break;
         case 0x81:
-          doKey1Work();
-        break;
+            doKey1Work();
+            break;
         case 0x82:
-          doKey2Work();
-        break;
+            doKey2Work();
+            break;
         case 0x83:
-          doKey3Work();
-        break;
+            doKey3Work();
+            break;
         case 0x84:
-          doKey4Work();
-        break;
+            doKey4Work();
+            break;
         case 0x85:
-          doKey5Work();
-        break;
+            doKey5Work();
+            break;
         case 0x86:
-          doKey6Work();
-        break;
+            doKey6Work();
+            break;
         case 0x87:
-          doKey7Work();
-        break;
+            doKey7Work();
+            break;
         case 0x88:
-          doKey8Work();
-        break;
+            doKey8Work();
+            break;
         case 0x89:
-          doKey9Work();
-        break;
+            doKey9Work();
+            break;
         case 0x8A:
-          doKeyAWork();
-        break;
+            doKeyAWork();
+            break;
         case 0x8B:
-          doKeyBWork();
-        break;
+            doKeyBWork();
+            break;
         case 0x8C:
-          doKeyCWork();
-        break;
+            doKeyCWork();
+            break;
         case 0x8D:
-          doKeyDWork();
-        break;
+            doKeyDWork();
+            break;
         case 0x8E:
-          doKeyEWork();
-        break;
+            doKeyEWork();
+            break;
         case 0x8F:
-          doKeyFWork();
-        break;
+            doKeyFWork();
+            break;
         case 0x90:
-          doKeyF1Work();
-        break;
+            doKeyF1Work();
+            break;
         case 0x91:
-          doKeyF2Work();
-        break;
+            doKeyF2Work();
+            break;
         case 0x92:
-          doKeyF3Work();
-        break;
+            doKeyF3Work();
+            break;
         case 0x93:
-          doKeyF4Work();
-        break;
+            doKeyF4Work();
+            break;
         case 0x94:
-          doKeyUPWork();
-        break;
+            doKeyUPWork();
+            break;
         case 0x95:
-          doKeyDOWNWork();
-        break;
+            doKeyDOWNWork();
+            break;
         case 0x96:
-          doKeyLEFTWork();
-        break;
+            doKeyLEFTWork();
+            break;
         case 0x97:
-          doKeyRIGHTWork();
-        break;
+            doKeyRIGHTWork();
+            break;
         case 0x98:
-          doKeyEnterWork();
-        break;
+            doKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::doKey0Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(segSel[cPosition].X,segSel[cPosition].Y,word24x24[0],segSel[cPosition].height,segSel[cPosition].width/8);
-    segTemp[cPosition]=0;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(segSel[cPosition].X,segSel[cPosition].Y,word24x24[0],segSel[cPosition].height,segSel[cPosition].width/8);
+        segTemp[cPosition]=0;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::doKey1Work(void)
@@ -278,22 +292,26 @@ void ScreenSegtypeSel::doKeyDOWNWork(void)
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::doKeyLEFTWork(void)
 {
-try {
-    clearCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
-    if (cPosition==0) cPosition=1;
-    cPosition--;
-    setCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
-  } catch (...) {}
+    try
+    {
+        clearCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
+        if (cPosition==0) cPosition=1;
+        cPosition--;
+        setCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::doKeyRIGHTWork(void)
 {
-try {
-    clearCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
-    cPosition++;
-    if (cPosition>=2) cPosition=1;
-    setCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
-  } catch (...) {}
+    try
+    {
+        clearCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
+        cPosition++;
+        if (cPosition>=2) cPosition=1;
+        setCursor24x24(segSel[cPosition].X,segSel[cPosition].Y+24);
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenSegtypeSel::doKeyEnterWork(void)

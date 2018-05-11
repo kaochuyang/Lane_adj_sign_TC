@@ -4,17 +4,17 @@
 
 class PARSEGROUP
 {
-    public:
-        PARSEGROUP();
-        virtual ~PARSEGROUP();
+public:
+    PARSEGROUP();
+    virtual ~PARSEGROUP();
 
 
-        void PARSE_junbo_CMS();//
+    void PARSE_junbo_CMS();//
 
-        void PARSE_junli_VD();
+    void PARSE_junli_VD();
 
-    protected:
-    private:
+protected:
+private:
 };
 
 #endif // PARSEGROUP_H

@@ -29,47 +29,55 @@ SCREENCommStat::~SCREENCommStat(void)
 //---------------------------------------------------------------------------
 void SCREENCommStat::DoKeyWork(BYTE key)              //已過濾,進來的是0x80~0x98之間,5X5按鍵
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x90:
-          DoKeyF1Work();
-        break;
+            DoKeyF1Work();
+            break;
         case 0x91:
-          DoKeyF2Work();
-        break;
+            DoKeyF2Work();
+            break;
         case 0x92:
-          DoKeyF3Work();
-        break;
+            DoKeyF3Work();
+            break;
         case 0x93:
-          DoKeyF4Work();
-        break;
+            DoKeyF4Work();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENCommStat::LoadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//4_1_10CommStatus.bit","rb");
-    if (bitmap) {
-        fread(commStatBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//4_1_10CommStatus.bit","rb");
+        if (bitmap)
+        {
+            fread(commStatBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENCommStat::DisplayCommStat(void)
 {
-try {
-    smem.SetcFace(cCOMMSTAT);
-    smem.vWriteMsgToDOM("Enter Communication Status Screen");
-    lcd240x128.DISPLAY_GRAPHIC(0,commStatBitmap,128,30);
-    UpdateCenterComm();
+    try
+    {
+        smem.SetcFace(cCOMMSTAT);
+        smem.vWriteMsgToDOM("Enter Communication Status Screen");
+        lcd240x128.DISPLAY_GRAPHIC(0,commStatBitmap,128,30);
+        UpdateCenterComm();
 //    UpdateSSComm();
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENCommStat::UpdateComm(void)
@@ -80,13 +88,16 @@ void SCREENCommStat::UpdateComm(void)
 //---------------------------------------------------------------------------
 void SCREENCommStat::UpdateCenterComm(void)
 {
-try {
-    if (smem.GetcFace()==cCOMMSTAT) {
-        if (smem.vLoadCenterConnectStatus())
-            lcd240x128.DISPLAY_GRAPHIC_XY(96,40,word16x16[1],16,16/8);
-        else lcd240x128.DISPLAY_GRAPHIC_XY(96,40,word16x16[2],16,16/8);
+    try
+    {
+        if (smem.GetcFace()==cCOMMSTAT)
+        {
+            if (smem.vLoadCenterConnectStatus())
+                lcd240x128.DISPLAY_GRAPHIC_XY(96,40,word16x16[1],16,16/8);
+            else lcd240x128.DISPLAY_GRAPHIC_XY(96,40,word16x16[2],16,16/8);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 /*
@@ -109,31 +120,35 @@ void SCREENCommStat::DoKeyF1Work(void)
 //---------------------------------------------------------------------------
 void SCREENCommStat::DoKeyF2Work(void)  //硬體重置
 {
-try {
+    try
+    {
 
-    digitalIO.WriteDigitalIO(0xFF);
-    usleep(1500000);
+        digitalIO.WriteDigitalIO(0xFF);
+        usleep(1500000);
 //autorun    stc.Lock_to_Set_Control_Strategy(STRATEGY_FLASH);
-    digitalIO.WriteDigitalIO(0x00);
+        digitalIO.WriteDigitalIO(0x00);
 
-    stc.CalculateAndSendRedCount(10);
-    writeJob.WriteLetW77E58AutoControl();                                       //let W77e58 autoControl.
+        stc.CalculateAndSendRedCount(10);
+        writeJob.WriteLetW77E58AutoControl();                                       //let W77e58 autoControl.
 
-    system("sync");
-    system("sync");
-    system("reboot");
+        system("sync");
+        system("sync");
+        system("reboot");
 
-    screenHWReset.DisplayHWReset();
-  } catch (...) {}
+        screenHWReset.DisplayHWReset();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENCommStat::DoKeyF3Work(void)
 {
-try {
-    smem.vWriteMsgToDOM("Restart The GPRS Modem By Control Power");
-    smem.vSet0F11CommuncationResetChangeStatus(true);
-    screenCtlSetup.DisplayCtlSetup();
-  } catch (...) {}
+    try
+    {
+        smem.vWriteMsgToDOM("Restart The GPRS Modem By Control Power");
+        smem.vSet0F11CommuncationResetChangeStatus(true);
+        screenCtlSetup.DisplayCtlSetup();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENCommStat::DoKeyF4Work(void)

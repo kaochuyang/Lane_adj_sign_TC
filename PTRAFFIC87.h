@@ -11,18 +11,18 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC87
 {
-    public:
+public:
 
-        PTRAFFIC87(void);
-        ~PTRAFFIC87(void);
-        bool DoWorkViaPTraffic(MESSAGEOK);
+    PTRAFFIC87(void);
+    ~PTRAFFIC87(void);
+    bool DoWorkViaPTraffic(MESSAGEOK);
 
-    private:
+private:
 
-        PTRAFFIC87COMM pTraffic87Comm;
-        PTRAFFIC87TC pTraffic87Tc;
-        PTRAFFIC87CMS pTraffic87Cms;
-        PTRAFFIC87VD pTraffic87Vd;
+    PTRAFFIC87COMM pTraffic87Comm;
+    PTRAFFIC87TC pTraffic87Tc;
+    PTRAFFIC87CMS pTraffic87Cms;
+    PTRAFFIC87VD pTraffic87Vd;
 
 };
 //---------------------------------------------------------------------------

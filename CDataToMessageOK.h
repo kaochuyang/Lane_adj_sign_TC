@@ -5,7 +5,7 @@
 //--------------------------------------------------------------------------
 class CDataToMessageOK
 {
-    public:
+public:
 
     //For SmartSensor------------------------------------------------------------
     /*  HowToUse _MESSAGEOUT = oDataToMessageOK.SendSSProtocalSetTimeInterval(30); */
@@ -21,7 +21,7 @@ class CDataToMessageOK
 
     //For 92VD------------------------------------------------------------
     /* HowToUse _MessageOfMake = vPackageINFOTo92Protocol(Info,  Length); */
-        MESSAGEOK vPackageINFOTo92Protocol(unsigned char *, int ,bool);                     /*把Info打包成 AABBooxxINFOAADDchk */
+    MESSAGEOK vPackageINFOTo92Protocol(unsigned char *, int ,bool);                     /*把Info打包成 AABBooxxINFOAADDchk */
 
     //For Screen------------------------------------------------------------
 //        MESSAGEOK vSet92VDTimeGap_6F14ToMessageOK(int);
@@ -30,29 +30,29 @@ class CDataToMessageOK
 //        MESSAGEOK vSet92VDTransmitCycle_6F3FToMessageOK(short int,short int);
 
     //For Ver94RedCount
-        MESSAGEOK vPackageINFOToVer94RedCount(BYTE,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int  );
+    MESSAGEOK vPackageINFOToVer94RedCount(BYTE,
+                                          unsigned short int,
+                                          unsigned short int,
+                                          unsigned short int,
+                                          unsigned short int,
+                                          unsigned short int  );
 
-        MESSAGEOK vPackageINFOToVerHKRedCount(int, int, int, int );
-        MESSAGEOK vPackageINFOToVerHKRedCountComm();
+    MESSAGEOK vPackageINFOToVerHKRedCount(int, int, int, int );
+    MESSAGEOK vPackageINFOToVerHKRedCountComm();
 
-        MESSAGEOK vPackageINFOToVer94v2RedCount(BYTE,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int,
-                                              unsigned short int );
+    MESSAGEOK vPackageINFOToVer94v2RedCount(BYTE,
+                                            unsigned short int,
+                                            unsigned short int,
+                                            unsigned short int,
+                                            unsigned short int,
+                                            unsigned short int,
+                                            unsigned short int,
+                                            unsigned short int,
+                                            unsigned short int );
 
-        MESSAGEOK vPackageINFOTo92ProtocolSetADDR(unsigned char *, int, unsigned char, unsigned short int);
+    MESSAGEOK vPackageINFOTo92ProtocolSetADDR(unsigned char *, int, unsigned char, unsigned short int);
 
-    private:
+private:
 
 };
 //--------------------------------------------------------------------------

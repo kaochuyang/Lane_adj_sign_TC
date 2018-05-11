@@ -9,16 +9,16 @@
 //---------------------------------------------------------------------------
 class PROTOCOL
 {
-    public:
+public:
 
-        PROTOCOL(void);
-        ~PROTOCOL(void);
-        bool DoWork(MESSAGEOK);                                                 //根據readJob或writeJob傳來的Structure作事情
+    PROTOCOL(void);
+    ~PROTOCOL(void);
+    bool DoWork(MESSAGEOK);                                                 //根據readJob或writeJob傳來的Structure作事情
 
-    private:
+private:
 
-        PTRAFFIC pTraffic;
-        PDEVICE pDevice;
+    PTRAFFIC pTraffic;
+    PDEVICE pDevice;
 
 };
 //---------------------------------------------------------------------------

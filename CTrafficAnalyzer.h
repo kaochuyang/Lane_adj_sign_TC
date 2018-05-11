@@ -20,22 +20,22 @@
 //---------------------------------------------------------------------------
 class CTrafficAnalyzer
 {
-  public:
+public:
 
-      int threshold_E_by_signal;
-      int threshold_E;
-      int threshold_D;
-      int threshold_C;
-      int threshold_B;
-      unsigned int zone_queue_total[16];
+    int threshold_E_by_signal;
+    int threshold_E;
+    int threshold_D;
+    int threshold_C;
+    int threshold_B;
+    unsigned int zone_queue_total[16];
 
 //    CTrafficAnalyzer(){}
-      CTrafficAnalyzer(void);
+    CTrafficAnalyzer(void);
 
     //invoked whenever got a RTMS TARGET(0x18) protocol
     unsigned char InsertTargetAndCheckTrafficStatus(const CTarget &target, unsigned short int &STCcurrent_step);
 
-  private:
+private:
 
     unsigned short int blips2zone(const CTarget &target);
     void zone2zone_queue(unsigned char , unsigned int *, unsigned int *);

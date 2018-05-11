@@ -22,42 +22,50 @@ SCREENUpdateDB::~SCREENUpdateDB(void)
 //---------------------------------------------------------------------------
 void SCREENUpdateDB::DoKeyWork(BYTE key)
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x90:
-             DoKeyF1Work();
-        break;
+            DoKeyF1Work();
+            break;
         case 0x93:
-             DoKeyF4Work();
-        break;
+            DoKeyF4Work();
+            break;
         case 0x98:
-             DoKeyEnterWork();
-        break;
+            DoKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENUpdateDB::LoadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//4_5_updatedb.bit","rb");
-    if (bitmap) {
-        fread(updateDBBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//4_5_updatedb.bit","rb");
+        if (bitmap)
+        {
+            fread(updateDBBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENUpdateDB::DisplayUpdateDB(void)
 {
-try {
-    smem.SetcFace(cUPDATEDB);
-    smem.vWriteMsgToDOM("Enter Update Database Screen");
-    lcd240x128.DISPLAY_GRAPHIC(0,updateDBBitmap,128,30);
-  } catch (...) {}
+    try
+    {
+        smem.SetcFace(cUPDATEDB);
+        smem.vWriteMsgToDOM("Enter Update Database Screen");
+        lcd240x128.DISPLAY_GRAPHIC(0,updateDBBitmap,128,30);
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENUpdateDB::DoKeyF1Work(void)
@@ -72,25 +80,27 @@ void SCREENUpdateDB::DoKeyF4Work(void)
 //---------------------------------------------------------------------------
 void SCREENUpdateDB::DoKeyEnterWork(void)
 {
-try {
-    unsigned char data[5];
+    try
+    {
+        unsigned char data[5];
 
-    data[0]  = 0x5F;
-    data[1]  = 0x0B;
-    data[2]  = 0x0F;   //要求全部
+        data[0]  = 0x5F;
+        data[1]  = 0x0B;
+        data[2]  = 0x0F;   //要求全部
 
-    MESSAGEOK _MsgOK;
+        MESSAGEOK _MsgOK;
 
-    _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 3,true);
-    _MsgOK.InnerOrOutWard = cComingFromScreen;
+        _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 3,true);
+        _MsgOK.InnerOrOutWard = cComingFromScreen;
 //    writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
-    writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
+        writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
 
-    smem.vWriteMsgToDOM("Request Traffic Center To Update My Database");
+        smem.vWriteMsgToDOM("Request Traffic Center To Update My Database");
 
 //    screenMain.DisplayMain();
-    screenLast92TCPlanSegmentUpdate.DisplayLastUpdate();
+        screenLast92TCPlanSegmentUpdate.DisplayLastUpdate();
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------

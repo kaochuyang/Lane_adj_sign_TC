@@ -215,18 +215,18 @@ void junbo_light_control::junbol_light_5F7C()
 //   data[2]=0x8;//
         for(int i=1; i<num_light+1; i++)
         {
-       /*     if(query_count==0)
-            {
-                data[i*3]=smem.record_state[countID[i-1]].ID;
-                data[i*3+1]=smem.record_state[countID[i-1]].command;
-                data[i*3+2]=smem.record_state[countID[i-1]].parameter;
-            }
-            else
-            {
-                data[i*3]=smem.record_light[countID[i-1]].ID;
-                data[i*3+1]=smem.record_light[countID[i-1]].command;
-                data[i*3+2]=smem.record_light[countID[i-1]].parameter;
-            }*/
+            /*     if(query_count==0)
+                 {
+                     data[i*3]=smem.record_state[countID[i-1]].ID;
+                     data[i*3+1]=smem.record_state[countID[i-1]].command;
+                     data[i*3+2]=smem.record_state[countID[i-1]].parameter;
+                 }
+                 else
+                 {
+                     data[i*3]=smem.record_light[countID[i-1]].ID;
+                     data[i*3+1]=smem.record_light[countID[i-1]].command;
+                     data[i*3+2]=smem.record_light[countID[i-1]].parameter;
+                 }*/
         }
 
         MESSAGEOK _MsgOK;
@@ -267,18 +267,18 @@ void junbo_light_control::junbol_light_5F7B()
 //   data[2]=0x8;//
         for(int i=1; i<num_light+1; i++)
         {
-     /*       if(query_count==0)
-            {
-                data[i*3]=smem.record_state[countID[i-1]].ID;
-                data[i*3+1]=smem.record_state[countID[i-1]].command;
-                data[i*3+2]=smem.record_state[countID[i-1]].parameter;
-            }
-            else
-            {
-                data[i*3]=smem.record_light[countID[i-1]].ID;
-                data[i*3+1]=smem.record_light[countID[i-1]].command;
-                data[i*3+2]=smem.record_light[countID[i-1]].parameter;
-            }*/
+            /*       if(query_count==0)
+                   {
+                       data[i*3]=smem.record_state[countID[i-1]].ID;
+                       data[i*3+1]=smem.record_state[countID[i-1]].command;
+                       data[i*3+2]=smem.record_state[countID[i-1]].parameter;
+                   }
+                   else
+                   {
+                       data[i*3]=smem.record_light[countID[i-1]].ID;
+                       data[i*3+1]=smem.record_light[countID[i-1]].command;
+                       data[i*3+2]=smem.record_light[countID[i-1]].parameter;
+                   }*/
         }
 
         MESSAGEOK _MsgOK;
@@ -546,32 +546,32 @@ void junbo_light_control::junbo_light_send_reference_step(unsigned short int jun
         if((default_dir_mark!=0)&&((junbo_step==0)||(junbo_step==1)||(junbo_step==11)))
         {
             switch (default_dir_mark)
-         {
+            {
 
             case (1):
-            light_ID[1]=light_ID[6]=light_ID[8]=red;
-            light_ID[2]=light_ID[5]=light_ID[7]=green;
-            light_ID[3]=green;
-            light_ID[4]=red;
-            break;
-        case (2):
-            light_ID[1]=light_ID[6]=light_ID[8]=red;
-            light_ID[2]=light_ID[5]=light_ID[7]=green;
-            light_ID[3]=red;
-            light_ID[4]=green;
+                light_ID[1]=light_ID[6]=light_ID[8]=red;
+                light_ID[2]=light_ID[5]=light_ID[7]=green;
+                light_ID[3]=green;
+                light_ID[4]=red;
+                break;
+            case (2):
+                light_ID[1]=light_ID[6]=light_ID[8]=red;
+                light_ID[2]=light_ID[5]=light_ID[7]=green;
+                light_ID[3]=red;
+                light_ID[4]=green;
 
-            break;
-        case (3):
-            light_ID[1]=light_ID[6]=light_ID[8]=red;
-            light_ID[2]=light_ID[5]=light_ID[7]=green;
-            light_ID[3]=red;
-            light_ID[4]=red;
-            break;
-        default:
-            for(int i=0; i<8; i++)
-                light_ID[i]=light_off;
-            break;
-        }
+                break;
+            case (3):
+                light_ID[1]=light_ID[6]=light_ID[8]=red;
+                light_ID[2]=light_ID[5]=light_ID[7]=green;
+                light_ID[3]=red;
+                light_ID[4]=red;
+                break;
+            default:
+                for(int i=0; i<8; i++)
+                    light_ID[i]=light_off;
+                break;
+            }
         }
         else ;
 
@@ -723,36 +723,36 @@ void junbo_light_control::junbo_light_receive(MESSAGEOK messageIn)//just for rec
 
             if(junbo_receive_packet[2]>=1&&junbo_receive_packet[2]<=8)
             {
-          /*      if((junbo_receive_packet[3]==0xb1)
-                        ||(junbo_receive_packet[3]==0xb0)
-                        ||(junbo_receive_packet[3]==0xb3))
-                {
-                    ID=junbo_receive_packet[2];
-                    smem.record_light[ID].ID=junbo_receive_packet[2];
-                    smem.record_light[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                    smem.record_light[ID].parameter=junbo_receive_packet[4];
-                }
-                else if(junbo_receive_packet[3]==0xb2)
-                {
-                    ID=junbo_receive_packet[2];
-                    smem.record_timeout[ID].ID=junbo_receive_packet[2];
-                    smem.record_timeout[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                    smem.record_timeout[ID].parameter=junbo_receive_packet[4];
-                }
-                else if(junbo_receive_packet[3]==0xb5)
-                {
-                    ID=junbo_receive_packet[2];
-                    smem.record_brightness[ID].ID=junbo_receive_packet[2];
-                    smem.record_brightness[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                    smem.record_brightness[ID].parameter=junbo_receive_packet[4];
-                }
-                else
-                {
-                    ID=junbo_receive_packet[2];
-                    smem.record_state[ID].ID=junbo_receive_packet[2];
-                    smem.record_state[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
-                    smem.record_state[ID].parameter=junbo_receive_packet[4];
-                }*/
+                /*      if((junbo_receive_packet[3]==0xb1)
+                              ||(junbo_receive_packet[3]==0xb0)
+                              ||(junbo_receive_packet[3]==0xb3))
+                      {
+                          ID=junbo_receive_packet[2];
+                          smem.record_light[ID].ID=junbo_receive_packet[2];
+                          smem.record_light[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                          smem.record_light[ID].parameter=junbo_receive_packet[4];
+                      }
+                      else if(junbo_receive_packet[3]==0xb2)
+                      {
+                          ID=junbo_receive_packet[2];
+                          smem.record_timeout[ID].ID=junbo_receive_packet[2];
+                          smem.record_timeout[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                          smem.record_timeout[ID].parameter=junbo_receive_packet[4];
+                      }
+                      else if(junbo_receive_packet[3]==0xb5)
+                      {
+                          ID=junbo_receive_packet[2];
+                          smem.record_brightness[ID].ID=junbo_receive_packet[2];
+                          smem.record_brightness[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                          smem.record_brightness[ID].parameter=junbo_receive_packet[4];
+                      }
+                      else
+                      {
+                          ID=junbo_receive_packet[2];
+                          smem.record_state[ID].ID=junbo_receive_packet[2];
+                          smem.record_state[ID].command=junbo_receive_packet[3];//junbo_receive_packet[2]   I am ID
+                          smem.record_state[ID].parameter=junbo_receive_packet[4];
+                      }*/
 
             }
 
@@ -895,20 +895,20 @@ void junbo_light_control::query_modual_state()
 
     for(int i=1; i<9; i++)
     {
-/*        smem.record_state[i].ID=0;
-        smem.record_state[i].command=0;
-        smem.record_state[i].parameter=0;
-        //int i=4;
-        ucSendTMP[0] = 0xAA;//head
-        ucSendTMP[1] = 0x1;//sequence
-        ucSendTMP[2] = i;//ID
-        ucSendTMP[3] = query.command;
-        ucSendTMP[4] = query.parameter;
-        ucSendTMP[5] = 0x0;//cks
-        for (int a=0; a<5; a++)
-            ucSendTMP[5]^=ucSendTMP[a];
-        printf("\nquery light ID=%d\n",i);
-        junbo_light_send(ucSendTMP);*/
+        /*        smem.record_state[i].ID=0;
+                smem.record_state[i].command=0;
+                smem.record_state[i].parameter=0;
+                //int i=4;
+                ucSendTMP[0] = 0xAA;//head
+                ucSendTMP[1] = 0x1;//sequence
+                ucSendTMP[2] = i;//ID
+                ucSendTMP[3] = query.command;
+                ucSendTMP[4] = query.parameter;
+                ucSendTMP[5] = 0x0;//cks
+                for (int a=0; a<5; a++)
+                    ucSendTMP[5]^=ucSendTMP[a];
+                printf("\nquery light ID=%d\n",i);
+                junbo_light_send(ucSendTMP);*/
     }
 
     pthread_mutex_unlock(&junbo_light_control::_junbo_mutex);
@@ -1028,9 +1028,9 @@ void junbo_light_control::report_module_state_to_revapp()
     pthread_mutex_lock(&junbo_light_control::_junbo_mutex);
     for(int i=1; i<9; i++)
     {
-/*        data[3*i-1]=smem.record_state[i].ID;
-        data[3*i]=smem.record_state[i].command;
-        data[3*i+1]=smem.record_state[i].parameter;*/
+        /*        data[3*i-1]=smem.record_state[i].ID;
+                data[3*i]=smem.record_state[i].command;
+                data[3*i+1]=smem.record_state[i].parameter;*/
     }
     writeJob.WritePhysicalOut(data, 26, revAPP);
     pthread_mutex_unlock(&junbo_light_control::_junbo_mutex);

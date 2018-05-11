@@ -4,11 +4,11 @@
 
 class readjob
 {
-    public:
-        readjob();
-        virtual ~readjob();
-    protected:
-    private:
+public:
+    readjob();
+    virtual ~readjob();
+protected:
+private:
 };
 
 #endif // READJOB_H

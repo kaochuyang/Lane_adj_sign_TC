@@ -9,17 +9,17 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC92CMS
 {
-    public:
+public:
 
-        PTRAFFIC92CMS(void);
-        ~PTRAFFIC92CMS(void);
-        bool DoWorkViaPTraffic92(MESSAGEOK);                                    //根據PTraffic92來的訊息作事情
+    PTRAFFIC92CMS(void);
+    ~PTRAFFIC92CMS(void);
+    bool DoWorkViaPTraffic92(MESSAGEOK);                                    //根據PTraffic92來的訊息作事情
 
-    private:
+private:
 
 
-        int vReturnToCenterACK(unsigned char , unsigned char);
-        int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
+    int vReturnToCenterACK(unsigned char , unsigned char);
+    int vReturnToCenterNACK(unsigned char, unsigned char, unsigned char, unsigned char);
 
 
 };

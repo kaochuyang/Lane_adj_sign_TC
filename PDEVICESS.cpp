@@ -21,52 +21,54 @@ PDEVICESS::~PDEVICESS(void)
 //---------------------------------------------------------------------------
 bool PDEVICESS::DoWorkViaPDevice(MESSAGEOK message)
 {
-try {
+    try
+    {
 
-/*
-    if(message.packet[0] == 'X' && message.packet[1] == 'D' &&  message.InnerOrOutWard == cInner)
-            vDoProtocol_XD(message);
-    else if(message.packet[0] == 'X' && message.packet[1] == 'A' &&  message.InnerOrOutWard == cInner)
-            vDoProtocol_XA(message);
-    else if(message.packet[0] == 'X' && message.packet[1] == '1' &&  message.InnerOrOutWard == cInner)
-            vDoProtocol_X1(message);
-    else if(message.packet[0] == 'S' && message.packet[1] == '0' &&  message.InnerOrOutWard == cInner)
-            vWriteSmartSensor_S0_ToShareMem(message);
-    else if(message.packet[0] == 'S' && message.packet[1] == 'K' &&
-            message.packet[2] == 'S' && message.packet[3] == 'u' &&
-            message.packet[4] == 'c' && message.packet[5] == 'c' &&  message.InnerOrOutWard == cInner)
-            vDoReceiveSKSuccess(message);
+        /*
+            if(message.packet[0] == 'X' && message.packet[1] == 'D' &&  message.InnerOrOutWard == cInner)
+                    vDoProtocol_XD(message);
+            else if(message.packet[0] == 'X' && message.packet[1] == 'A' &&  message.InnerOrOutWard == cInner)
+                    vDoProtocol_XA(message);
+            else if(message.packet[0] == 'X' && message.packet[1] == '1' &&  message.InnerOrOutWard == cInner)
+                    vDoProtocol_X1(message);
+            else if(message.packet[0] == 'S' && message.packet[1] == '0' &&  message.InnerOrOutWard == cInner)
+                    vWriteSmartSensor_S0_ToShareMem(message);
+            else if(message.packet[0] == 'S' && message.packet[1] == 'K' &&
+                    message.packet[2] == 'S' && message.packet[3] == 'u' &&
+                    message.packet[4] == 'c' && message.packet[5] == 'c' &&  message.InnerOrOutWard == cInner)
+                    vDoReceiveSKSuccess(message);
 
-//OTSS++
-    else if(message.packet[0] == 'X' && message.packet[1] == 'G' &&  message.InnerOrOutWard == cInner)
-            vXGTransToRTMS0x18(message);
-//OTSS--
+        //OTSS++
+            else if(message.packet[0] == 'X' && message.packet[1] == 'G' &&  message.InnerOrOutWard == cInner)
+                    vXGTransToRTMS0x18(message);
+        //OTSS--
 
-//Physical Out
-    else if(message.packet[0] == 'S' && message.packet[1] == '4' && message.InnerOrOutWard == cOutWard)
-            writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
-    else if(message.packet[0] == 'S' && message.packet[1] == 'K' &&
-            message.packet[2] == 'S' && message.packet[7] == '8' &&
-            message.packet[8] == 'E' && message.packet[12] == '8' &&
-            message.InnerOrOutWard == cOutWard)
-            writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
-    else if(message.packet[0] == 'S' && message.packet[1] == 'K' &&
-            message.packet[2] == 'S' && message.packet[7] == '9' &&
-            message.packet[8] == '7' && message.packet[12] == '4' &&
-            message.InnerOrOutWard == cOutWard)
-            writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
-    else if(message.packet[0] == 'S' && message.packet[1] == 'J' &&               //查車長
-            message.packet[2] == 'S' && message.packet[3] == '0' &&
-            message.InnerOrOutWard == cOutWard)
-            writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
-    else if(message.packet[0] == 'S' && message.packet[1] == '0' &&               //查BasicInfo
-            message.packet[2] == 0x0D && message.InnerOrOutWard == cOutWard)
-            writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
+        //Physical Out
+            else if(message.packet[0] == 'S' && message.packet[1] == '4' && message.InnerOrOutWard == cOutWard)
+                    writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
+            else if(message.packet[0] == 'S' && message.packet[1] == 'K' &&
+                    message.packet[2] == 'S' && message.packet[7] == '8' &&
+                    message.packet[8] == 'E' && message.packet[12] == '8' &&
+                    message.InnerOrOutWard == cOutWard)
+                    writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
+            else if(message.packet[0] == 'S' && message.packet[1] == 'K' &&
+                    message.packet[2] == 'S' && message.packet[7] == '9' &&
+                    message.packet[8] == '7' && message.packet[12] == '4' &&
+                    message.InnerOrOutWard == cOutWard)
+                    writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
+            else if(message.packet[0] == 'S' && message.packet[1] == 'J' &&               //查車長
+                    message.packet[2] == 'S' && message.packet[3] == '0' &&
+                    message.InnerOrOutWard == cOutWard)
+                    writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
+            else if(message.packet[0] == 'S' && message.packet[1] == '0' &&               //查BasicInfo
+                    message.packet[2] == 0x0D && message.InnerOrOutWard == cOutWard)
+                    writeJob.WritePhysicalOut(message.packet,message.packetLength,DEVICESS);
 
-*/
-    return true;
+        */
+        return true;
 
-  } catch (...) {}
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 //sim------------------------------------------------------------------------

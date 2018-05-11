@@ -25,231 +25,261 @@ ScreenRedCountHWCheckDevID::~ScreenRedCountHWCheckDevID(void)
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::loadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//TC5F//RedCountHWCheckSelect.bit","rb");
-    if (bitmap) {
-        fread(RedCountHWCheckSelBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//TC5F//RedCountHWCheckSelect.bit","rb");
+        if (bitmap)
+        {
+            fread(RedCountHWCheckSelBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::DisplayRedCountHWCheckDevID(void)
 {
-try {
-    smem.SetcFace(cREDCOUNTHWCHECKDEVID);
-    lcd240x128.DISPLAY_GRAPHIC(0,RedCountHWCheckSelBitmap,128,30);
-    DisplaySetSegtype(0);
-    cPosition=0;
-    setCursor24x24(redCountHWCheckDevID.X,redCountHWCheckDevID.Y+24);
-  } catch (...) {}
+    try
+    {
+        smem.SetcFace(cREDCOUNTHWCHECKDEVID);
+        lcd240x128.DISPLAY_GRAPHIC(0,RedCountHWCheckSelBitmap,128,30);
+        DisplaySetSegtype(0);
+        cPosition=0;
+        setCursor24x24(redCountHWCheckDevID.X,redCountHWCheckDevID.Y+24);
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::initDispWord(void)
 {
-         redCountHWCheckDevID.X=96;
-         redCountHWCheckDevID.Y=68;
-         redCountHWCheckDevID.width=24;
-         redCountHWCheckDevID.height=24;
+    redCountHWCheckDevID.X=96;
+    redCountHWCheckDevID.Y=68;
+    redCountHWCheckDevID.width=24;
+    redCountHWCheckDevID.height=24;
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::DisplaySetSegtype(int a)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[a],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp = a;
-  } catch (...){}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[a],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp = a;
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKeyWork(BYTE key)
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x80:
-          doKey0Work();
-        break;
+            doKey0Work();
+            break;
         case 0x81:
-          doKey1Work();
-        break;
+            doKey1Work();
+            break;
         case 0x82:
-          doKey2Work();
-        break;
+            doKey2Work();
+            break;
         case 0x83:
-          doKey3Work();
-        break;
+            doKey3Work();
+            break;
         case 0x84:
-          doKey4Work();
-        break;
+            doKey4Work();
+            break;
         case 0x85:
-          doKey5Work();
-        break;
+            doKey5Work();
+            break;
         case 0x86:
-          doKey6Work();
-        break;
+            doKey6Work();
+            break;
         case 0x87:
-          doKey7Work();
-        break;
+            doKey7Work();
+            break;
         case 0x88:
-          doKey8Work();
-        break;
+            doKey8Work();
+            break;
         case 0x89:
-          doKey9Work();
-        break;
+            doKey9Work();
+            break;
         case 0x8A:
-          doKeyAWork();
-        break;
+            doKeyAWork();
+            break;
         case 0x8B:
-          doKeyBWork();
-        break;
+            doKeyBWork();
+            break;
         case 0x8C:
-          doKeyCWork();
-        break;
+            doKeyCWork();
+            break;
         case 0x8D:
-          doKeyDWork();
-        break;
+            doKeyDWork();
+            break;
         case 0x8E:
-          doKeyEWork();
-        break;
+            doKeyEWork();
+            break;
         case 0x8F:
-          doKeyFWork();
-        break;
+            doKeyFWork();
+            break;
         case 0x90:
-          doKeyF1Work();
-        break;
+            doKeyF1Work();
+            break;
         case 0x91:
-          doKeyF2Work();
-        break;
+            doKeyF2Work();
+            break;
         case 0x92:
-          doKeyF3Work();
-        break;
+            doKeyF3Work();
+            break;
         case 0x93:
-          doKeyF4Work();
-        break;
+            doKeyF4Work();
+            break;
         case 0x94:
-          doKeyUPWork();
-        break;
+            doKeyUPWork();
+            break;
         case 0x95:
-          doKeyDOWNWork();
-        break;
+            doKeyDOWNWork();
+            break;
         case 0x96:
-          doKeyLEFTWork();
-        break;
+            doKeyLEFTWork();
+            break;
         case 0x97:
-          doKeyRIGHTWork();
-        break;
+            doKeyRIGHTWork();
+            break;
         case 0x98:
-          doKeyEnterWork();
-        break;
+            doKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey0Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[0],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp = 0;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[0],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp = 0;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey1Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[1],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp = 0x01;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[1],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp = 0x01;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey2Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[2],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp=0x02;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[2],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp=0x02;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey3Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[3],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp=0x03;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[3],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp=0x03;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey4Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[4],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp=0x04;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[4],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp=0x04;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey5Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[5],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp=0x05;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[5],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp=0x05;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey6Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[6],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp = 0x06;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[6],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp = 0x06;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey7Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[7],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp=0x07;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[7],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp=0x07;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey8Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[8],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp=0x08;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[8],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp=0x08;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKey9Work(void)
 {
-try {
-    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[9],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-    redCountHWCheckTmp=0x09;
-    doKeyRIGHTWork();
-  } catch (...) {}
+    try
+    {
+        lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[9],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+        redCountHWCheckTmp=0x09;
+        doKeyRIGHTWork();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKeyAWork(void)
 {
-  lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[0x0A],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-  redCountHWCheckTmp=0x0A;
-  doKeyRIGHTWork();
+    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[0x0A],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+    redCountHWCheckTmp=0x0A;
+    doKeyRIGHTWork();
 
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKeyBWork(void)
 {
-  lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[0x0B],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
-  redCountHWCheckTmp=0x0B;
-  doKeyRIGHTWork();
+    lcd240x128.DISPLAY_GRAPHIC_XY(redCountHWCheckDevID.X,redCountHWCheckDevID.Y,word24x24[0x0B],redCountHWCheckDevID.height,redCountHWCheckDevID.width/8);
+    redCountHWCheckTmp=0x0B;
+    doKeyRIGHTWork();
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKeyCWork(void)
@@ -298,14 +328,18 @@ void ScreenRedCountHWCheckDevID::doKeyDOWNWork(void)
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKeyLEFTWork(void)
 {
-try {
-  } catch (...) {}
+    try
+    {
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKeyRIGHTWork(void)
 {
-try {
-  } catch (...) {}
+    try
+    {
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void ScreenRedCountHWCheckDevID::doKeyEnterWork(void)
@@ -314,7 +348,10 @@ void ScreenRedCountHWCheckDevID::doKeyEnterWork(void)
     unsigned char ucData[6];
     MESSAGEOK _MsgOK;
 
-    if (x == 0x0B) { x = 65535; }
+    if (x == 0x0B)
+    {
+        x = 65535;
+    }
 
     ucData[0] = 0xEA;
     ucData[1] = 0x12;

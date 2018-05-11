@@ -7,12 +7,12 @@
 //---------------------------------------------------------------------------
 class PTRAFFIC87VD
 {
-    public:
+public:
 
-        PTRAFFIC87VD(void);
-        ~PTRAFFIC87VD(void);
+    PTRAFFIC87VD(void);
+    ~PTRAFFIC87VD(void);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

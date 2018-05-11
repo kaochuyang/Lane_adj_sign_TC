@@ -17,53 +17,65 @@ SCREENLoginErr::~SCREENLoginErr(void)
 //---------------------------------------------------------------------------
 void SCREENLoginErr::DisplayLoginErr(void)
 {
-try {
-    smem.SetcFace(cLOGINERR);
-    smem.vWriteMsgToDOM("Enter Login Error Screen");
-    lcd240x128.DISPLAY_GRAPHIC(0,loginErrBitmap,128,30);
-  } catch (...) {}
+    try
+    {
+        smem.SetcFace(cLOGINERR);
+        smem.vWriteMsgToDOM("Enter Login Error Screen");
+        lcd240x128.DISPLAY_GRAPHIC(0,loginErrBitmap,128,30);
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENLoginErr::DoKeyWork(BYTE key)   //已過濾,進來的是0x80~0x98之間
 {
-try {
-    switch (key) {
+    try
+    {
+        switch (key)
+        {
         case 0x90:     //ESC,F1
-          DoKeyEscWork();
-        break;
+            DoKeyEscWork();
+            break;
         case 0x98:     //ENTER
-          DoKeyEnterWork();
-        break;
+            DoKeyEnterWork();
+            break;
         default:
-        break;
+            break;
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENLoginErr::LoadBitmapFromFile(void)
 {
-try {
-    FILE *bitmap;
-    bitmap=fopen("//cct//bitmap//backGround//2_passworderr.bit","rb");
-    if (bitmap) {
-        fread(loginErrBitmap,3840,1,bitmap);
-        fclose(bitmap);
+    try
+    {
+        FILE *bitmap;
+        bitmap=fopen("//cct//bitmap//backGround//2_passworderr.bit","rb");
+        if (bitmap)
+        {
+            fread(loginErrBitmap,3840,1,bitmap);
+            fclose(bitmap);
+        }
     }
-  } catch (...) {}
+    catch (...) {}
 }
 
 //---------------------------------------------------------------------------
 void SCREENLoginErr::DoKeyEscWork(void)
 {
-try {
-    screenLogo.DisplayLogo();
-  } catch (...) {}
+    try
+    {
+        screenLogo.DisplayLogo();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------
 void SCREENLoginErr::DoKeyEnterWork(void)
 {
-try {
-    screenLogin.DisplayLogin();
-  } catch (...) {}
+    try
+    {
+        screenLogin.DisplayLogin();
+    }
+    catch (...) {}
 }
 //---------------------------------------------------------------------------

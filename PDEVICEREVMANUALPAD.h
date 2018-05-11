@@ -7,16 +7,16 @@
 //---------------------------------------------------------------------------
 class PDEVICEREVMANUALPAD
 {
-    public:
+public:
 
-        PDEVICEREVMANUALPAD(void);
-        ~PDEVICEREVMANUALPAD(void);
-        bool DoWorkViaPDevice(MESSAGEOK);                                       //根據PDevice來的封包作事情
+    PDEVICEREVMANUALPAD(void);
+    ~PDEVICEREVMANUALPAD(void);
+    bool DoWorkViaPDevice(MESSAGEOK);                                       //根據PDevice來的封包作事情
 
-        bool vSetRevStatus(MESSAGEOK);
-        bool vAckTCConn(MESSAGEOK, bool);
+    bool vSetRevStatus(MESSAGEOK);
+    bool vAckTCConn(MESSAGEOK, bool);
 
-    private:
+private:
 
 };
 //---------------------------------------------------------------------------

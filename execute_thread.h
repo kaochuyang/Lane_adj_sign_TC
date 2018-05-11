@@ -4,11 +4,11 @@
 
 class execute_thread
 {
-    public:
-        execute_thread();
-        virtual ~execute_thread();
-    protected:
-    private:
+public:
+    execute_thread();
+    virtual ~execute_thread();
+protected:
+private:
 };
 
 #endif // EXECUTE_THREAD_H

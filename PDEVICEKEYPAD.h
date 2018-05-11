@@ -7,35 +7,35 @@
 //---------------------------------------------------------------------------
 class PDEVICEKEYPAD
 {
-    public:
+public:
 
-        PDEVICEKEYPAD(void);
-        ~PDEVICEKEYPAD(void);
-        bool DoWorkViaPDevice(MESSAGEOK);                                       //根據PDevice來的封包作事情
-        void SendStartMsg(void);
+    PDEVICEKEYPAD(void);
+    ~PDEVICEKEYPAD(void);
+    bool DoWorkViaPDevice(MESSAGEOK);                                       //根據PDevice來的封包作事情
+    void SendStartMsg(void);
 
-    private:
+private:
 
-        BYTE DATA_P1;                                                           //25個鍵盤加按鈕(按鈕不使用)
-        BYTE DATA_P2;                                                           //不使用(TC用來讀AD值)
-        DATA_Bit DATA_P3;                                                       //SW27~SW34(僅使用SW27遠端或現場操作)
-        BYTE DATA_P4;                                                           //SW35(Address Low Byte)
-        BYTE DATA_P5;                                                           //SW36(Address Hi Byte)
-        DATA_Bit DATA_P6;                                                           //SW37(不使用)
+    BYTE DATA_P1;                                                           //25個鍵盤加按鈕(按鈕不使用)
+    BYTE DATA_P2;                                                           //不使用(TC用來讀AD值)
+    DATA_Bit DATA_P3;                                                       //SW27~SW34(僅使用SW27遠端或現場操作)
+    BYTE DATA_P4;                                                           //SW35(Address Low Byte)
+    BYTE DATA_P5;                                                           //SW36(Address Hi Byte)
+    DATA_Bit DATA_P6;                                                           //SW37(不使用)
 
-        DATA_Bit _LastDATA_P6;
+    DATA_Bit _LastDATA_P6;
 
-        void DoDisplayLcdWorkByData_P1(BYTE);                                   //控制LCD變化
+    void DoDisplayLcdWorkByData_P1(BYTE);                                   //控制LCD變化
 
-/*OTCombo0714*/
-        int cSwitch;                                                            //現在執行(面板)的控制策略 0:沒開關 1:全紅 2:閃光 3:手動
+    /*OTCombo0714*/
+    int cSwitch;                                                            //現在執行(面板)的控制策略 0:沒開關 1:全紅 2:閃光 3:手動
 
-        bool vSavePlan(unsigned char);
+    bool vSavePlan(unsigned char);
 
-        unsigned char ucLastData[6];
+    unsigned char ucLastData[6];
 
-        unsigned char ucData[6];
-        MESSAGEOK _MSG;
+    unsigned char ucData[6];
+    MESSAGEOK _MSG;
 };
 //---------------------------------------------------------------------------
 #endif

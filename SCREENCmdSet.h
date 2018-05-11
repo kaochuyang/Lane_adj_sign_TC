@@ -6,36 +6,36 @@
 //---------------------------------------------------------------------------
 class SCREENCmdSet:public SCREEN
 {
-    public:
-        SCREENCmdSet(void);
-        ~SCREENCmdSet(void);
+public:
+    SCREENCmdSet(void);
+    ~SCREENCmdSet(void);
 
-        void DisplayCmdSet(void);
-        void DoKeyWork(BYTE);
+    void DisplayCmdSet(void);
+    void DoKeyWork(BYTE);
 
-    private:
-        BYTE cmdSetBitmap[3840];
+private:
+    BYTE cmdSetBitmap[3840];
 
-        DISP_WORD command;
-        DISP_WORD position[4];
-        int cSelect;
+    DISP_WORD command;
+    DISP_WORD position[4];
+    int cSelect;
 
-        void LoadBitmapFromFile(void);
-        void InitDispWord(void);                                                  //﹍て礶畒夹单把计
+    void LoadBitmapFromFile(void);
+    void InitDispWord(void);                                                  //﹍て礶畒夹单把计
 
-        void DoKey0Work(void);
-        void DoKey1Work(void);
-        void DoKey2Work(void);
-        void DoKey3Work(void);
+    void DoKey0Work(void);
+    void DoKey1Work(void);
+    void DoKey2Work(void);
+    void DoKey3Work(void);
 
-        void DoKeyF1Work(void);
-        void DoKeyF2Work(void);
-        void DoKeyF4Work(void);
+    void DoKeyF1Work(void);
+    void DoKeyF2Work(void);
+    void DoKeyF4Work(void);
 
-        void DoKeyUPWork(void);
-        void DoKeyDOWNWork(void);
+    void DoKeyUPWork(void);
+    void DoKeyDOWNWork(void);
 
-        void DoKeyEnterWork(void);
+    void DoKeyEnterWork(void);
 };
 //---------------------------------------------------------------------------
 extern SCREENCmdSet screenCmdSet;
