@@ -202,9 +202,6 @@ int main(int argc, char* argv[])
         PTRAFFIC92COMM oRev_protocol_0F;
         MESSAGEOK revAPP_messagein;
 ////-----------------------------------------------------------------------------------------------------//
-
-
-
         maxport=maxport+1;                                                          //important
 
 
