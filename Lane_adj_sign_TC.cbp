@@ -13,6 +13,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
+					<Add directory="../Lane_adj_sign_TC" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +24,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
+					<Add directory="../Lane_adj_sign_TC" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -38,6 +42,8 @@
 		<Unit filename="CHexToInt.h" />
 		<Unit filename="CIOCom.cpp" />
 		<Unit filename="CIOCom.h" />
+		<Unit filename="CMS_hw_protocol.cpp" />
+		<Unit filename="CMS_hw_protocol.h" />
 		<Unit filename="CPacketCluster.cpp" />
 		<Unit filename="CPacketCluster.h" />
 		<Unit filename="CPhaseInfo.cpp" />
@@ -256,6 +262,8 @@
 		<Unit filename="protocol_8F_LAS.h" />
 		<Unit filename="protocol_9F_m_curve.cpp" />
 		<Unit filename="protocol_9F_m_curve.h" />
+		<Unit filename="protocol_CF_cms_travel_time.cpp" />
+		<Unit filename="protocol_CF_cms_travel_time.h" />
 		<Unit filename="readjob.cpp" />
 		<Unit filename="readjob.h" />
 		<Unit filename="screenActuateArwenStatus.cpp" />
@@ -342,6 +350,7 @@
 		<Unit filename="screenWeekDay.h" />
 		<Unit filename="screenWeekDayEditF2.cpp" />
 		<Unit filename="screenWeekDayEditF2.h" />
+		<Unit filename="src/CMS_traveltime_hw_protocol.cpp" />
 		<Unit filename="tstdlibs.h" />
 		<Unit filename="var.h" />
 		<Extensions>

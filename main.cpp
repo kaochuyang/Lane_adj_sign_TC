@@ -152,6 +152,16 @@ int main(int argc, char* argv[])
         printf("DISTIP : %s:%d\n\n",distIP,distPort);
 
 
+
+/////////////  for watchdog///////
+    if (digitalIO.GetAuthority(0x200,0x208))
+        {
+            //OTMARKPRINTF  printf("MotherBoard Digital I/O GetKernalAuthority Successful!!\n");
+        }
+        else printf("MotherBoard Digital I/O GetKernalAuthority Failure!!\n");
+
+
+
         //¶}±ÒUDP SOCKET ³q°T°ð
         //¶}±Ò»P¥æ³q±±¨î¤¤¤ß³q°TªºUDP SOCKET
         if ((tempmax=smem.redCountPort.OpenRs232Port("/dev/ttyS1", 2400, true))>0)

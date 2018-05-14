@@ -82,7 +82,7 @@ public:
     int segmenttype_8f;
     LAS_excute_info LAS_segmenttype[21];//1~7 common day, 8-20 special day, 0 no info.
     protocol_CF_cms_travel_time _CF_object;
-CMS_hw_protocol CMS_obj;
+   CMS_hw_protocol CMS_obj;
     // LSC=  Lane adjusted sign controler
     protocol_8F_LAS protocol_8f_object;
     protocol_9F_m_curve protocol_9F_object;
