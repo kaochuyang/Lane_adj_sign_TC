@@ -235,12 +235,11 @@ int main(int argc, char* argv[])
             if(smem.revAPP_socket.GetPortAlreadyOpen())FD_SET(smem.revAPP_socket.Getfd(),&readfs);//for revAPP
             if (smem.centerSocket.GetPortAlreadyOpen()) FD_SET(smem.centerSocket.Getfd(),&readfs);
             if (smem.centerSocket2.GetPortAlreadyOpen()) FD_SET(smem.centerSocket2.Getfd(),&readfs);
-         //   if(smem.junbo_LASC_object.junbo_lane_adj_port.GetPortAlreadyOpen())FD_SET(smem.junbo_LASC_object.junbo_lane_adj_port.Getfd(),&readfs);
+            //   if(smem.junbo_LASC_object.junbo_lane_adj_port.GetPortAlreadyOpen())FD_SET(smem.junbo_LASC_object.junbo_lane_adj_port.Getfd(),&readfs);
             timeout.tv_sec=60;                                                      //timeout¬í¼Æ
             timeout.tv_usec=0;                                                      //³o­Ó¬O²@¬í,¼È¤£¨Ï¥Î
 
             rec=select(maxport,&readfs,NULL,NULL,&timeout);                         //wait block for read
-
             if (rec<0)                                                              //Select Error
             {
 
@@ -254,7 +253,7 @@ int main(int argc, char* argv[])
 
 
 
-                     if (smem.redCountPort.GetPortAlreadyOpen())
+                if (smem.redCountPort.GetPortAlreadyOpen())
                 {
                     if (FD_ISSET(smem.redCountPort.Getfd(),&readfs))
                     {
