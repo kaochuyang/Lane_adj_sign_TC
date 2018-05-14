@@ -486,7 +486,7 @@ void intervalTimer::TimersSetting(void)
 
         _it5.it_value.tv_sec = 5;
         _it5.it_value.tv_nsec = 0;
-        _it5.it_interval.tv_sec = 8;
+        _it5.it_interval.tv_sec = 3;
         _it5.it_interval.tv_nsec = 0;
         if ( timer_settime( _t5, 0, & _it5, NULL ) ) exit( 1 );
 
@@ -727,7 +727,6 @@ bool off_flag=0;
 
                     break;
                 case( 11 )://light act report
-                    printf("timer test 11\n");
 
                     //smem.protocol_8f_object._8f07_light_act_report();
 
@@ -735,18 +734,19 @@ bool off_flag=0;
                 case( 12 )://,module act report
                     //smem.protocol_8f_object._8f05_module_act_report();
                     smem.count_vd_alive++;
-                    printf("timer test 12\n");
+                    printf("timer test 12   alivecount=%d\n",smem.count_vd_alive);
+                    smem._CF_object._CF02_hw_state_auto_report();
 
                     break;
                 case( 13 ):       //auto minus bright
-                    printf("timer test 13\n");
+                    printf("timer test 13  _CF00_time_display_auto_report \n");
                     smem._CF_object._CF00_time_display_auto_report();
 //                    smem.junbo_LASC_object.link_ID_check();
 //                    smem.junbo_LASC_object.auto_minus_bright();
 
                 case( 14 ):
 
-                    printf("timer test 14\n");
+                    printf("timer14 heartbeat display\n");
 
 
                     if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time-1)

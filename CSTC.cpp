@@ -1054,122 +1054,60 @@ void * CSTC::_stc_thread_light_control_func( void * )
     try
     {
 
-
+            bool err_flag=true;
+            int x=0,y=0,z=0;
         while ( true )
         {
             printf("TEST MODE !!!!\n");
-            int command=-1,parameter=-1,ID=0;
+
             printf("test mode\n");
-            cout<<"input command belong to 0 1 2 3 4 5 6 7 "<<endl;
-            cout<<"0 is light on or off"<<endl;
-            cout<<"1 is select light picture"<<endl;
-            cout<<"2 is light time_out setting"<<endl;
-            cout<<"3 is light off"<<endl;
-            cout<<"4 is light module query"<<endl;
-            cout<<"5 is light bright control"<<endl;
-            cout<<"6 is light check link"<<endl;
-            cout<<"7 is exit test_mode"<<endl;
 
-            while(command<0||command>7)
-            {
-                cin>>command;
-                if(command<0||command>7)printf("err command=%d,please check your command value\n",command);
+            while(err_flag)
+            {   err_flag=false;
+                cout<<"please enter 3 numbers between 1~99 those are CMS display number"<<endl;
+                cout<<"enter ID0's number"<<endl;
+                while(!(cin.peek()>='0'&&cin.peek()<='9'))
+                {
+                    if(!cin)cin.clear();
+                    cin.get();
+                }
+                cin>>x;
+                if(cin.fail()){printf("err cms_ID0=%d,please check your command value\n",x);x=0;err_flag=true;}
+                cout<<"enter ID1's number"<<endl;
+                while(!(cin.peek()>='0'&&cin.peek()<='9'))
+                {
+                    if(!cin)cin.clear();
+                    cin.get();
+                }
+                cin>>y;
+                if(cin.fail()){printf("err cms_ID1=%d,please check your command value\n",y);y=0;err_flag=true;}
+                cout<<"enter ID2's number"<<endl;
+                while(!(cin.peek()>='0'&&cin.peek()<='9'))
+                {
+                    if(!cin)cin.clear();
+                    cin.get();
+                }
+                cin>>z;
+if(cin.fail()){printf("err cms_ID2=%d,please check your command value\n",z);z=0;err_flag=true;}
+                if(x<1||x>99){printf("err cms_ID0=%d,please check your command value\n",x);x=0;err_flag=true;}
+                if(y<1||y>99){printf("err cms_ID1=%d,please check your command value\n",y);y=0;err_flag=true;}
+                if(z<1||z>99){printf("err cms_ID2=%d,please check your command value\n",z);z=0;err_flag=true;}
+
             }
 
-            switch(command)
-            {
-            case 0:
-                cout<<endl<<"input parameter=0 is light_off 1 is light_on"<<endl;
-                while(parameter>1||parameter<0)
-                {
-                    cin>>parameter;
-                    if(parameter>1||parameter<0)("parameter=%d,please check your parameter\n",parameter);
-                }
-                smem.junbo_LASC_object.test_LAS_function(command,parameter);
-                break;
-
-            case 1:
-                cout<<"input parameter= 0=off 1=straight 2=left 3=right 4=straight_left 5=straight_right "<<endl;
-                cout<<"6=straight_flash 7=left_flash 8=right_flash 9=straight_left_flash 10=straight_right_flash"<<endl;
-                while(parameter>10||parameter<0)
-                {
-                    cin>>parameter;
-                    if(parameter>10||parameter<0)printf("parameter=%d, please check your parameter\n",parameter);
-
-                }
-                cout<<"input ID=1~8;"<<endl;
-                while(ID<1||ID>8)
-                {
-                    cin>>ID;
-                    if(ID<1||ID>8)printf("ID=%d,please check your ID number\n");
-                }
-                smem.junbo_LASC_object.test_LAS_function(command,parameter,ID);
-
-                break;
-            case 2:
-                cout<<"parameter=0~99,  0 is light_on forever, 1~99 is sec"<<endl;
-                while(parameter<0||parameter>99)
-                {
-                    cin>>parameter;
-
-                    if(parameter<0||parameter>99)
-                        printf("parameter=%d, please check your parameter\n",parameter);
-                }
-                smem.junbo_LASC_object.test_LAS_function(command,parameter);
-                break;
-
-            case 3:
-                for(ID=1; ID<9; ID++)
-                    smem.junbo_LASC_object.test_LAS_function(command,parameter);
-                break;
-
-            case 4:
-                parameter=0;
-                cout<<"input ID=1~8;"<<endl;
-                while(ID<1||ID>8)
-                {
-                    cin>>ID;
-                    if(ID<1||ID>8)printf("ID=%d,please check your ID number\n");
-                }
-                smem.junbo_LASC_object.test_LAS_function(command,parameter,ID);
-
-                break;
-
-            case 5:
-                cout<<"parameter=1~4; 1 is brightness 100%, 4 is brightness 35%"<<endl;
-
-                while(parameter<1||parameter>4)
-                {
-                    cin>>parameter;
-
-                    if(parameter<1||parameter>4)
-                        printf("parameter=%d, please check your parameter\n",parameter);
-                }
-                smem.junbo_LASC_object.test_LAS_function(command,parameter);
-
-                break;
-
-            case 6:
-
-
-                parameter=0;
-
-
-                smem.junbo_LASC_object.test_LAS_function(command,parameter);
-
-
-
-
-                break;
-
-            case 7:
-                parameter=0;
-                smem.junbo_LASC_object.test_LAS_function(command,parameter);
-                break;
-
-            default:
-                break;
-            }
+            smem.CMS_obj.AVI_protocol(x,y,z);
+            err_flag=true;
+//
+//            switch(command)
+//            {
+//            case 0:
+//
+//                break;
+//
+//
+//            default:
+//                break;
+//            }
 
 
         }

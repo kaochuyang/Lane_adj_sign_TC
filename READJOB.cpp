@@ -332,6 +332,8 @@ bool READJOB::vDoDisplay(int *maxMessageIndex,MESSAGEOK *messageIn)             
                                     ucLeft = messageIn[i].packet[9];
                                     ucRight = messageIn[i].packet[10];
                                     screenRedCountHWCheck.vRefreshRedCountHWCheck(ucID, ucLeft, ucRight);
+                                    for(int count=0;count <*maxMessageIndex;count++)
+                                    printf("%x",messageIn->packet[count]);
                                 }
 
                             }
