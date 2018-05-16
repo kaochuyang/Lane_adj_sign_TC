@@ -739,18 +739,18 @@ bool off_flag=0;
 
                     break;
                 case( 13 ):       //auto minus bright
-                    printf("timer test 13  _CF00_time_display_auto_report \n");
+                    printf("timer test 13  _CF00_time_display_auto_report to center \n");
                     smem._CF_object._CF00_time_display_auto_report();
 //                    smem.junbo_LASC_object.link_ID_check();
 //                    smem.junbo_LASC_object.auto_minus_bright();
 
                 case( 14 ):
 
-                    printf("timer14 heartbeat display\n");
+
 
 
                     if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time-1)
-                    {
+                    { printf("timer14 heartbeat display\n");
                     smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
                     smem._CF_object.value_record.ID2_value,
                     smem._CF_object.value_record.ID3_value);
@@ -761,10 +761,10 @@ bool off_flag=0;
                    {
 
                    if(smem._CF_object.value_record.switch_button)
-                   smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
+                   {smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
                     smem._CF_object.value_record.ID2_value,
-                    smem._CF_object.value_record.ID3_value);
-
+                    smem._CF_object.value_record.ID3_value);printf("timer14 heartbeat display switch_button=on auto\n");}
+                    else printf("timer14 heartbeat interrupt switch_button=off\n");
                    }
 
 
@@ -779,9 +779,7 @@ bool off_flag=0;
 
                 case( 100 ):
 
-                    //smem.junbo_LASC_object.determind_weekday_specialday();
-
-                    break;
+                            break;
 
                 case( 101 ):
 
@@ -790,33 +788,7 @@ bool off_flag=0;
 
                 case( 500 ):
                     printf("timer test 500 \n");
-//
-//                    if(query_count==0)
-//                    {
-//                        smem.junbo_LASC_object.query_module_state_1();
-//                        query_count++;
-//                        printf("timer test 500 count=%d\n",query_count);
-//                    }
-//
-//
-//                    if(query_count==1)
-//                    {
-//                        smem.junbo_LASC_object.query_module_state_2();
-//                        query_count++;
-//                        printf("timer test 500 count=%d\n",query_count);
-//                    }
-//                    if(query_count==2)
-//                    {
-//                        smem.junbo_LASC_object.query_module_state_3();
-//                        query_count++;
-//                        printf("timer test 500 count=%d\n",query_count);
-//                    }
-//                    if(query_count==3)
-//                    {
-//                        smem.protocol_8f_object._8fc5_module_report();
-//                        query_count=0;
-//                        printf("timer test 500 count=%d\n",query_count);
-//                    }
+
                     break;
 
 

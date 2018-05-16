@@ -92,6 +92,56 @@ void protocol_CF_cms_travel_time::_CF10_time_display_set(MESSAGEOK mes)
     }
     catch(...) {}
 }
+void protocol_CF_cms_travel_time::_CF10_test_time_display_set(int x,int y,int z)
+{
+
+     try
+    {
+
+        smem.vWriteMsgToDOM("manual setting CF10");
+        char cTMP[256];
+        smem.count_vd_alive=0;
+        int ID1_value=x;
+        int ID2_value=y;
+        int ID3_value=z;
+        sprintf(cTMP, "ID0_value=%d ID1_value=%d ID2_value=%d", ID1_value,ID2_value, ID3_value);
+        smem.vWriteMsgToDOM(cTMP);
+        int error_flag=0;
+        if (ID1_value>99&&ID1_value<0)
+        {
+            error_flag=ID1_value;
+            vReturnToCenterNACK(0xCF,0x10,0x4,error_flag);
+
+        }
+        else value_record.ID1_value=ID1_value;
+        if (ID2_value>99&&ID2_value<0)
+        {
+            error_flag=ID2_value;
+            vReturnToCenterNACK(0xCF,0x10,0x4,error_flag);
+
+        }
+        else value_record.ID2_value=ID2_value;
+        if (ID3_value>99&&ID3_value<0)
+        {
+            error_flag=ID3_value;
+            vReturnToCenterNACK(0xCF,0x10,0x4,error_flag);
+
+        }
+        else value_record.ID3_value=ID3_value;
+
+
+        if(error_flag==0)
+        {
+            printf("ID1=%d minutes ID2=%d minutes ID3=%d minutes",ID1_value,ID2_value,ID3_value);
+            store_value(value_record);
+            vReturnToCenterACK(0xCF,0x10);
+        }
+
+    }
+    catch(...) {}
+
+
+}
 
 
 void protocol_CF_cms_travel_time::_CF40_time_display_query()
@@ -173,16 +223,19 @@ void protocol_CF_cms_travel_time::_CF00_time_display_auto_report()
         int ID2_value=value_record.ID2_value;
         int ID3_value=value_record.ID3_value;
         int error_flag=0;
+        pack[2]=1;
         if (ID1_value>99&&ID1_value<0)
         {
             pack[3]=0xff;
         }
         else pack[3]=ID1_value;
+        pack[4]=2;
         if (ID2_value>99&&ID2_value<0)
         {
             pack[5]=0xff;
         }
         else pack[5]=ID2_value;
+        pack[6]=3;
         if (ID3_value>99&&ID3_value<0)
         {
             pack[7]=0xff;

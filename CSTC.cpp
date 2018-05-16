@@ -1066,7 +1066,7 @@ void * CSTC::_stc_thread_light_control_func( void * )
             {   err_flag=false;
                 cout<<"please enter 3 numbers between 1~99 those are CMS display number"<<endl;
                 cout<<"enter ID0's number"<<endl;
-                while(!(cin.peek()>='0'&&cin.peek()<='9'))
+                while(!(cin.peek()>='0'&&cin.peek()<='99'))
                 {
                     if(!cin)cin.clear();
                     cin.get();
@@ -1074,7 +1074,7 @@ void * CSTC::_stc_thread_light_control_func( void * )
                 cin>>x;
                 if(cin.fail()){printf("err cms_ID0=%d,please check your command value\n",x);x=0;err_flag=true;}
                 cout<<"enter ID1's number"<<endl;
-                while(!(cin.peek()>='0'&&cin.peek()<='9'))
+                while(!(cin.peek()>='0'&&cin.peek()<='99'))
                 {
                     if(!cin)cin.clear();
                     cin.get();
@@ -1082,20 +1082,20 @@ void * CSTC::_stc_thread_light_control_func( void * )
                 cin>>y;
                 if(cin.fail()){printf("err cms_ID1=%d,please check your command value\n",y);y=0;err_flag=true;}
                 cout<<"enter ID2's number"<<endl;
-                while(!(cin.peek()>='0'&&cin.peek()<='9'))
+                while(!(cin.peek()>='0'&&cin.peek()<='99'))
                 {
                     if(!cin)cin.clear();
                     cin.get();
                 }
                 cin>>z;
 if(cin.fail()){printf("err cms_ID2=%d,please check your command value\n",z);z=0;err_flag=true;}
-                if(x<1||x>99){printf("err cms_ID0=%d,please check your command value\n",x);x=0;err_flag=true;}
-                if(y<1||y>99){printf("err cms_ID1=%d,please check your command value\n",y);y=0;err_flag=true;}
-                if(z<1||z>99){printf("err cms_ID2=%d,please check your command value\n",z);z=0;err_flag=true;}
+                if(x<0||x>99){printf("err cms_ID0=%d,please check your command value\n",x);x=0;err_flag=true;}
+                if(y<0||y>99){printf("err cms_ID1=%d,please check your command value\n",y);y=0;err_flag=true;}
+                if(z<0||z>99){printf("err cms_ID2=%d,please check your command value\n",z);z=0;err_flag=true;}
 
             }
 
-            smem.CMS_obj.AVI_protocol(x,y,z);
+            smem._CF_object._CF10_test_time_display_set(x,y,z);
             err_flag=true;
 //
 //            switch(command)

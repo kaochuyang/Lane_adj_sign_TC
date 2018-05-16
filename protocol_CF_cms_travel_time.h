@@ -19,6 +19,8 @@ public:
 
     bool DoWorkViaPTraffic92(MESSAGEOK message);
     void _CF10_time_display_set(MESSAGEOK messageIn);
+     void _CF10_test_time_display_set(int x,int y,int z);
+
     void _CF40_time_display_query();
     void _CFC0_time_display_rport_report();
     void _CF00_time_display_auto_report();
