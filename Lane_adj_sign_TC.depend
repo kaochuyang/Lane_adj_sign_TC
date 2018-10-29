@@ -2395,7 +2395,7 @@
 1526026366 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/CSegmentInfo.h
 	<pthread.h>
 
-1526026318 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/CSTC.cpp
+1540819933 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/CSTC.cpp
 	"CSTC.h"
 	"light.h"
 	"CTools.h"
@@ -2475,7 +2475,7 @@
 	<string.h>
 	<wchar.h>
 
-1526265688 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/CTIMER.cpp
+1540825727 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/CTIMER.cpp
 	"CTIMER.h"
 	"var.h"
 	"CDataToMessageOK.h"
@@ -2608,7 +2608,7 @@
 	<sys/perm.h>
 	<sys/io.h>
 
-1526039753 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/main.cpp
+1540819933 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/main.cpp
 	"var.h"
 	"SMEM.h"
 	"PARSETRAFFIC.h"
@@ -3150,7 +3150,7 @@
 	<stdio.h>
 	<math.h>
 
-1526026324 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/READJOB.cpp
+1540819933 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/READJOB.cpp
 	"READJOB.h"
 	"PROTOCOL.h"
 	"SMEM.h"
@@ -4071,13 +4071,13 @@
 
 1526042037 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/CMS_hw_protocol.h
 
-1526043835 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.cpp
+1540821991 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.cpp
 	"protocol_CF_cms_travel_time.h"
 	"SMEM.h"
 	"CDataToMessageOK.h"
 	"WRITEJOB.h"
 
-1526043692 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.h
+1540819933 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.h
 	"var.h"
 	"protocol_8F_LAS.h"
 
@@ -6126,4 +6126,13 @@
 	"CMS_traveltime_hw_protocol.h"
 
 1526277257 /home/cct/Desktop/Untitled4/CMS_traveltime_controler/Lane_adj_sign_TC/include/CMS_traveltime_hw_protocol.h
+
+1540822411 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_AD_cms_travel_time.cpp
+	"protocol_AD_cms_travel_time.h"
+	"SMEM.h"
+	"CDataToMessageOK.h"
+	"WRITEJOB.h"
+
+1540822397 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_AD_cms_travel_time.h
+	"protocol_CF_cms_travel_time.h"
 

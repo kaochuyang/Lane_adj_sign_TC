@@ -558,7 +558,7 @@ void * intervalTimer::PTime(void *arg)
         // smem.power_object.power_regular_reboot_resetting();
         int text_ID=1;
         int tempFace=0;
-bool off_flag=0;
+        bool off_flag=0;
         unsigned char uc6F00[2];
         uc6F00[0] = 0x6F;
         uc6F00[1] = 0x00;
@@ -746,26 +746,25 @@ bool off_flag=0;
 
                 case( 14 ):
 
-
-
-
                     if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time-1)
-                    { printf("timer14 heartbeat display\n");
-                    smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
-                    smem._CF_object.value_record.ID2_value,
-                    smem._CF_object.value_record.ID3_value);
-
-
+                    {
+                        printf("timer14 heartbeat display\n");
+                        smem.CMS_obj.AVI_protocol
+                        (smem._CF_object.value_record.ID1_value,
+                         smem._CF_object.value_record.ID2_value,
+                         smem._CF_object.value_record.ID3_value);
                     }
-                   else
-                   {
-
-                   if(smem._CF_object.value_record.switch_button)
-                   {smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
-                    smem._CF_object.value_record.ID2_value,
-                    smem._CF_object.value_record.ID3_value);printf("timer14 heartbeat display switch_button=on auto\n");}
-                    else printf("timer14 heartbeat interrupt switch_button=off\n");
-                   }
+                    else
+                    {
+                        if(smem._CF_object.value_record.switch_button)
+                        {
+                            smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
+                                                      smem._CF_object.value_record.ID2_value,
+                                                      smem._CF_object.value_record.ID3_value);
+                            printf("timer14 heartbeat display switch_button=on auto\n");
+                        }
+                        else printf("timer14 heartbeat interrupt switch_button=off\n");
+                    }
 
 
                     break;
@@ -779,7 +778,7 @@ bool off_flag=0;
 
                 case( 100 ):
 
-                            break;
+                    break;
 
                 case( 101 ):
 
