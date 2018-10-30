@@ -578,13 +578,12 @@ void * intervalTimer::PTime(void *arg)
 
         //OTMARKPRINTF  printf( "THREAD_VDINFO: pid=%d\n", getpid() );
         smem._CF_object.clear_value_record(&smem._CF_object.value_record);
+        smem._AD_object.clear_value_record(&smem._AD_object.value_record);
 
         ////initial proccess for  data///
         smem._CF_object.read_value(&smem._CF_object.value_record);
-
-
+        smem._AD_object.read_value(&smem._AD_object.value_record);
         printf("init setting\n");
-
         printf("init read_LAS_report_object\n");
 
         ////////
@@ -735,18 +734,15 @@ void * intervalTimer::PTime(void *arg)
                     //smem.protocol_8f_object._8f05_module_act_report();
                     smem.count_vd_alive++;
                     printf("timer test 12   alivecount=%d\n",smem.count_vd_alive);
-                    smem._CF_object._CF02_hw_state_auto_report();
+                    smem._AD_object._AD00_time_display_auto_report();
 
                     break;
                 case( 13 ):       //auto minus bright
                     printf("timer test 13  _CF00_time_display_auto_report to center \n");
                     smem._CF_object._CF00_time_display_auto_report();
-//                    smem.junbo_LASC_object.link_ID_check();
-//                    smem.junbo_LASC_object.auto_minus_bright();
-
                 case( 14 ):
-
-                    if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time-1)
+                    smem._CF_object.value_record=smem._AD_object.value_record;//I want to deal with the CF and AD protocol same time.
+                    if(smem.count_vd_alive<6)
                     {
                         printf("timer14 heartbeat display\n");
                         smem.CMS_obj.AVI_protocol
@@ -756,20 +752,26 @@ void * intervalTimer::PTime(void *arg)
                     }
                     else
                     {
-                        if(smem._CF_object.value_record.switch_button)
+                        if(smem._CF_object.value_record.display_mode==2)
                         {
                             smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
                                                       smem._CF_object.value_record.ID2_value,
                                                       smem._CF_object.value_record.ID3_value);
                             printf("timer14 heartbeat display switch_button=on auto\n");
                         }
+                        else if(smem._CF_object.value_record.display_mode==3)
+                        {
+                            if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time)
+                            {
+                                smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
+                                                          smem._CF_object.value_record.ID2_value,
+                                                          smem._CF_object.value_record.ID3_value);
+                            }
+                            printf("timer14 heartbeat display switch_button=on auto\n");
+                        }
                         else printf("timer14 heartbeat interrupt switch_button=off\n");
                     }
-
-
                     break;
-
-
                 case( 15 ):  //HwStatus AutoReport
                     printf("timer test 15 \n");
                     //smem.junbo_LASC_object.do_query_module();

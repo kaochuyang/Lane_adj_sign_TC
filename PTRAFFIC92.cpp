@@ -62,11 +62,14 @@ bool PTRAFFIC92::DoWorkViaPTraffic(MESSAGEOK message)
                     smem.protocol_8f_object.DoWorkViaPTraffic92(message);
 
                     break;
-     case 0xCF:
+                case 0xCF:
                     printf("CFxxx----\n");
                     smem._CF_object.DoWorkViaPTraffic92(message);
-
                     break;
+                case 0xAD:
+                printf("ADXX----\n");
+                smem._AD_object.DoWorkViaPTraffic92(message);
+                break;
                 default:
                     pTraffic92Other.DoWorkViaPTraffic92(message);
                     break;

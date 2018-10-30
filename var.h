@@ -255,6 +255,8 @@ typedef struct Value_Record
  int ID3_value;
  int interrrupt_time;
  bool switch_button;
+ int display_mode;
+ int lightQuantity;
  };
 
 

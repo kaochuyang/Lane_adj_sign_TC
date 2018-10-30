@@ -331,7 +331,10 @@ int main(int argc, char* argv[])
                                         if((revAPP_messagein.packet[2]==0x02)&&(revAPP_messagein.packet[3]=0x03))
                                             oRev_protocol_0F.check_link_revAPP();
                                         else printf("check link packet miss\n");
-
+                                    case(0xCF):
+                                        smem.vWriteMsgToDOM("test CMS traveltime display");
+                                        smem._CF_object._CF10_test_time_display_set(revAPP_messagein.packet[2]
+                                                ,revAPP_messagein.packet[3],revAPP_messagein.packet[4]);
                                     default:
                                         smem.vWriteMsgToDOM("wrong revAPP 0F protocol!! by app");
                                         printf("wrong revAPP 0F protocol!!\n");

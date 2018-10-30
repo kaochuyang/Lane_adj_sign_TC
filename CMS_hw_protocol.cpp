@@ -12,11 +12,8 @@ CMS_hw_protocol::~CMS_hw_protocol()
 }
 void   CMS_hw_protocol::AVI_protocol(int ID1_value,int ID2_value,int ID3_value)
 {
-
-
     try
     {
-
         BYTE packet[21];
         packet[0]=0xaa;
         packet[1]=0xbb;
@@ -43,17 +40,8 @@ void   CMS_hw_protocol::AVI_protocol(int ID1_value,int ID2_value,int ID3_value)
         packet[20] = 0x0;//cks
         for (int a=0; a<20; a++)
             packet[20]^=packet[a];
-
 smem.redCountPort.Rs232Write(packet,21,"dev-RedCount");
-
-
-
     }
     catch(...)
     {}
-
-
-
-
-
 }

@@ -284,8 +284,6 @@ void protocol_CF_cms_travel_time::_CF41_CMS_controler_interrupt_query()
     {
         smem.vWriteMsgToDOM("_CF41_CMS_controler_interrupt_query");
         _CFC1_CMS_controler_interrupt_report();
-
-
     }
     catch(...) {}
 
@@ -312,16 +310,7 @@ void protocol_CF_cms_travel_time::_CFC1_CMS_controler_interrupt_report()
         _MsgOK.InnerOrOutWard = cOutWard;
 //    writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
         writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
-
-
-
-
-
-
-
-
-
-    }
+  }
     catch(...) {}
 
 }
@@ -389,9 +378,10 @@ void protocol_CF_cms_travel_time::clear_value_record(Value_Record *object)
         object->ID1_value=0;
         object->ID2_value=0;
         object->ID3_value=0;
-        object->interrrupt_time=10;
+        object->interrrupt_time=30;
         object->switch_button=0;
-
+        object->display_mode=1;
+        object->lightQuantity=3;
 
     }
     catch(...) {}

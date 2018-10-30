@@ -262,6 +262,8 @@
 		<Unit filename="protocol_8F_LAS.h" />
 		<Unit filename="protocol_9F_m_curve.cpp" />
 		<Unit filename="protocol_9F_m_curve.h" />
+		<Unit filename="protocol_AD_cms_travel_time.cpp" />
+		<Unit filename="protocol_AD_cms_travel_time.h" />
 		<Unit filename="protocol_CF_cms_travel_time.cpp" />
 		<Unit filename="protocol_CF_cms_travel_time.h" />
 		<Unit filename="readjob.cpp" />
