@@ -41,7 +41,7 @@ bool PTRAFFIC92::DoWorkViaPTraffic(MESSAGEOK message)
                 }
                 sprintf(msg,"GetProtocol%02X%02X", message.packet[7], message.packet[8]);
                 smem.vWriteMsgToDOM(msg);
-
+printf(msg,"GetProtocol%02X%02X", message.packet[7], message.packet[8]);
                 switch (message.packet[7])
                 {
                 case 0x0F:

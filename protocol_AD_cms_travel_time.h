@@ -19,9 +19,9 @@ public:
     void _AD11_CMS_controler_interrupt_set(MESSAGEOK messageIn);
     void _AD41_CMS_controler_interrupt_query();
     void _ADC1_CMS_controler_interrupt_report();
-    int getValueRecord(int num);
+int getValueRecord(int num);
     void setValueRecord(int num,int value);
-    Value_Record value_record;
+  Value_Record value_record;
 protected:
 private:
 

@@ -734,12 +734,13 @@ void * intervalTimer::PTime(void *arg)
                     //smem.protocol_8f_object._8f05_module_act_report();
                     smem.count_vd_alive++;
                     printf("timer test 12   alivecount=%d\n",smem.count_vd_alive);
-                    smem._AD_object._AD00_time_display_auto_report();
+
 
                     break;
                 case( 13 ):       //auto minus bright
                     printf("timer test 13  _CF00_time_display_auto_report to center \n");
-                    smem._CF_object._CF00_time_display_auto_report();
+                //    smem._CF_object._CF00_time_display_auto_report();
+                       smem._AD_object._AD00_time_display_auto_report();
                 case( 14 ):
                     smem._CF_object.value_record=smem._AD_object.value_record;//I want to deal with the CF and AD protocol same time.
                     if(smem.count_vd_alive<6)

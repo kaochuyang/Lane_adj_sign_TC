@@ -32,7 +32,7 @@ bool protocol_AD_cms_travel_time::DoWorkViaPTraffic92(MESSAGEOK mes)
             break;
         case 0x41:
             _AD41_CMS_controler_interrupt_query();
-
+            break;
         default:
 
             vReturnToCenterNACK(0xAD,mes.packet[8],0,0);
@@ -47,23 +47,38 @@ bool protocol_AD_cms_travel_time::DoWorkViaPTraffic92(MESSAGEOK mes)
 }
 int protocol_AD_cms_travel_time::getValueRecord(int num)
 {
+
+
     int result=0;
     switch(num)
     {
-    case 1:
+    case 0:
+     printf("case 1\n");
         result=value_record.ID1_value;
+        printf("result=%d\n",result);
+        break;
+    case 1:
+    printf("case 2\n");
+        result=value_record.ID2_value;
+        printf("result=%d\n",result);
         break;
     case 2:
-        result=value_record.ID2_value;
-        break;
-    case 3:
+    printf("case 3\n");
         result=value_record.ID3_value;
+        printf("result=%d\n",result);
         break;
     default:
+        printf("result=%d\n",result);
         break;
-        return result;
     }
+    printf("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\__\n");
+    printf("IDvalue_%d =%d\n",1,value_record.ID1_value);
+    printf("IDvalue_%d =%d\n",2,value_record.ID2_value);
+    printf("IDvalue_%d =%d\n",3,value_record.ID3_value);
+    printf("result=%d\n",result);
+    printf("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\__\n");
 
+    return result;
 }
 /*set the traveltime_CMS display object's value */
 void protocol_AD_cms_travel_time::setValueRecord(int num,int value)
@@ -94,28 +109,42 @@ void protocol_AD_cms_travel_time::_AD10_time_display_set(MESSAGEOK mes)
     {
         char cTMP[256];
         smem.count_vd_alive=0;
+
         int lightQuantity=(mes.packetLength-12)/2;
         int ID_value[3]= {0};
         int error_flag=0;
-        for(int i=0; i<lightQuantity; i++)
+        if(mes.packetLength>18)
         {
-            ID_value[i]=mes.packet[10+2*i];
-            if (((ID_value[i]<254)&&(ID_value[i]>99))||(ID_value[i]<1))
-            {
-                error_flag=ID_value[i];
-                vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
-            }
-            else
-            {
-                if(ID_value[i]==255) ID_value[i]=0;
-                setValueRecord(i,ID_value[i]);
-            }
+            error_flag=1;
+            vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
         }
+        else
+            for(int i=0; i<lightQuantity; i++)
+            {
+                ID_value[i]=mes.packet[10+2*i];
+                if (((ID_value[i]<254)&&(ID_value[i]>99))||(ID_value[i]<1))
+                {
+                    error_flag=ID_value[i];
+                    vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
+                    break;
+                }
+                else
+                {
+                    if(ID_value[i]==255) ID_value[i]=0;
+                    setValueRecord(i,ID_value[i]);
+                }
+            };
 
         if(error_flag==0)
         {
+            for(int i=value_record.lightQuantity; i<3; i++)setValueRecord(i,0);
+            value_record.lightQuantity=lightQuantity;
+            printf("ADID1=%d minutes ID2=%d minutes ID3=%d minutes quantity=%d\n"
+                   ,value_record.ID1_value,
+                   value_record.ID2_value,
+                   value_record.ID3_value
+                   ,value_record.lightQuantity);
 
-            printf("AD__ID1=%d minutes ID2=%d minutes ID3=%d minutes",ID_value[0],ID_value[1], ID_value[2]);
             store_value(value_record);
             vReturnToCenterACK(0xAD,0x10);
         }
@@ -185,11 +214,16 @@ void protocol_AD_cms_travel_time::_ADC0_time_display_rport_report()
         pack[0]=0xAD;
         pack[1]=0xC0;
         int ID_value=0;
+        printf("IDvalue_%d =%d\n",1,value_record.ID1_value);
+        printf("IDvalue_%d =%d\n",2,value_record.ID2_value);
+        printf("IDvalue_%d =%d\n",3,value_record.ID3_value);
         for(int i=0; i<value_record.lightQuantity; i++)
         {
             ID_value=getValueRecord(i);
+            printf("IDvalue_%d =%d\n",i+1,getValueRecord(i));
+
             pack[2+2*i]=i+1;
-            if (ID_value>99&&ID_value<1)
+            if (ID_value>99||ID_value<1)
                 pack[3+2*i]=0xff;
             else pack[3+2*i]=ID_value;
         }
@@ -216,7 +250,7 @@ void protocol_AD_cms_travel_time::_AD00_time_display_auto_report()
         {
             ID_value=getValueRecord(i);
             pack[2+2*i]=i+1;
-            if (ID_value>99&&ID_value<1)
+            if (ID_value>99||ID_value<1)
                 pack[3+2*i]=0xff;
             else pack[3+2*i]=ID_value;
         }
