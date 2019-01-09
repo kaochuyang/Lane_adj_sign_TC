@@ -1264,60 +1264,56 @@ unsigned char SMEM::vGetHardwareStatus(int iWhatByte)
 {
     try
     {
-        unsigned char ucTMPByte3, ucTMPByte4, ucTMP;
-        ucTMPByte3 = 0x00;                                                          //init
-        ucTMPByte4 = 0x00;
-        pthread_mutex_lock(&mutexSmem);
+    unsigned char ucTMPByte3, ucTMPByte4, ucTMP;
+    ucTMPByte3 = 0x00;                                                          //init
+    ucTMPByte4 = 0x00;
+    pthread_mutex_lock(&mutexSmem);
 
-        //OT20110825
-        if(bTrafficeLightBoardConnectStatus == false)    //traffic light board failure
-        {
-            ucTMPByte4 += 0x01;
-        }
+    //OT20110825
+    if(bTrafficeLightBoardConnectStatus == false) {  //traffic light board failure
+      ucTMPByte4 += 0x00;//0000 0001
+    }
 
-        ucTMPByte3 += 0x40;                                                       //bit14
+    ucTMPByte3 += 0x0;//20180207 modify for tainan //0100 0000                                                //bit14
 
-        if(bConnectWithCenterStatus == true)
-        {
-            ucTMPByte3 += 0x01;                                                       //bit8
-        }
-        else
-        {
-            ucTMPByte3 += 0x80;                                                      //bit15
-        }
+    if(bConnectWithCenterStatus == true) {
+      ucTMPByte3 += 0x00;  //0000 00001                                                     //bit8
+    }
+    else {
+      ucTMPByte3 += 0x80; //1000 0000                                                     //bit15
+    }
 
-        /* disable signal conflict error */
-        /*
-            if(_DIOByte.switchBit.b1 == true ||                                         //signal conflict error
-               _DIOByte.switchBit.b2 == true ||
-               _DIOByte.switchBit.b3 == true ||
-               _DIOByte.switchBit.b4 == true ||
-               _DIOByte.switchBit.b5 == true ||
-               _DIOByte.switchBit.b6 == true    )
-              ucTMPByte3 += 0x08;
-        */
-        if(bTCSignalConflictError == true)                                          //signal conflict error 2
-        {
-            ucTMPByte3 += 0x08;
-        }
+/* disable signal conflict error */
+/*
+    if(_DIOByte.switchBit.b1 == true ||                                         //signal conflict error
+       _DIOByte.switchBit.b2 == true ||
+       _DIOByte.switchBit.b3 == true ||
+       _DIOByte.switchBit.b4 == true ||
+       _DIOByte.switchBit.b5 == true ||
+       _DIOByte.switchBit.b6 == true    )
+      ucTMPByte3 += 0x08;
+*/
+    if(bTCSignalConflictError == true) {                                        //signal conflict error 2
+       ucTMPByte3 += 0x08;//0000 1000
+    }
 
 //    if(_DIOByte.switchBit.b1 == true)
 //      ucTMPByte3 += 0x02;                                                       //bit9
 
-        if(bTCDoorStatus == true && bHaveTCDoorSwitch == true)
-            ucTMPByte3 += 0x02;                                                       //bit9
+    if(bTCDoorStatus == true && bHaveTCDoorSwitch == true)
+      ucTMPByte3 += 0x02; //0000 0010                                                      //bit9
 
-        if(bSignalDriverStatus == false) ucTMPByte4 += 0x40;    //bit6
+    if(bSignalDriverStatus == false) ucTMPByte4 += 0x40;    //bit6//0010 0000
 
 
-        if(iWhatByte == 3)
-            ucTMP = ucTMPByte3;
-        else if (iWhatByte == 4)
-            ucTMP = ucTMPByte4;
-        else
-            ucTMP = 0;
-        pthread_mutex_unlock(&mutexSmem);
-        return ucTMP;
+    if(iWhatByte == 3)
+      ucTMP = ucTMPByte3;
+    else if (iWhatByte == 4)
+      ucTMP = ucTMPByte4;
+    else
+      ucTMP = 0;
+    pthread_mutex_unlock(&mutexSmem);
+    return ucTMP;
     }
     catch (...) {}
 }

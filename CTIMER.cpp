@@ -492,28 +492,28 @@ void intervalTimer::TimersSetting(void)
 
 
 
-        /* ucTmp = smem.vGetHWCycleCodeFor_0F14_0FC4();
-         switch (ucTmp)
-         {
-         case(0):
-             iTmp = 0;
-             break;
-         case(1):
-             iTmp = 1;
-             break;
-         case(2):
-             iTmp = 2;
-             break;
-         case(3):
-             iTmp = 5;
-             break;
-         case(4):
-             iTmp = 60;
-             break;
-         case(5):
-             iTmp = 300;
-             break;
-         }*/
+        ucTmp = smem.vGetHWCycleCodeFor_0F14_0FC4();
+        switch (ucTmp)
+        {
+        case(0):
+            iTmp = 0;
+            break;
+        case(1):
+            iTmp = 1;
+            break;
+        case(2):
+            iTmp = 2;
+            break;
+        case(3):
+            iTmp = 5;
+            break;
+        case(4):
+            break;
+            iTmp = 60;
+        case(5):
+            iTmp = 300;
+            break;
+        }
         _it6.it_value.tv_sec = 86400;
         _it6.it_value.tv_nsec = 0;
         _it6.it_interval.tv_sec = 86400;
@@ -739,8 +739,8 @@ void * intervalTimer::PTime(void *arg)
                     break;
                 case( 13 ):       //auto minus bright
                     printf("timer test 13  _CF00_time_display_auto_report to center \n");
-                //    smem._CF_object._CF00_time_display_auto_report();
-                       smem._AD_object._AD00_time_display_auto_report();
+                    //    smem._CF_object._CF00_time_display_auto_report();
+                    smem._AD_object._AD00_time_display_auto_report();
                 case( 14 ):
                     smem._CF_object.value_record=smem._AD_object.value_record;//I want to deal with the CF and AD protocol same time.
                     if(smem.count_vd_alive<6)
@@ -774,9 +774,11 @@ void * intervalTimer::PTime(void *arg)
                     }
                     break;
                 case( 15 ):  //HwStatus AutoReport
-                    printf("timer test 15 \n");
-                    //smem.junbo_LASC_object.do_query_module();
-
+                    uc0F04[2] = smem.vGetHardwareStatus(3);
+                    uc0F04[3] = smem.vGetHardwareStatus(4);
+                    _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
+                    _MSG.InnerOrOutWard = cOutWard;
+                    writeJob.WritePhysicalOut(_MSG.packet, _MSG.packetLength, DEVICECENTER92);
                     break;
 
                 case( 100 ):
