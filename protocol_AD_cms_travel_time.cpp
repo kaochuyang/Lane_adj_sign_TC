@@ -53,17 +53,17 @@ int protocol_AD_cms_travel_time::getValueRecord(int num)
     switch(num)
     {
     case 0:
-     printf("case 1\n");
+        printf("case 1\n");
         result=value_record.ID1_value;
         printf("result=%d\n",result);
         break;
     case 1:
-    printf("case 2\n");
+        printf("case 2\n");
         result=value_record.ID2_value;
         printf("result=%d\n",result);
         break;
     case 2:
-    printf("case 3\n");
+        printf("case 3\n");
         result=value_record.ID3_value;
         printf("result=%d\n",result);
         break;
@@ -196,6 +196,22 @@ void protocol_AD_cms_travel_time::_AD10_test_time_display_set(int x,int y,int z)
     }
     catch(...) {}
 }
+void protocol_AD_cms_travel_time::revAPP_AD10_test_time_display_set(int x,int y,int z)
+{
+    try
+    {
+        BYTE data[2];
+        data[0]=0x0f;
+        data[1]=0x80;
+        _AD10_test_time_display_set( x, y,z);
+        writeJob.WritePhysicalOut(data,2,revAPP);
+
+    }
+    catch(...) {}
+}
+
+
+
 void protocol_AD_cms_travel_time::_AD40_time_display_query()
 {
     try
@@ -236,6 +252,38 @@ void protocol_AD_cms_travel_time::_ADC0_time_display_rport_report()
     }
     catch(...) {}
 }
+void protocol_AD_cms_travel_time::revAPP_AD40_time_display_query()
+{
+    try
+    {
+        printf("display value report\n");
+        unsigned char pack[8];
+
+        pack[0]=0x1f;
+        pack[1]=0xAD;
+        pack[2]=0xC0;
+        int ID_value=0;
+        printf("IDvalue_%d =%d\n",1,value_record.ID1_value);
+        printf("IDvalue_%d =%d\n",2,value_record.ID2_value);
+        printf("IDvalue_%d =%d\n",3,value_record.ID3_value);
+        for(int i=1; i<4; i++)
+        {
+            ID_value=getValueRecord(i);
+            printf("IDvalue_%d =%d\n",i+1,getValueRecord(i));
+            if (ID_value>99||ID_value<1)
+                pack[2+i]=0xff;
+            else pack[2+i]=ID_value;
+        }
+
+        writeJob.WritePhysicalOut(pack, 6, revAPP);
+//_intervalTimer.LAS_module_query_timer(0);
+    }
+    catch(...) {}
+}
+
+
+
+
 void protocol_AD_cms_travel_time::_AD00_time_display_auto_report()
 {
     try
@@ -286,7 +334,29 @@ void protocol_AD_cms_travel_time::_AD11_CMS_controler_interrupt_set(MESSAGEOK me
     }
     catch(...) {}
 }
+void protocol_AD_cms_travel_time::revAPP_AD11_CMS_controler_interrupt_set(int interruptTime,int mode)
+{
+    try
+    {
+        char cTMP[256];
 
+        if(interruptTime>99||interruptTime<0)
+            value_record.interrrupt_time=30;
+        else value_record.interrrupt_time=interruptTime;
+        value_record.display_mode=mode;
+//save
+        sprintf(cTMP, "interrupt time = %d minutes,switch button=%d", value_record.interrrupt_time, value_record.display_mode);
+        smem.vWriteMsgToDOM(cTMP);
+        store_value(value_record);
+        BYTE data[2];
+        data[0]=0x0f;
+        data[1]=0x80;
+
+        writeJob.WritePhysicalOut(data,2,revAPP);
+
+    }
+    catch(...) {}
+}
 void protocol_AD_cms_travel_time::_AD41_CMS_controler_interrupt_query()
 {
     try
@@ -318,9 +388,60 @@ void protocol_AD_cms_travel_time::_ADC1_CMS_controler_interrupt_report()
 
 }
 
+void protocol_AD_cms_travel_time::revAPP_AD41_CMS_controler_interrupt_query()
+{
+    try
+    {
+        printf("display value report by revAPP\n");
+        unsigned char pack[5];
+        pack[0]=0x1f;
+        pack[1]=0xAD;
+        pack[2]=0xC1;
+        pack[3]=value_record.interrrupt_time;
+        pack[4]=value_record.display_mode;
+        writeJob.WritePhysicalOut(pack,5,revAPP);
+    }
+    catch(...) {}
+
+}
 
 
+void protocol_AD_cms_travel_time::revAPP_CMS_Traveltime_switch(MESSAGEOK mes)
+{
+    try
+    {
 
+        if(mes.packet[1]==0xAD)
+        {
+            switch(mes.packet[2])
+            {
+            case 0x10:
+                if(mes.packetLength==6)
+                    revAPP_AD10_test_time_display_set(mes.packet[2],mes.packet[3],mes.packet[4]);
+                break;
+
+            case 0x40:
+                if(mes.packetLength==3)
+                    revAPP_AD40_time_display_query();
+                break;
+            case 0x11:
+                if(mes.packetLength==5)
+                    revAPP_AD11_CMS_controler_interrupt_set(mes.packet[3],mes.packet[4]);
+                break;
+            case 0x41:
+                if(mes.packetLength==3)
+                    revAPP_AD41_CMS_controler_interrupt_query();
+                break;
+            default:
+                break;
+            }
+
+        }
+
+
+    }
+    catch(...) {}
+}
 
 
 

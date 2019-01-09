@@ -22,6 +22,16 @@ public:
 int getValueRecord(int num);
     void setValueRecord(int num,int value);
   Value_Record value_record;
+
+
+    void revAPP_AD10_test_time_display_set(int x,int y,int z);
+    void revAPP_AD40_time_display_query();
+    void  revAPP_AD11_CMS_controler_interrupt_set(int interruptTime,int mode);
+    void  revAPP_AD41_CMS_controler_interrupt_query();
+
+void revAPP_CMS_Traveltime_switch(MESSAGEOK mes);
+
+
 protected:
 private:
 

@@ -341,6 +341,13 @@ int main(int argc, char* argv[])
                                         break;
                                     }
                                 }
+                                else if(revAPP_messagein.packet[0]==0x1F)
+                                {
+
+                                    smem._AD_object.revAPP_CMS_Traveltime_switch(revAPP_messagein);
+                                }
+
+
                                 memset(revAPP_messagein.packet,0x0,sizeof(revAPP_messagein.packet));
                             }
                         }
