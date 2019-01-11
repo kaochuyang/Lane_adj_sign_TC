@@ -743,30 +743,38 @@ void * intervalTimer::PTime(void *arg)
                     smem._AD_object._AD00_time_display_auto_report();
                 case( 14 ):
                     smem._CF_object.value_record=smem._AD_object.value_record;//I want to deal with the CF and AD protocol same time.
-                    if(smem.count_vd_alive<6)
+                    if(smem.count_vd_alive<600)
                     {
                         printf("timer14 heartbeat display\n");
-                        smem.CMS_obj.AVI_protocol
-                        (smem._CF_object.value_record.ID1_value,
-                         smem._CF_object.value_record.ID2_value,
-                         smem._CF_object.value_record.ID3_value);
+
+                        smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,1);
+                             sleep(1);
+                         smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID2_value,2);
+                             sleep(1);
+                        smem.CMS_obj.AVI_protocol(0xff,1);
                     }
                     else
                     {
                         if(smem._CF_object.value_record.display_mode==2)
                         {
-                            smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
-                                                      smem._CF_object.value_record.ID2_value,
-                                                      smem._CF_object.value_record.ID3_value);
+                           smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,1);
+                             sleep(1);
+                         smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID2_value,2);
+                             sleep(1);
+      smem.CMS_obj.AVI_protocol(255,1);
+
                             printf("timer14 heartbeat display switch_button=on auto\n");
                         }
                         else if(smem._CF_object.value_record.display_mode==3)
                         {
                             if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time)
                             {
-                                smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,
-                                                          smem._CF_object.value_record.ID2_value,
-                                                          smem._CF_object.value_record.ID3_value);
+                               smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,1);
+                               sleep(1);
+                         smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID2_value,2);
+                          sleep(1);
+                         smem.CMS_obj.AVI_protocol(255,1);
+
                             }
                             printf("timer14 heartbeat display switch_button=on auto\n");
                         }

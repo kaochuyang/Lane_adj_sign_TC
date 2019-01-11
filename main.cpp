@@ -69,7 +69,8 @@ int main(int argc, char* argv[])
     {
         bool notexit=true;                                                          //while loop ¥Ã¤£Â÷¶}
         unsigned char ucTmp;
-
+        BYTE CMSTravelTimeBlock[8];
+        memset(CMSTravelTimeBlock,0,8);
         int iFWYearTmp;
         int iFWMonthTmp;
         int iFWDayTmp;
@@ -164,7 +165,7 @@ int main(int argc, char* argv[])
 
         //¶}±ÒUDP SOCKET ³q°T°ð
         //¶}±Ò»P¥æ³q±±¨î¤¤¤ß³q°TªºUDP SOCKET
-        if ((tempmax=smem.redCountPort.OpenRs232Port("/dev/ttyS1", 2400, true))>0)
+        if ((tempmax=smem.redCountPort.OpenRs232Port("/dev/ttyS1", 9600, false))>0)
         {
             printf("open redcount port succece!!\n");
 
@@ -255,18 +256,15 @@ int main(int argc, char* argv[])
                     if (FD_ISSET(smem.redCountPort.Getfd(),&readfs))
                     {
                         readSelectLength=smem.redCountPort.Rs232Read();
+
                         if (readSelectLength>0)
                         {
                             if(smem.vGetCommEnable() == true)    //OT20110728
                             {
-//                        printf("Get RedCount Return Msg!\n");
-                                parseAABB.ParseBlock(readSelectLength,smem.redCountPort.block,smem.redCountPort.messageIn,&smem.redCountPort.lastPacketIndex,&smem.redCountPort.maxMessageIndex);
-                                parseAABB.CheckSum(&smem.redCountPort.maxMessageIndex,smem.redCountPort.messageIn);
-                                parseAABB.DecideProtocol(&smem.redCountPort.maxMessageIndex,smem.redCountPort.messageIn,smem.redCountPort.GetConnDevice());
-                                parseAABB.CheckReasonable(&smem.redCountPort.maxMessageIndex,smem.redCountPort.messageIn);
-                                readJob.vDoDisplay(&smem.redCountPort.maxMessageIndex,smem.redCountPort.messageIn);
-                                parseAABB.EchoToGUI(&smem.redCountPort.maxMessageIndex,smem.redCountPort.messageIn,"RedCount");
-                                parseAABB.MoveLastData(&smem.redCountPort.maxMessageIndex,&smem.redCountPort.lastPacketIndex,smem.redCountPort.messageIn);
+
+                                for(int i=0;i<8;i++)
+                                  printf("%x ",smem.redCountPort.block[i]);
+                                  printf("\n");
                             }
                         }
                     }

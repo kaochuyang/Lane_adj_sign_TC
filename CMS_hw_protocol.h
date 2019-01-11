@@ -8,7 +8,7 @@ class CMS_hw_protocol
         CMS_hw_protocol();
         virtual ~CMS_hw_protocol();
 
-    void  AVI_protocol(int ID1_value,int ID2_value,int ID3_value);
+    void  AVI_protocol(int value,int ID);
     protected:
     private:
 };
