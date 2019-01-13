@@ -260,7 +260,7 @@ void protocol_CF_cms_travel_time::_CF11_CMS_controler_interrupt_set(MESSAGEOK me
     {
 
         char cTMP[256];
-        if(meg.packet[9]>99&&meg.packet[9]<0)vReturnToCenterNACK(0xCF,0x11,0x4,0x1);
+        if(meg.packet[9]>99&&meg.packet[9]<1)vReturnToCenterNACK(0xCF,0x11,0x4,0x1);
         else
         {
             value_record.interrrupt_time=meg.packet[9];
@@ -418,7 +418,7 @@ void protocol_CF_cms_travel_time::_CF02_hw_state_auto_report()
 void protocol_CF_cms_travel_time::sendCMS_Action()
 {
 
-    if(!checkCMSTravelTimeHW())
+   // if(checkCMSTravelTimeHW())
     {
         if(smem._CF_object.value_record.ID1_value!=255)
             if(CMSLight[0].MissCount<30)CMSLight[0].MissCount++;
@@ -434,11 +434,31 @@ void protocol_CF_cms_travel_time::sendCMS_Action()
     }
 }
 
+bool protocol_CF_cms_travel_time:: getLightOnOrOff(int ID)
+{bool result=false;
+    switch(ID)
+    {
+        case 1:
+        if(smem._CF_object.value_record.ID1_value!=255)result=true;
+        break;
+        case 2:
+           if(smem._CF_object.value_record.ID2_value!=255)result=true;
+        break;
+        case 3:
+          if(smem._CF_object.value_record.ID3_value!=255)result=true;
+        break;
+        default :
+        result=false;
+        break;
+    }
+    return result;
+}
+
+
 void protocol_CF_cms_travel_time::closeCMS_Action()
 {
 
-    if(!checkCMSTravelTimeHW())
-    {
+
         if(smem._CF_object.value_record.ID1_value!=255)
             if(CMSLight[0].MissCount<30)CMSLight[0].MissCount++;
         smem.CMS_obj.AVI_protocol(255,1);
@@ -450,7 +470,7 @@ void protocol_CF_cms_travel_time::closeCMS_Action()
         if(smem._CF_object.value_record.ID3_value!=255)
             if(CMSLight[2].MissCount<30)CMSLight[2].MissCount++;
         smem.CMS_obj.AVI_protocol(255,3);
-    }
+
 }
 void protocol_CF_cms_travel_time::initCMSTravelTimeMissCount(int ID)
 {
@@ -462,9 +482,11 @@ bool protocol_CF_cms_travel_time::checkCMSTravelTimeHW()
 {
     bool result=true;//if result=true hw is sun and if result=false hw have error;
     for(int i=0; i<3; i++)
-    {
-        if(CMSLight[i].MissCount>30)result=false;//30 is hard code ,represent did not receive the response of HW times.
+    {if(getLightOnOrOff(i))
+        if(CMSLight[i].MissCount>10)result=false;//30 is hard code ,represent did not receive the response of HW times.
     }
+
+    if(!result)printf("hardware false!!\n");
     return result;
 }
 

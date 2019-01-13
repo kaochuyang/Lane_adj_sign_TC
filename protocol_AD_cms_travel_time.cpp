@@ -417,7 +417,7 @@ void protocol_AD_cms_travel_time::revAPP_CMS_Traveltime_switch(MESSAGEOK mes)
             {
             case 0x10:
                 if(mes.packetLength==6)
-                    revAPP_AD10_test_time_display_set(mes.packet[2],mes.packet[3],mes.packet[4]);
+                    revAPP_AD10_test_time_display_set(mes.packet[3],mes.packet[4],mes.packet[5]);
                 break;
 
             case 0x40:

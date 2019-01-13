@@ -25,7 +25,7 @@ public:
     void _CFC0_time_display_rport_report();
     void _CF00_time_display_auto_report();
 
-    void _CF11_CMS_controler_interrupt_set(MESSAGEOK messageIn);
+    void _CF11_CMS_controler_interrupt_set(MESSAGEOK messageIn);//mode set is also here
     void _CF41_CMS_controler_interrupt_query();
     void _CFC1_CMS_controler_interrupt_report();
 
@@ -47,7 +47,7 @@ void closeCMS_Action();
 void initCMSTravelTimeMissCount(int ID);
 protected:
 private:
-
+bool getLightOnOrOff(int ID);
 
   LightStateRecord CMSLight[3];
 

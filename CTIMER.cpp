@@ -514,9 +514,9 @@ void intervalTimer::TimersSetting(void)
             iTmp = 300;
             break;
         }
-        _it6.it_value.tv_sec = 86400;
+        _it6.it_value.tv_sec = 5;
         _it6.it_value.tv_nsec = 0;
-        _it6.it_interval.tv_sec = 86400;
+        _it6.it_interval.tv_sec = 60;
         _it6.it_interval.tv_nsec = 0;
         if ( timer_settime( _t6, 0, & _it6, NULL ) ) exit( 1 );
 
@@ -745,7 +745,7 @@ void * intervalTimer::PTime(void *arg)
                     smem._CF_object.value_record=smem._AD_object.value_record;//I want to deal with the CF and AD protocol same time.
                     if(smem._CF_object.value_record.display_mode==1)
                     {
-                        printf("timer14 heartbeat display\n");
+                        printf("timer14 heartbeat display mode 1 close light\n");
                         smem._CF_object.closeCMS_Action();
 
                     }
@@ -754,21 +754,31 @@ void * intervalTimer::PTime(void *arg)
                         if(smem._CF_object.value_record.display_mode==2)
                         {
                             smem._CF_object.sendCMS_Action();
-                            printf("timer14 heartbeat display switch_button=on auto\n");
+                            printf("timer14 heartbeat mode 2 display light\n");
                         }
                         else if(smem._CF_object.value_record.display_mode==3)
                         {
                             if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time)
                             {
                                 smem._CF_object.sendCMS_Action();
+                                printf("timer14 heartbeat mode 3 display light\n");
 
-                            }
-                            printf("timer14 heartbeat display switch_button=on auto\n");
+                            }else {smem._CF_object.closeCMS_Action();
+                            printf("timer14 heartbeat  mode 3 display light\n");}
                         }
-                        else printf("timer14 heartbeat interrupt switch_button=off\n");
+                        else printf("timer14 heartbeat mode other close light\n");
                     }
+
+                    uc0F04[2] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
+                    uc0F04[3] = 0x0;
+                    _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
+                    _MSG.InnerOrOutWard = cOutWard;
+                    writeJob.WritePhysicalOut(_MSG.packet, _MSG.packetLength, DEVICECENTER92);
+
+
                     break;
                 case( 15 ):  //HwStatus AutoReport
+                printf("timer15 heartbeat1\n");
                     uc0F04[2] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
                     uc0F04[3] = 0x0;
                     _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
