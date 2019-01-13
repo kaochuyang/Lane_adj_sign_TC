@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
         unsigned char ucTmp;
         BYTE *CMSTravelTimeBlock=NULL;
         BYTE CMS_CKS;
-        memset(CMSTravelTimeBlock,0,8);
+//        memset(CMSTravelTimeBlock,0,8);
         int iFWYearTmp;
         int iFWMonthTmp;
         int iFWDayTmp;

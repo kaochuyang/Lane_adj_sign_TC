@@ -434,7 +434,24 @@ void protocol_CF_cms_travel_time::sendCMS_Action()
     }
 }
 
+void protocol_CF_cms_travel_time::closeCMS_Action()
+{
 
+    if(!checkCMSTravelTimeHW())
+    {
+        if(smem._CF_object.value_record.ID1_value!=255)
+            if(CMSLight[0].MissCount<30)CMSLight[0].MissCount++;
+        smem.CMS_obj.AVI_protocol(255,1);
+        sleep(1);
+        if(smem._CF_object.value_record.ID2_value!=255)
+            if(CMSLight[1].MissCount<30)CMSLight[1].MissCount++;
+        smem.CMS_obj.AVI_protocol(255,2);
+        sleep(1);
+        if(smem._CF_object.value_record.ID3_value!=255)
+            if(CMSLight[2].MissCount<30)CMSLight[2].MissCount++;
+        smem.CMS_obj.AVI_protocol(255,3);
+    }
+}
 void protocol_CF_cms_travel_time::initCMSTravelTimeMissCount(int ID)
 {
     if(ID<4&&ID>0)

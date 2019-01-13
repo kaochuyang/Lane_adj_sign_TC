@@ -743,10 +743,11 @@ void * intervalTimer::PTime(void *arg)
                     smem._AD_object._AD00_time_display_auto_report();
                 case( 14 ):
                     smem._CF_object.value_record=smem._AD_object.value_record;//I want to deal with the CF and AD protocol same time.
-                    if(smem.count_vd_alive<600)
+                    if(smem._CF_object.value_record.display_mode==1)
                     {
                         printf("timer14 heartbeat display\n");
-                        smem._CF_object.sendCMS_Action();
+                        smem._CF_object.closeCMS_Action();
+
                     }
                     else
                     {

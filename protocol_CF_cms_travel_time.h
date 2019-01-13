@@ -41,7 +41,7 @@ public:
 
   };
 
-
+void closeCMS_Action();
   void sendCMS_Action();
   bool checkCMSTravelTimeHW();
 void initCMSTravelTimeMissCount(int ID);
