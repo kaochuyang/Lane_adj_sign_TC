@@ -69,7 +69,8 @@ int main(int argc, char* argv[])
     {
         bool notexit=true;                                                          //while loop ¥Ã¤£Â÷¶}
         unsigned char ucTmp;
-        BYTE CMSTravelTimeBlock[8];
+        BYTE *CMSTravelTimeBlock=NULL;
+        BYTE CMS_CKS;
         memset(CMSTravelTimeBlock,0,8);
         int iFWYearTmp;
         int iFWMonthTmp;
@@ -236,7 +237,7 @@ int main(int argc, char* argv[])
             //   if(smem.junbo_LASC_object.junbo_lane_adj_port.GetPortAlreadyOpen())FD_SET(smem.junbo_LASC_object.junbo_lane_adj_port.Getfd(),&readfs);
             timeout.tv_sec=60;                                                      //timeout¬í¼Æ
             timeout.tv_usec=0;                                                      //³o­Ó¬O²@¬í,¼È¤£¨Ï¥Î
-
+            CMSTravelTimeBlock=smem.redCountPort.block;
             rec=select(maxport,&readfs,NULL,NULL,&timeout);                         //wait block for read
             if (rec<0)                                                              //Select Error
             {
@@ -262,9 +263,17 @@ int main(int argc, char* argv[])
                             if(smem.vGetCommEnable() == true)    //OT20110728
                             {
 
-                                for(int i=0;i<8;i++)
-                                  printf("%x ",smem.redCountPort.block[i]);
-                                  printf("\n");
+                                for(int i=0; i<8; i++)
+                                    printf("%x ",CMSTravelTimeBlock[i]);
+                                printf("\n");
+                                if(CMSTravelTimeBlock[0]==0xaa&&CMSTravelTimeBlock[1]==0xcc)
+                                {
+                                    CMS_CKS=0;
+                                    for(int i=0; i<7; i++ )CMS_CKS^=CMSTravelTimeBlock[i];
+                                    if(CMSTravelTimeBlock[7]==CMS_CKS)smem._CF_object.initCMSTravelTimeMissCount(CMSTravelTimeBlock[3]);
+
+                                }
+
                             }
                         }
                     }

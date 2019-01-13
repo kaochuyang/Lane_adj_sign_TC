@@ -746,34 +746,20 @@ void * intervalTimer::PTime(void *arg)
                     if(smem.count_vd_alive<600)
                     {
                         printf("timer14 heartbeat display\n");
-
-                        smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,1);
-                             sleep(1);
-                         smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID2_value,2);
-                             sleep(1);
-                        smem.CMS_obj.AVI_protocol(0xff,1);
+                        smem._CF_object.sendCMS_Action();
                     }
                     else
                     {
                         if(smem._CF_object.value_record.display_mode==2)
                         {
-                           smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,1);
-                             sleep(1);
-                         smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID2_value,2);
-                             sleep(1);
-      smem.CMS_obj.AVI_protocol(255,1);
-
+                            smem._CF_object.sendCMS_Action();
                             printf("timer14 heartbeat display switch_button=on auto\n");
                         }
                         else if(smem._CF_object.value_record.display_mode==3)
                         {
                             if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time)
                             {
-                               smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,1);
-                               sleep(1);
-                         smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID2_value,2);
-                          sleep(1);
-                         smem.CMS_obj.AVI_protocol(255,1);
+                                smem._CF_object.sendCMS_Action();
 
                             }
                             printf("timer14 heartbeat display switch_button=on auto\n");
@@ -782,8 +768,8 @@ void * intervalTimer::PTime(void *arg)
                     }
                     break;
                 case( 15 ):  //HwStatus AutoReport
-                    uc0F04[2] = smem.vGetHardwareStatus(3);
-                    uc0F04[3] = smem.vGetHardwareStatus(4);
+                    uc0F04[2] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
+                    uc0F04[3] = 0x0;
                     _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
                     _MSG.InnerOrOutWard = cOutWard;
                     writeJob.WritePhysicalOut(_MSG.packet, _MSG.packetLength, DEVICECENTER92);

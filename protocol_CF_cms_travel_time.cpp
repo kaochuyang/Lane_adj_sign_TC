@@ -95,7 +95,7 @@ void protocol_CF_cms_travel_time::_CF10_time_display_set(MESSAGEOK mes)
 void protocol_CF_cms_travel_time::_CF10_test_time_display_set(int x,int y,int z)
 {
 
-     try
+    try
     {
 
         smem.vWriteMsgToDOM("manual setting CF10");
@@ -310,7 +310,7 @@ void protocol_CF_cms_travel_time::_CFC1_CMS_controler_interrupt_report()
         _MsgOK.InnerOrOutWard = cOutWard;
 //    writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
         writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
-  }
+    }
     catch(...) {}
 
 }
@@ -363,8 +363,8 @@ void protocol_CF_cms_travel_time::read_value(Value_Record *object)
         }
         else
         {
-             pf=fopen(filename,"w+");
-             fwrite(&object,sizeof(Value_Record),1,pf);
+            pf=fopen(filename,"w+");
+            fwrite(&object,sizeof(Value_Record),1,pf);
             smem.vWriteMsgToDOM("read CMS_TRAVEL_TIME_ini error\n");
             printf("read CMS_TRAVEL_TIME_ini object error\n");
         }
@@ -414,3 +414,40 @@ void protocol_CF_cms_travel_time::_CF02_hw_state_auto_report()
 
 
 }
+
+void protocol_CF_cms_travel_time::sendCMS_Action()
+{
+
+    if(!checkCMSTravelTimeHW())
+    {
+        if(smem._CF_object.value_record.ID1_value!=255)
+            if(CMSLight[0].MissCount<30)CMSLight[0].MissCount++;
+        smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID1_value,1);
+        sleep(1);
+        if(smem._CF_object.value_record.ID2_value!=255)
+            if(CMSLight[1].MissCount<30)CMSLight[1].MissCount++;
+        smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID2_value,2);
+        sleep(1);
+        if(smem._CF_object.value_record.ID3_value!=255)
+            if(CMSLight[2].MissCount<30)CMSLight[2].MissCount++;
+        smem.CMS_obj.AVI_protocol(smem._CF_object.value_record.ID3_value,3);
+    }
+}
+
+
+void protocol_CF_cms_travel_time::initCMSTravelTimeMissCount(int ID)
+{
+    if(ID<4&&ID>0)
+        CMSLight[ID].MissCount=0;
+}
+
+bool protocol_CF_cms_travel_time::checkCMSTravelTimeHW()
+{
+    bool result=true;//if result=true hw is sun and if result=false hw have error;
+    for(int i=0; i<3; i++)
+    {
+        if(CMSLight[i].MissCount>30)result=false;//30 is hard code ,represent did not receive the response of HW times.
+    }
+    return result;
+}
+

@@ -31,10 +31,25 @@ public:
 
     void _CF02_hw_state_auto_report();
   Value_Record value_record;
+
+
+  struct LightStateRecord
+  {
+  int MissCount;
+
+  bool UseOrNot;//reserve for the future.
+
+  };
+
+
+  void sendCMS_Action();
+  bool checkCMSTravelTimeHW();
+void initCMSTravelTimeMissCount(int ID);
 protected:
 private:
 
 
+  LightStateRecord CMSLight[3];
 
 };
 
