@@ -169,22 +169,31 @@ void protocol_AD_cms_travel_time::_AD10_test_time_display_set(int x,int y,int z)
         sprintf(cTMP, "ID0_value=%d ID1_value=%d ID2_value=%d", ID1_value,ID2_value, ID3_value);
         smem.vWriteMsgToDOM(cTMP);
         int error_flag=0;
-        if (ID1_value>99&&ID1_value<0)
+        if(ID1_value!=255)
         {
-            error_flag=ID1_value;
-            vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
+            if (ID1_value>99||ID1_value<0)
+            {
+                error_flag=ID1_value;
+                vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
+            }
         }
         else value_record.ID1_value=ID1_value;
-        if (ID2_value>99&&ID2_value<0)
+        if(ID2_value!=255)
         {
-            error_flag=ID2_value;
-            vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
+            if (ID2_value>99||ID2_value<0)
+            {
+                error_flag=ID2_value;
+                vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
+            }
         }
         else value_record.ID2_value=ID2_value;
-        if (ID3_value>99&&ID3_value<0)
+        if(ID3_value!=255)
         {
-            error_flag=ID3_value;
-            vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
+            if (ID3_value>99||ID3_value<0)
+            {
+                error_flag=ID3_value;
+                vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
+            }
         }
         else value_record.ID3_value=ID3_value;
         if(error_flag==0)
@@ -200,6 +209,11 @@ void protocol_AD_cms_travel_time::revAPP_AD10_test_time_display_set(int x,int y,
 {
     try
     {
+    char cTMP[256];
+    sprintf(cTMP, "revAPP_AD10_test_time_display_set ID1=%d ID2=%d ID3=%d\n", x,y,z);
+    smem.vWriteMsgToDOM(cTMP);
+
+    smem.vWriteMsgToDOM("revAPP_AD10_test_time_display_set");
         BYTE data[2];
         data[0]=0x0f;
         data[1]=0x80;
@@ -256,6 +270,7 @@ void protocol_AD_cms_travel_time::revAPP_AD40_time_display_query()
 {
     try
     {
+    smem.vWriteMsgToDOM("revAPP_AD40_time_display_query");
         printf("display value report\n");
         unsigned char pack[8];
 
@@ -266,13 +281,13 @@ void protocol_AD_cms_travel_time::revAPP_AD40_time_display_query()
         printf("IDvalue_%d =%d\n",1,value_record.ID1_value);
         printf("IDvalue_%d =%d\n",2,value_record.ID2_value);
         printf("IDvalue_%d =%d\n",3,value_record.ID3_value);
-        for(int i=1; i<4; i++)
+        for(int i=0; i<3; i++)
         {
             ID_value=getValueRecord(i);
             printf("IDvalue_%d =%d\n",i+1,getValueRecord(i));
             if (ID_value>99||ID_value<1)
-                pack[2+i]=0xff;
-            else pack[2+i]=ID_value;
+                pack[2+i+1]=0xff;
+            else pack[2+i+1]=ID_value;
         }
 
         writeJob.WritePhysicalOut(pack, 6, revAPP);
@@ -338,7 +353,9 @@ void protocol_AD_cms_travel_time::revAPP_AD11_CMS_controler_interrupt_set(int in
 {
     try
     {
-        char cTMP[256];
+    char cTMP[256];
+    sprintf(cTMP, "revAPP_AD11_CMS_controler_interrupt_set mode=%d interrupt_time=%d\n", mode,interruptTime);
+    smem.vWriteMsgToDOM(cTMP);
 
         if(interruptTime>99||interruptTime<0)
             value_record.interrrupt_time=30;
@@ -391,7 +408,7 @@ void protocol_AD_cms_travel_time::_ADC1_CMS_controler_interrupt_report()
 void protocol_AD_cms_travel_time::revAPP_AD41_CMS_controler_interrupt_query()
 {
     try
-    {
+    {smem.vWriteMsgToDOM("revAPP_AD40_time_display_query");
         printf("display value report by revAPP\n");
         unsigned char pack[5];
         pack[0]=0x1f;
