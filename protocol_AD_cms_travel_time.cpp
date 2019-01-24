@@ -169,36 +169,32 @@ void protocol_AD_cms_travel_time::_AD10_test_time_display_set(int x,int y,int z)
         sprintf(cTMP, "ID0_value=%d ID1_value=%d ID2_value=%d", ID1_value,ID2_value, ID3_value);
         smem.vWriteMsgToDOM(cTMP);
         int error_flag=0;
-        if(ID1_value!=255)
-        {
-            if (ID1_value>99||ID1_value<0)
+
+            if( (ID1_value>99||ID1_value<0)&&(ID1_value!=255))
             {
                 error_flag=ID1_value;
                 vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
             }
-        }
-        else value_record.ID1_value=ID1_value;
-        if(ID2_value!=255)
-        {
-            if (ID2_value>99||ID2_value<0)
+                else value_record.ID1_value=ID1_value;
+
+
+            if ((ID2_value>99||ID2_value<0)&&(ID2_value!=255))
             {
                 error_flag=ID2_value;
                 vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
             }
-        }
-        else value_record.ID2_value=ID2_value;
-        if(ID3_value!=255)
-        {
-            if (ID3_value>99||ID3_value<0)
+                else value_record.ID2_value=ID2_value;
+
+
+            if ((ID3_value>99||ID3_value<0)&&(ID3_value!=255))
             {
                 error_flag=ID3_value;
                 vReturnToCenterNACK(0xAD,0x10,0x4,error_flag);
             }
-        }
-        else value_record.ID3_value=ID3_value;
+                else value_record.ID3_value=ID3_value;
         if(error_flag==0)
         {
-            printf("ID1=%d minutes ID2=%d minutes ID3=%d minutes",ID1_value,ID2_value,ID3_value);
+            printf("ID1=%d minutes ID2=%d minutes ID3=%d minutes\n _AD10_test_time_display_set\n",ID1_value,ID2_value,ID3_value);
             store_value(value_record);
             vReturnToCenterACK(0xAD,0x10);
         }
