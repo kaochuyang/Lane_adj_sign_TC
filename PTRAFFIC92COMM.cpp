@@ -1905,14 +1905,14 @@ bool PTRAFFIC92COMM::check_link_revAPP()
         // if(iReturnCommandSet <= 2) { vReturnToCenterNACK(0x0F, 0xC2, 0x80, 0x00); return false; } // not include level "O"
 
 
-        BYTE data[9];
+        BYTE data[2];
 
         data[0] = 0x0F;
         data[1] = 0x7b;
 
 
-
         writeJob.WritePhysicalOut(data,2,revAPP);
+        smem._CF_object.reportHWstateToApp();
 
 
         return true;

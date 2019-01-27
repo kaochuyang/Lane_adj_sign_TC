@@ -418,7 +418,7 @@ void protocol_CF_cms_travel_time::_CF02_hw_state_auto_report()
 void protocol_CF_cms_travel_time::sendCMS_Action()
 {
 
-   // if(checkCMSTravelTimeHW())
+    // if(checkCMSTravelTimeHW())
     {
         if(smem._CF_object.value_record.ID1_value!=255)
             if(CMSLight[0].MissCount<30)CMSLight[0].MissCount++;
@@ -435,19 +435,20 @@ void protocol_CF_cms_travel_time::sendCMS_Action()
 }
 
 bool protocol_CF_cms_travel_time:: getLightOnOrOff(int ID)
-{bool result=false;
+{
+    bool result=false;
     switch(ID)
     {
-        case 1:
+    case 1:
         if(smem._CF_object.value_record.ID1_value!=255)result=true;
         break;
-        case 2:
-           if(smem._CF_object.value_record.ID2_value!=255)result=true;
+    case 2:
+        if(smem._CF_object.value_record.ID2_value!=255)result=true;
         break;
-        case 3:
-          if(smem._CF_object.value_record.ID3_value!=255)result=true;
+    case 3:
+        if(smem._CF_object.value_record.ID3_value!=255)result=true;
         break;
-        default :
+    default :
         result=false;
         break;
     }
@@ -459,17 +460,17 @@ void protocol_CF_cms_travel_time::closeCMS_Action()
 {
 
 
-        if(smem._CF_object.value_record.ID1_value!=255)
-            if(CMSLight[0].MissCount<30)CMSLight[0].MissCount++;
-        smem.CMS_obj.AVI_protocol(255,1);
-        sleep(1);
-        if(smem._CF_object.value_record.ID2_value!=255)
-            if(CMSLight[1].MissCount<30)CMSLight[1].MissCount++;
-        smem.CMS_obj.AVI_protocol(255,2);
-        sleep(1);
-        if(smem._CF_object.value_record.ID3_value!=255)
-            if(CMSLight[2].MissCount<30)CMSLight[2].MissCount++;
-        smem.CMS_obj.AVI_protocol(255,3);
+    if(smem._CF_object.value_record.ID1_value!=255)
+        if(CMSLight[0].MissCount<30)CMSLight[0].MissCount++;
+    smem.CMS_obj.AVI_protocol(255,1);
+    sleep(1);
+    if(smem._CF_object.value_record.ID2_value!=255)
+        if(CMSLight[1].MissCount<30)CMSLight[1].MissCount++;
+    smem.CMS_obj.AVI_protocol(255,2);
+    sleep(1);
+    if(smem._CF_object.value_record.ID3_value!=255)
+        if(CMSLight[2].MissCount<30)CMSLight[2].MissCount++;
+    smem.CMS_obj.AVI_protocol(255,3);
 
 }
 void protocol_CF_cms_travel_time::initCMSTravelTimeMissCount(int ID)
@@ -478,15 +479,45 @@ void protocol_CF_cms_travel_time::initCMSTravelTimeMissCount(int ID)
         CMSLight[ID].MissCount=0;
 }
 
+bool protocol_CF_cms_travel_time::getCMSLightHWState(int index)
+{
+    /*miss count represent the controler sent the message to the light hardware ,then hardware did'nt report any message times*/
+    /*false represent the light is work,true reprent the light is not work*/
+    if(CMSLight[index].MissCount>5)
+        return true;
+    else return false;
+}
+
 bool protocol_CF_cms_travel_time::checkCMSTravelTimeHW()
 {
     bool result=true;//if result=true hw is sun and if result=false hw have error;
     for(int i=0; i<3; i++)
-    {if(getLightOnOrOff(i))
-        if(CMSLight[i].MissCount>10)result=false;//30 is hard code ,represent did not receive the response of HW times.
+    {
+        if(getLightOnOrOff(i))
+            if(CMSLight[i].MissCount>10)result=false;//10 is hard code ,represent did not receive the response of HW times.
     }
 
     if(!result)printf("hardware false!!\n");
     return result;
 }
+void protocol_CF_cms_travel_time::reportHWstateToApp()
+{
+try{
+        BYTE  data2[6];
+        data2[0]=0x1f;
+        data2[1]=0xad;
+        data2[2]=0xc4;
+        for(int index=0; index<3; index++)
+        {
+            if(smem._CF_object.getCMSLightHWState(index))
+                data2[3+index]=1;
+            else data2[3+index]=0;
+        }
+        writeJob.WritePhysicalOut(data2,6,revAPP);
+}catch(...){}
+}
+
+
+
+
 

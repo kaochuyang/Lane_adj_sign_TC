@@ -32,7 +32,7 @@ public:
     void _CF02_hw_state_auto_report();
   Value_Record value_record;
 
-
+void reportHWstateToApp();
   struct LightStateRecord
   {
   int MissCount;
@@ -40,7 +40,7 @@ public:
   bool UseOrNot;//reserve for the future.
 
   };
-
+bool getCMSLightHWState(int index);
 void closeCMS_Action();
   void sendCMS_Action();
   bool checkCMSTravelTimeHW();
