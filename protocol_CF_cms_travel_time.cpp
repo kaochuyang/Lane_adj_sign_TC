@@ -20,7 +20,7 @@ bool protocol_CF_cms_travel_time::DoWorkViaPTraffic92(MESSAGEOK mes)
 
 
         switch(mes.packet[8])
-        {
+        {smem.count_vd_alive=0;
         case 0x10:
             _CF10_time_display_set(mes);
             break;
@@ -52,7 +52,7 @@ void protocol_CF_cms_travel_time::_CF10_time_display_set(MESSAGEOK mes)
     try
     {
         char cTMP[256];
-        smem.count_vd_alive=0;
+
         int ID1_value=mes.packet[10];
         int ID2_value=mes.packet[12];
         int ID3_value=mes.packet[14];
@@ -100,7 +100,7 @@ void protocol_CF_cms_travel_time::_CF10_test_time_display_set(int x,int y,int z)
 
         smem.vWriteMsgToDOM("manual setting CF10");
         char cTMP[256];
-        smem.count_vd_alive=0;
+        //smem.count_vd_alive=0;
         int ID1_value=x;
         int ID2_value=y;
         int ID3_value=z;
@@ -476,11 +476,16 @@ void protocol_CF_cms_travel_time::closeCMS_Action()
 void protocol_CF_cms_travel_time::initCMSTravelTimeMissCount(int ID)
 {
     if(ID<4&&ID>0)
-        CMSLight[ID].MissCount=0;
+        CMSLight[ID-1].MissCount=0;
 }
 
 bool protocol_CF_cms_travel_time::getCMSLightHWState(int index)
-{
+{int ID[3]={0};
+
+//     if(CMSLight[0].MissCount>5)ID[0]=1;
+//    if(CMSLight[1].MissCount>5)ID[1]=1;
+//    if(CMSLight[2].MissCount>5)ID[2]=1;
+//    printf("MiSSState ID1=%d ID2=%d ID3=%d \n",ID[0],ID[1],ID[2]);
     /*miss count represent the controler sent the message to the light hardware ,then hardware did'nt report any message times*/
     /*false represent the light is work,true reprent the light is not work*/
     if(CMSLight[index].MissCount>5)
@@ -517,6 +522,21 @@ try{
 }catch(...){}
 }
 
+void protocol_CF_cms_travel_time::reportCenterLinkState()
+{
+    try
+    {
+        BYTE data[3];
+        data[0]=0x0f;
+        data[1]=0x7c;
+
+        //if data[2]=1 CenterState is Link,if data[2]=0 CenterState is disconnect
+        if(smem.count_vd_alive<smem._CF_object.value_record.interrrupt_time)
+        data[2]=1;
+        else data[2]=0;
+          writeJob.WritePhysicalOut(data,3,revAPP);
+    }catch(...){}
+}
 
 
 

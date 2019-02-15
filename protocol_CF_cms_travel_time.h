@@ -33,6 +33,7 @@ public:
   Value_Record value_record;
 
 void reportHWstateToApp();
+void reportCenterLinkState();
   struct LightStateRecord
   {
   int MissCount;
@@ -45,6 +46,8 @@ void closeCMS_Action();
   void sendCMS_Action();
   bool checkCMSTravelTimeHW();
 void initCMSTravelTimeMissCount(int ID);
+
+
 protected:
 private:
 bool getLightOnOrOff(int ID);

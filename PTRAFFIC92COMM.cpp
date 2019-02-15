@@ -254,7 +254,7 @@ bool PTRAFFIC92COMM::DoWorkViaPTraffic92(MESSAGEOK message)
             vPass_0F8E(message);
             break;
 
-        //PhysicalOut
+            //PhysicalOut
         case 0x80:
             writeJob.WritePhysicalOut(message.packet, message.packetLength, DEVICECENTER92);
             break;
@@ -614,7 +614,7 @@ bool PTRAFFIC92COMM::vSetIPCTime_0F12(MESSAGEOK DataMessageIn)
 //  else
 //  {
         unsigned int YY = DataMessageIn.packet[9],MM=DataMessageIn.packet[10],DD=DataMessageIn.packet[11],
-                     hh = DataMessageIn.packet[13],mm=DataMessageIn.packet[14],ss=DataMessageIn.packet[15];
+                          hh = DataMessageIn.packet[13],mm=DataMessageIn.packet[14],ss=DataMessageIn.packet[15];
         unsigned int YYYY = YY + 1911;
 
         struct tm _CenterTime;                                                        //´«ºâSecDif¥Îªº
@@ -1018,7 +1018,7 @@ bool PTRAFFIC92COMM::vSetDBPassword_0F15(MESSAGEOK DataMessageIn)
 
                 (( DataMessageIn.packet[9+i] >= 48 && DataMessageIn.packet[9+i] <= 57) ||
                  (DataMessageIn.packet[9+i] >= 65 && DataMessageIn.packet[9+i] <= 70) ))
-            {  }  //do nothing
+                {  }  //do nothing
             else
             {
                 vReturnToCenterNACK( 0x0F, 0x15, 0x04, i+1);
@@ -1913,7 +1913,7 @@ bool PTRAFFIC92COMM::check_link_revAPP()
 
         writeJob.WritePhysicalOut(data,2,revAPP);
         smem._CF_object.reportHWstateToApp();
-
+        smem._CF_object.reportCenterLinkState();
 
         return true;
     }
