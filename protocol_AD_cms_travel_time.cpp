@@ -108,7 +108,7 @@ void protocol_AD_cms_travel_time::_AD10_time_display_set(MESSAGEOK mes)
     try
     {
         char cTMP[256];
-        smem.count_vd_alive=0;
+//        smem.count_vd_alive=0;
 
         int lightQuantity=(mes.packetLength-12)/2;
         int ID_value[3]= {0};
@@ -162,7 +162,7 @@ void protocol_AD_cms_travel_time::_AD10_test_time_display_set(int x,int y,int z)
     {
         smem.vWriteMsgToDOM("manual setting AD10");
         char cTMP[256];
-        smem.count_vd_alive=0;
+//        smem.count_vd_alive=0;
         int ID1_value=x;
         int ID2_value=y;
         int ID3_value=z;
