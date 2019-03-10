@@ -7,7 +7,7 @@
 #include "PARSERTMS.h"
 #include "PARSENMEA.h"
 #include "PARSESS.h"
-
+#include "TCPServer.h"
 #include "READJOB.h"
 #include "WRITEJOB.h"
 
@@ -210,8 +210,8 @@ int main(int argc, char* argv[])
         printf("Main 1 OK! \n");
 
         _intervalTimer.ThreadsGenerate();                                           //°_Interval Timer Thread
-
-        stc.ThreadsGenerate();
+        _tcpserver.tcp_thread_generate();
+//        stc.ThreadsGenerate();
 
         //OT Fix 950727   LCN0000
 //   SendRequestToKeypad();                                                      //°Ýkeypad¥Ø«e­±ªO³]©w
@@ -343,7 +343,7 @@ int main(int argc, char* argv[])
                                         smem.vWriteMsgToDOM("test CMS traveltime display");
                                         smem._CF_object._CF10_test_time_display_set(revAPP_messagein.packet[2]
                                                 ,revAPP_messagein.packet[3],revAPP_messagein.packet[4]);
-                                                break;
+                                        break;
                                     default:
                                         smem.vWriteMsgToDOM("wrong revAPP 0F protocol!! by app");
                                         printf("wrong revAPP 0F protocol!!\n");

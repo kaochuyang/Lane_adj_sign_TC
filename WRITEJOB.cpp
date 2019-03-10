@@ -448,6 +448,21 @@ bool WRITEJOB::WritePhysicalOut(BYTE *packet,int length,int device)
                 smem.SetWaitMsg(packet[2],packet,length);
             }
 
+
+   printf("TCP TCP TCP SEND NotYet 3\n");
+            for(int i=0; i<103; i++)
+            {
+                if(smem.getCliSock(i)>0)
+                    {send( smem.getCliSock(i),packet, length, 0);
+
+                    printf("TCP TCP TCP SEND\n");
+                    for(int j=0;j<length;j++)
+                    printf("%x ",packet[j]);
+
+                    printf("\n");
+                    }
+            }
+
             screenCurrentCommPacket.vRefreshCurrentScreenPacket(packet, length, "1");
 
             break;
@@ -728,7 +743,7 @@ bool WRITEJOB::WritePhysicalOutNoSetSeqNoResend(BYTE *packet,int length,int devi
         {
 
         case DEVICECENTER92:                                                //92年版交控中心
-
+printf("TCP TCP TCP SEND NotYet  0\n");
             if (smem.vGetAdjudicateReturnAddressBCDorHEX()==cBCD)    //BCD code編碼
             {
                 bcdSwitchHi.bcdCode=packet[3];
@@ -740,7 +755,7 @@ bool WRITEJOB::WritePhysicalOutNoSetSeqNoResend(BYTE *packet,int length,int devi
                 iPacketLcn=(int)packet[3]*256+(int)packet[4];
             }
             iTCLCN = smem.GetAddress();
-
+printf("TCP TCP TCP SEND NotYet 1\n");
             if (smem.centerPort.GetPortAlreadyOpen() && (iPacketLcn != 0) )
                 statusRs232=smem.centerPort.Rs232Write(packet,length,"/dev/ttyS10");
 
@@ -748,7 +763,7 @@ bool WRITEJOB::WritePhysicalOutNoSetSeqNoResend(BYTE *packet,int length,int devi
             if(smem.vGetINTData(Com2_TYPE) == Com2IsTesterPort)
             {
             }
-
+printf("TCP TCP TCP SEND NotYet 2\n");
             if (smem.DynCalServerInCrossSocket.GetPortAlreadyOpen() && (iPacketLcn != 0) )
                 statusUdp=smem.DynCalServerInCrossSocket.UdpSend(packet,length,"DynCalServerInCrossSocket");
 
@@ -765,6 +780,20 @@ bool WRITEJOB::WritePhysicalOutNoSetSeqNoResend(BYTE *packet,int length,int devi
                 statusUdp=smem.centerSocket2.UdpSend(packet,length,"centerSocket2");
             }
 
+
+   printf("TCP TCP TCP SEND NotYet 3\n");
+            for(int i=0; i<103; i++)
+            {
+                if(smem.getCliSock(i)>0)
+                    {send( smem.getCliSock(i),packet, length, 0);
+
+                    printf("TCP TCP TCP SEND\n");
+                    for(int j=0;j<length;j++)
+                    printf("%x ",packet[j]);
+
+                    printf("\n");
+                    }
+            }
 
             screenCurrentCommPacket.vRefreshCurrentScreenPacket(packet, length, "1");
 

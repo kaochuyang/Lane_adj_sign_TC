@@ -84,6 +84,12 @@ public:
     LAS_excute_info LAS_segmenttype[21];//1~7 common day, 8-20 special day, 0 no info.
     protocol_CF_cms_travel_time _CF_object;
     protocol_AD_cms_travel_time _AD_object;
+
+
+    int cliSock[100];     //TCP Client Socket Set
+    void setCliSock(int SerialNum,int CliNum );
+    int getCliSock(int SerialNum);
+
    CMS_hw_protocol CMS_obj;
     // LSC=  Lane adjusted sign controler
     protocol_8F_LAS protocol_8f_object;

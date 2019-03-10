@@ -2100,7 +2100,7 @@
 	"var.h"
 	"SMEM.h"
 
-1540905463 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/SMEM.h
+1552230891 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/SMEM.h
 	"var.h"
 	"STORAGE.h"
 	"RS232.h"
@@ -2609,13 +2609,14 @@
 	<sys/perm.h>
 	<sys/io.h>
 
-1548257123 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/main.cpp
+1552233679 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/main.cpp
 	"var.h"
 	"SMEM.h"
 	"PARSETRAFFIC.h"
 	"PARSERTMS.h"
 	"PARSENMEA.h"
 	"PARSESS.h"
+	"TCPServer.h"
 	"READJOB.h"
 	"WRITEJOB.h"
 	"LCD240x128.h"
@@ -3048,7 +3049,7 @@
 	<stdlib.h>
 	<error.h>
 
-1526026318 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/PTRAFFIC92COMM.cpp
+1552219853 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/PTRAFFIC92COMM.cpp
 	"PTRAFFIC92COMM.h"
 	"CDataToMessageOK.h"
 	"WRITEJOB.h"
@@ -4024,7 +4025,7 @@
 	"screenSegtypePreview.h"
 	"SMEM.h"
 
-1547041287 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/SMEM.cpp
+1552231573 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/SMEM.cpp
 	"SMEM.h"
 	"WRITEJOB.h"
 	"CDataToMessageOK.h"
@@ -4052,7 +4053,7 @@
 	<unistd.h>
 	<string.h>
 
-1526026383 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/WRITEJOB.cpp
+1552234961 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/WRITEJOB.cpp
 	"WRITEJOB.h"
 	"SMEM.h"
 	"PROTOCOL.h"
@@ -4072,13 +4073,13 @@
 
 1547346152 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/CMS_hw_protocol.h
 
-1547557323 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.cpp
+1552219853 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.cpp
 	"protocol_CF_cms_travel_time.h"
 	"SMEM.h"
 	"CDataToMessageOK.h"
 	"WRITEJOB.h"
 
-1548599580 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.h
+1552219853 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_CF_cms_travel_time.h
 	"var.h"
 	"protocol_8F_LAS.h"
 
@@ -6128,7 +6129,7 @@
 
 1526277257 /home/cct/Desktop/Untitled4/CMS_traveltime_controler/Lane_adj_sign_TC/include/CMS_traveltime_hw_protocol.h
 
-1548332234 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_AD_cms_travel_time.cpp
+1552219853 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/protocol_AD_cms_travel_time.cpp
 	"protocol_AD_cms_travel_time.h"
 	"SMEM.h"
 	"CDataToMessageOK.h"
@@ -8192,4 +8193,24 @@
 	"PTRAFFIC92.h"
 	"WRITEJOB.h"
 	"SMEM.h"
+
+1552235566 source:/home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/TCPServer.cpp
+	"TCPServer.h"
+
+1552227374 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/TCPServer.h
+	<stdio.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<sys/time.h>
+	<fcntl.h>
+	<pthread.h>
+	<sys/epoll.h>
+	"PTRAFFIC92TC.h"
+	"PTRAFFIC92COMM.h"
+	"PARSETRAFFIC.h"
+	"READJOB.h"
+	"WRITEJOB.h"
 
