@@ -236,6 +236,8 @@
 		<Unit filename="STCNCTU.cbx.local" />
 		<Unit filename="STORAGE.cpp" />
 		<Unit filename="STORAGE.h" />
+		<Unit filename="TCPServer.cpp" />
+		<Unit filename="TCPServer.h" />
 		<Unit filename="UDP.cpp" />
 		<Unit filename="UDP.h" />
 		<Unit filename="WRITEJOB.cpp" />

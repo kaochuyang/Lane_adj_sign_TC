@@ -629,9 +629,9 @@ void SMEM::InitialSMem(void)
 
         printf("ucReverseLaneManualEnable:%d\n", ucReverseLaneManualEnable);
 
-        ucW77E58FWVer[0] = 0; //Year
-        ucW77E58FWVer[1] = 0; //Month
-        ucW77E58FWVer[2] = 0; //Day
+        ucW77E58FWVer[0] = 2019; //Year
+        ucW77E58FWVer[1] = 3; //Month
+        ucW77E58FWVer[2] = 17; //Day
 
         bForceClockRedCountOneTime = false;
         bBugStopSend0x22ForceCtl51Light = false;

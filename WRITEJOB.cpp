@@ -447,15 +447,11 @@ bool WRITEJOB::WritePhysicalOut(BYTE *packet,int length,int device)
             {
                 smem.SetWaitMsg(packet[2],packet,length);
             }
-
-
-   printf("TCP TCP TCP SEND NotYet 3\n");
-            for(int i=0; i<103; i++)
+            for(int i=0; i<10; i++)
             {
                 if(smem.getCliSock(i)>0)
                     {send( smem.getCliSock(i),packet, length, 0);
 
-                    printf("TCP TCP TCP SEND\n");
                     for(int j=0;j<length;j++)
                     printf("%x ",packet[j]);
 

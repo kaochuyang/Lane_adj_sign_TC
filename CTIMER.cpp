@@ -505,18 +505,18 @@ void intervalTimer::TimersSetting(void)
             iTmp = 2;
             break;
         case(3):
-            iTmp = 5;
+            iTmp =5;
             break;
         case(4):
-            break;
             iTmp = 60;
+            break;
         case(5):
             iTmp = 300;
             break;
         }
         _it6.it_value.tv_sec = 5;
         _it6.it_value.tv_nsec = 0;
-        _it6.it_interval.tv_sec = 60;
+        _it6.it_interval.tv_sec = iTmp;
         _it6.it_interval.tv_nsec = 0;
         if ( timer_settime( _t6, 0, & _it6, NULL ) ) exit( 1 );
 
@@ -769,12 +769,15 @@ void * intervalTimer::PTime(void *arg)
                         else printf("timer14 heartbeat mode other close light\n");
                     }
 
-                    uc0F04[2] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
+
+if(!smem._CF_object.checkCMSTravelTimeHW())
+{                    uc0F04[2] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
                     uc0F04[3] = 0x0;
                     _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
                     _MSG.InnerOrOutWard = cOutWard;
                     writeJob.WritePhysicalOut(_MSG.packet, _MSG.packetLength, DEVICECENTER92);
 
+}
 
                     break;
                 case( 15 ):  //HwStatus AutoReport

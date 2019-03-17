@@ -150,7 +150,7 @@ void protocol_AD_cms_travel_time::_AD10_time_display_set(MESSAGEOK mes)
         }
         else
         {
-            sprintf(cTMP, "AD10 enter ERROR\n");
+                       sprintf(cTMP, "AD10 enter ERROR\n");
             smem.vWriteMsgToDOM(cTMP);
         }
     }
@@ -227,6 +227,8 @@ void protocol_AD_cms_travel_time::_AD40_time_display_query()
     try
     {
         smem.vWriteMsgToDOM("_AD40_time_display_query");
+        vReturnToCenterACK(0xAD,0x40);
+
         _ADC0_time_display_rport_report();
     }
     catch(...) {}
