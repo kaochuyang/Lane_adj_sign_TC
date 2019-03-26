@@ -440,13 +440,13 @@ bool protocol_CF_cms_travel_time:: getLightOnOrOff(int ID)
     switch(ID)
     {
     case 1:
-        if(smem._CF_object.value_record.ID1_value!=255)result=true;
+        if((smem._CF_object.value_record.ID1_value!=255)&&(smem._CF_object.value_record.ID1_value!=0))result=true;
         break;
     case 2:
-        if(smem._CF_object.value_record.ID2_value!=255)result=true;
+        if((smem._CF_object.value_record.ID2_value!=255)&&(smem._CF_object.value_record.ID2_value!=0))result=true;
         break;
     case 3:
-        if(smem._CF_object.value_record.ID3_value!=255)result=true;
+        if((smem._CF_object.value_record.ID3_value!=255)&&(smem._CF_object.value_record.ID3_value!=0))result=true;
         break;
     default :
         result=false;
@@ -477,6 +477,7 @@ void protocol_CF_cms_travel_time::initCMSTravelTimeMissCount(int ID)
 {
     if(ID<4&&ID>0)
         CMSLight[ID-1].MissCount=0;
+        printf("init CMS light ID=%d\n",ID);
 }
 
 bool protocol_CF_cms_travel_time::getCMSLightHWState(int index)

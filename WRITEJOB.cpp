@@ -447,6 +447,8 @@ bool WRITEJOB::WritePhysicalOut(BYTE *packet,int length,int device)
             {
                 smem.SetWaitMsg(packet[2],packet,length);
             }
+
+            usleep(10000);
             for(int i=0; i<10; i++)
             {
                 if(smem.getCliSock(i)>0)

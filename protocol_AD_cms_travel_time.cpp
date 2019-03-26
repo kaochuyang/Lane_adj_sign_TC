@@ -110,6 +110,7 @@ void protocol_AD_cms_travel_time::_AD10_time_display_set(MESSAGEOK mes)
         char cTMP[256];
 //        smem.count_vd_alive=0;
 
+
         int lightQuantity=(mes.packetLength-12)/2;
         int ID_value[3]= {0};
         int error_flag=0;
@@ -134,6 +135,13 @@ void protocol_AD_cms_travel_time::_AD10_time_display_set(MESSAGEOK mes)
                     setValueRecord(i,ID_value[i]);
                 }
             };
+
+if(error_flag==0)
+{
+sprintf(cTMP, "AD10 setting ID1=%d,ID2=%d,ID3=%d\n",ID_value[0],ID_value[1],ID_value[2]);
+            smem.vWriteMsgToDOM(cTMP);
+}
+
 
         if(error_flag==0)
         {
@@ -227,7 +235,7 @@ void protocol_AD_cms_travel_time::_AD40_time_display_query()
     try
     {
         smem.vWriteMsgToDOM("_AD40_time_display_query");
-        vReturnToCenterACK(0xAD,0x40);
+        //vReturnToCenterACK(0xAD,0x40);
 
         _ADC0_time_display_rport_report();
     }

@@ -771,7 +771,9 @@ void * intervalTimer::PTime(void *arg)
 
 
 if(!smem._CF_object.checkCMSTravelTimeHW())
-{                    uc0F04[2] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
+{
+printf("CHECK CHECK CHECK CHECK\n");
+      uc0F04[2] =0x04;
                     uc0F04[3] = 0x0;
                     _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
                     _MSG.InnerOrOutWard = cOutWard;
