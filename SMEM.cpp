@@ -387,9 +387,9 @@ SMEM::SMEM(void)
         bTCSegmentTypeUpdate = false;
         ucCSTCControlStrategy = 10; //TOD
 
-        iFirmwareYear = 2017;
-        iFirmwareMonth = 12;
-        iFirmwareDay = 7;
+        iFirmwareYear = 2019;
+        iFirmwareMonth = 04;
+        iFirmwareDay = 01;
 
         //20140415, add dynamic seg for HsinChu dynamic control.
         //20140211, add special version for SIPA ped.
@@ -3235,18 +3235,18 @@ int SMEM::vGetFirmwareInfo_0FC3(const int iSwitch)                              
             iTmp = iFirmwareDay;
             break;
         case(3):
-            if(ucW77E58FWVer[0] == 0 && ucW77E58FWVer[1] == 0 && ucW77E58FWVer[2] == 0)    //unknow
-            {
-                iFirmwareCompanyID = 0;
-            }
-            else if(ucW77E58FWVer[0] == 9 && ucW77E58FWVer[1] == 6 && ucW77E58FWVer[2] == 23)      //2009/6/23
-            {
+//            if(ucW77E58FWVer[0] == 0 && ucW77E58FWVer[1] == 0 && ucW77E58FWVer[2] == 0)    //unknow
+//            {
+//                iFirmwareCompanyID = 0;
+//            }
+//            else if(ucW77E58FWVer[0] == 9 && ucW77E58FWVer[1] == 6 && ucW77E58FWVer[2] == 23)      //2009/6/23
+//            {
                 iFirmwareCompanyID = 1;
-            }
-            else      //other
-            {
-                iFirmwareCompanyID = 255;
-            }
+//            }
+//            else      //other
+//            {
+//                iFirmwareCompanyID = 255;
+//            }
             iTmp = iFirmwareCompanyID;
             break;
         case(4):

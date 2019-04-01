@@ -494,16 +494,16 @@ bool PTRAFFIC92COMM::vReportEquipmentNo_0FC0(unsigned char cEquipmentNo)
             data[2]  = 0x00;
             data[3]  = 0x01;
 
-            if( smem.vGetAdjudicateReturnAddressBCDorHEX() == cBCD )                       //Select BCD mode
-            {
-                data[4]=oHexToInt.vIntToFuckingBCD(1,_MsgOK.packetLcn);
-                data[5]=oHexToInt.vIntToFuckingBCD(0,_MsgOK.packetLcn);
-            }
-            else                                                                        //Normal(HEX) mode
-            {
+//            if( smem.vGetAdjudicateReturnAddressBCDorHEX() == cBCD )                       //Select BCD mode
+//            {
+//                data[4]=oHexToInt.vIntToFuckingBCD(1,_MsgOK.packetLcn);
+//                data[5]=oHexToInt.vIntToFuckingBCD(0,_MsgOK.packetLcn);
+//            }
+//            else                                                                        //Normal(HEX) mode
+//            {
                 data[4]=HI(_MsgOK.packetLcn);
                 data[5]=LO(_MsgOK.packetLcn);
-            }
+//            }
 
             _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 6,true);
             _MsgOK.InnerOrOutWard = cOutWard;
@@ -513,15 +513,16 @@ bool PTRAFFIC92COMM::vReportEquipmentNo_0FC0(unsigned char cEquipmentNo)
         }
         else
         {
-            data[0]  = 0x0F;
-            data[1]  = 0xC0;
-            data[2]  = cEquipmentNo;
-            data[3]  = 0x00;
-
-            _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 4,true);
-            _MsgOK.InnerOrOutWard = cOutWard;
-//      writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
-            writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
+//            data[0]  = 0x0F;
+//            data[1]  = 0xC0;
+//            data[2]  = cEquipmentNo;
+//            data[3]  = 0x00;
+//
+//            _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 4,true);
+//            _MsgOK.InnerOrOutWard = cOutWard;
+////      writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
+//            writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);
+vReturnToCenterNACK(0x0F, 0xC0, 0x80, 0x00);    // not include level "O"
             return true;
         }
     }
