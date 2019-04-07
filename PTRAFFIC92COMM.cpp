@@ -482,7 +482,7 @@ bool PTRAFFIC92COMM::vReportEquipmentNo_0FC0(unsigned char cEquipmentNo)
             return false;
         }
 
-        unsigned char data[6];
+        unsigned char data[7];
         MESSAGEOK _MsgOK;
         _MsgOK.packetLcn=smem.GetAddress();
 
@@ -501,11 +501,12 @@ bool PTRAFFIC92COMM::vReportEquipmentNo_0FC0(unsigned char cEquipmentNo)
 //            }
 //            else                                                                        //Normal(HEX) mode
 //            {
-                data[4]=HI(_MsgOK.packetLcn);
-                data[5]=LO(_MsgOK.packetLcn);
+                data[4]=0x01;
+                data[5]=HI(_MsgOK.packetLcn);
+                data[6]=LO(_MsgOK.packetLcn);
 //            }
 
-            _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 6,true);
+            _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 7,true);
             _MsgOK.InnerOrOutWard = cOutWard;
 //    writeJob.WriteWorkByMESSAGEOUT(_MsgOK);
             writeJob.WritePhysicalOut(_MsgOK.packet, _MsgOK.packetLength, DEVICECENTER92);

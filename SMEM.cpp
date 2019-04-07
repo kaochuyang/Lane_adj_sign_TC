@@ -3241,7 +3241,7 @@ int SMEM::vGetFirmwareInfo_0FC3(const int iSwitch)                              
 //            }
 //            else if(ucW77E58FWVer[0] == 9 && ucW77E58FWVer[1] == 6 && ucW77E58FWVer[2] == 23)      //2009/6/23
 //            {
-                iFirmwareCompanyID = 1;
+                iFirmwareCompanyID = 248;// ==  f8   f:tsuto's companyID , 8:new device about transportation.
 //            }
 //            else      //other
 //            {
