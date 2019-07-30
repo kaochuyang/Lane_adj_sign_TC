@@ -764,6 +764,7 @@ void * intervalTimer::PTime(void *arg)
                                 printf("timer14 heartbeat mode 3 display light\n");
 
                             }else {smem._CF_object.closeCMS_Action();
+                            smem.vWriteMsgToDOM("CMSTravel time mode 3 center timeout close light.");
                             printf("timer14 heartbeat  mode 3 display light\n");}
                         }
                         else printf("timer14 heartbeat mode other close light\n");

@@ -18,9 +18,9 @@ bool protocol_CF_cms_travel_time::DoWorkViaPTraffic92(MESSAGEOK mes)
     try
     {
 
-
+smem.count_vd_alive=0;
         switch(mes.packet[8])
-        {smem.count_vd_alive=0;
+        {
         case 0x10:
             _CF10_time_display_set(mes);
             break;
