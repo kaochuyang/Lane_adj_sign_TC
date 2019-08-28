@@ -37,7 +37,7 @@ bool PTRAFFIC92TC::DoWorkViaPTraffic92(MESSAGEOK message)
 {
     try
     {
-
+        smem.count_vd_alive=0;
         switch (message.packet[8])
         {
         case 0x10:

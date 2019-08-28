@@ -6152,7 +6152,7 @@
 1541231860 /home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/var.h
 	<time.h>
 
-1541231860 /home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/SMEM.h
+1552808132 /home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/SMEM.h
 	"var.h"
 	"STORAGE.h"
 	"RS232.h"
@@ -6424,7 +6424,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1550238835 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/CTIMER.cpp
+1566990675 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/CTIMER.cpp
 	"CTIMER.h"
 	"var.h"
 	"CDataToMessageOK.h"
@@ -7064,7 +7064,7 @@
 	<stdlib.h>
 	<error.h>
 
-1550238835 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/PTRAFFIC92COMM.cpp
+1566990675 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/PTRAFFIC92COMM.cpp
 	"PTRAFFIC92COMM.h"
 	"CDataToMessageOK.h"
 	"WRITEJOB.h"
@@ -7093,7 +7093,7 @@
 	<stdlib.h>
 	<error.h>
 
-1541222409 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/PTRAFFIC92TC.cpp
+1566990753 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/PTRAFFIC92TC.cpp
 	"PTRAFFIC92TC.h"
 	"CDataToMessageOK.h"
 	"WRITEJOB.h"
@@ -7572,7 +7572,7 @@
 	<error.h>
 	"CSTC.h"
 
-1547204352 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/SMEM.cpp
+1564760718 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/SMEM.cpp
 	"SMEM.h"
 	"WRITEJOB.h"
 	"CDataToMessageOK.h"
@@ -7600,7 +7600,7 @@
 	<unistd.h>
 	<string.h>
 
-1541222409 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/WRITEJOB.cpp
+1564760718 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/WRITEJOB.cpp
 	"WRITEJOB.h"
 	"SMEM.h"
 	"PROTOCOL.h"
@@ -7653,13 +7653,14 @@
 	<sys/perm.h>
 	<sys/io.h>
 
-1548414897 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/main.cpp
+1552808132 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/main.cpp
 	"var.h"
 	"SMEM.h"
 	"PARSETRAFFIC.h"
 	"PARSERTMS.h"
 	"PARSENMEA.h"
 	"PARSESS.h"
+	"TCPServer.h"
 	"READJOB.h"
 	"WRITEJOB.h"
 	"LCD240x128.h"
@@ -7695,13 +7696,13 @@
 	"SMEM.h"
 	"PTRAFFIC92COMM.h"
 
-1548414897 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/protocol_AD_cms_travel_time.cpp
+1564760718 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/protocol_AD_cms_travel_time.cpp
 	"protocol_AD_cms_travel_time.h"
 	"SMEM.h"
 	"CDataToMessageOK.h"
 	"WRITEJOB.h"
 
-1550241181 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/protocol_CF_cms_travel_time.cpp
+1566990753 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/protocol_CF_cms_travel_time.cpp
 	"protocol_CF_cms_travel_time.h"
 	"SMEM.h"
 	"CDataToMessageOK.h"
@@ -8198,6 +8199,26 @@
 	"TCPServer.h"
 
 1552227374 /home/cct/桌面/cms_traveltime/Lane_adj_sign_TC/TCPServer.h
+	<stdio.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<sys/time.h>
+	<fcntl.h>
+	<pthread.h>
+	<sys/epoll.h>
+	"PTRAFFIC92TC.h"
+	"PTRAFFIC92COMM.h"
+	"PARSETRAFFIC.h"
+	"READJOB.h"
+	"WRITEJOB.h"
+
+1552808459 source:/home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/TCPServer.cpp
+	"TCPServer.h"
+
+1552808459 /home/cct/Desktop/Untitled4/has_been_log/CMS_traveltime_controler/Lane_adj_sign_TC/TCPServer.h
 	<stdio.h>
 	<sys/socket.h>
 	<arpa/inet.h>

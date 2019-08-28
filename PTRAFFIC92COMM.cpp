@@ -1361,9 +1361,9 @@ bool PTRAFFIC92COMM::vReportCommunicationStatus_0FC1()
         unsigned char data[4];
         data[0] = 0x0F;
         data[1] = 0xC1;
-        data[2] = smem.vGetHardwareStatus(3);
-        data[3] = smem.vGetHardwareStatus(4);
 
+        data[3] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
+        data[2] = 0x0;
         MESSAGEOK _MsgOK;
         _MsgOK = oDataToMessageOK.vPackageINFOTo92Protocol(data, 4,true);
         _MsgOK.InnerOrOutWard = cOutWard;

@@ -785,8 +785,8 @@ printf("CHECK CHECK CHECK CHECK\n");
                     break;
                 case( 15 ):  //HwStatus AutoReport
                 printf("timer15 heartbeat1\n");
-                    uc0F04[2] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
-                    uc0F04[3] = 0x0;
+                    uc0F04[3] =smem._CF_object.checkCMSTravelTimeHW()? 0x40:0x04;
+                    uc0F04[2] = 0x0;
                     _MSG = oDataToMessageOK.vPackageINFOTo92Protocol(uc0F04, 4, true);
                     _MSG.InnerOrOutWard = cOutWard;
                     writeJob.WritePhysicalOut(_MSG.packet, _MSG.packetLength, DEVICECENTER92);
