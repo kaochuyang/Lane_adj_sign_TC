@@ -249,6 +249,7 @@ bool READJOB::DoWorkByMESSAGEIN(int *maxMessageIndex,MESSAGEOK *messageIn)
                                            printf("%x ",messageIn[i].packet[ii]);
                                          printf("\n");
                         */
+                                smem.count_vd_alive=0;
                         protocol.DoWork(messageIn[i]);
 //                     printf("[OTMsg] Go readJob. S:OK C:OK\n");
                     }
